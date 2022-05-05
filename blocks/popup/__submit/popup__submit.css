@@ -1,0 +1,36 @@
+.popup__submit {
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
+  background-color: black;
+  width: 358px;
+  height: 50px;
+  margin-left: 36px;
+  margin-right: 36px;
+  margin-bottom: 36px;
+  margin-top: 22px;
+  border: none;
+  border-radius: 2px;
+}
+
+.popup__submit:hover {
+  opacity: 0.8;
+  transition: ease-out 0.4s;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 907px) {
+  .popup__submit {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    width: 238px;
+    height: 46px;
+    margin-left: 22px;
+    margin-right: 22px;
+    margin-bottom: 25px;
+  }
+}
