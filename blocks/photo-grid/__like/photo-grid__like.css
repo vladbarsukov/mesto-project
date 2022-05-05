@@ -17,5 +17,6 @@
   opacity: 0.5;
 }
 .photo-grid__like:active {
+  opacity: 1;
   background-image: url(../../../images/heartactive.svg);
 }
