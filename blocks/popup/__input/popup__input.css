@@ -1,0 +1,34 @@
+.popup__input {
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 1px solid;
+  border-color: rgba(0,0,0,0.2);
+  width: 358px;
+  height: 27px;
+  margin-top: 45px;
+  margin-bottom: 30px;
+  margin-left: 36px;
+  outline: none;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  cursor: pointer;
+}
+
+.popup__input:nth-child(2) {
+  margin-top: 0px;
+}
+
+.popup__input:focus {
+  color: blue;
+}
+
+@media screen and (max-width: 907px) {
+  .popup__input {
+    width: 238px;
+    margin-top: 71px;
+    margin-left: 25px;
+  }
+}

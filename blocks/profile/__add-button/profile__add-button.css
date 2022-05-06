@@ -1,0 +1,29 @@
+.profile__add-button {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  background-color: black;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  margin-left: auto;
+  background-image: url(../../../images/Vectoraddbutton.svg);
+  background-size: 22px 22px;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: ease-out 0.4s;
+}
+
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 907px) {
+  .profile__add-button {
+    width: 282px;
+    background-size: 16px 16px;
+    margin-top: 31px;
+  }
+}
