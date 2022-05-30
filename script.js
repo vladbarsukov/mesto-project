@@ -115,14 +115,14 @@ function deleteCard() {
 let popupImage = document.querySelector('#popupPhoto')
 let img = document.querySelector('.popup__photo')
 let imgDescription = document.querySelector('.popup__photo-title')
-let imageItem = document.querySelector('.photo-grid')
-
 function openImg() {
     popupImage.classList.add('popup_opened')
-  imageItem.addEventListener('click',function (evt) {
-        const imgSrc = evt.target.src;
-        img.src = imgSrc;
-        imgDescription.textContent = evt.target.nextElementSibling.textContent;
+    document.addEventListener('click',function (evt) {
+        let imgSrc = evt.target.src
+        console.log(imgSrc)
+        img.src = imgSrc
+        console.log(img.nextElementSibling.textContent)
+        imgDescription.textContent = evt.target.nextElementSibling.textContent
     })
 }
 
