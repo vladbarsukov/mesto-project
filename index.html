@@ -71,7 +71,7 @@
       <div class="photo-grid__item">
         <button onclick="deleteCard()" aria-label="кнопка удалить" type="button"
                 class="photo-grid__del-button"></button>
-        <img class="photo-grid__picture" alt="фото"/>
+        <img onclick="openImg()" class="photo-grid__picture" alt="фото"/>
         <div class="photo-grid__discription">
           <h2 class="photo-grid__text"></h2>
           <button aria-label="отметить как понравившееся" type="button" class="photo-grid__like"></button>
@@ -109,9 +109,9 @@
   <div class="popup__photo-content">
     <button id="closeButtonPhotoCard" aria-label="кнопка закрыть" type="button"
             class="popup__close-button"></button>
-    <img class="popup__photo" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
+    <img class="popup__photo"
          alt="фото"/>
-    <h2 class="popup__photo-title">Новое место</h2>
+    <h2 class="popup__photo-title"></h2>
   </div>
 </div>
 <script src="script.js"></script>

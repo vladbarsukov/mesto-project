@@ -110,3 +110,23 @@ function deleteCard() {
     const card = document.querySelector('.photo-grid__item');
     card.remove();
 }
+// попап с фото
+
+let popupImage = document.querySelector('#popupPhoto')
+let img = document.querySelector('.popup__photo')
+let imgDescription = document.querySelector('.popup__photo-title')
+function openImg() {
+    popupImage.classList.add('popup_opened')
+    document.addEventListener('click',function (evt) {
+        let imgSrc = evt.target.src
+        console.log(imgSrc)
+        img.src = imgSrc
+        console.log(img.nextElementSibling.textContent)
+        imgDescription.textContent = evt.target.nextElementSibling.textContent
+    })
+}
+
+let closeImg = document.querySelector('#closeButtonPhotoCard')
+closeImg.addEventListener('click', function (){
+    popupImage.classList.remove('popup_opened');
+});
