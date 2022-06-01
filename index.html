@@ -24,7 +24,7 @@
     <template id="card-template">
       <div class="photo-grid__item">
         <button aria-label="кнопка удалить" type="button" class="photo-grid__del-button"></button>
-        <img onclick="openImg()" class="photo-grid__picture" alt="фото" />
+        <img class="photo-grid__picture" alt="" />
         <div class="photo-grid__description">
           <h2 class="photo-grid__text"></h2>
           <button aria-label="отметить как понравившееся" type="button" class="photo-grid__like"></button>
@@ -61,10 +61,10 @@
 <div id="popupPhoto" class="popup">
   <div class="popup__photo-content">
     <button id="closeButtonPhotoCard" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
-    <img class="popup__photo" alt="фото" />
+    <img src="" class="popup__photo" alt="фото" />
     <h2 class="popup__photo-title"></h2>
   </div>
 </div>
-<script src="script.js"></script>
+<script src="scripts/mesto.js"></script>
 </body>
 </html>

@@ -13,3 +13,8 @@
     height: 19px;
     transition: ease-out 0.4s;
 }
+
+.photo-grid__del-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
