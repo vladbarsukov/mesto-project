@@ -8,8 +8,6 @@ const popupButtonAddCard = document.querySelector("#popupAddCard");
 
 function openButton(popup) {
   popup.classList.add("popup_opened");
-  nameInput.value = profileName.textContent;
-  jobInput.value = profession.textContent;
 }
 
 function addDefaultEditPopupData(popup) {
@@ -128,7 +126,7 @@ const img = document.querySelector(".popup__photo");
 const imgDescription = document.querySelector(".popup__photo-title");
 
 function openImg() {
-  popupImage.classList.add("popup_opened");
+  openButton(popupImage)
   imageItem.addEventListener("click", function (evt) {
     const imgSrc = evt.target.src;
     img.src = imgSrc;
