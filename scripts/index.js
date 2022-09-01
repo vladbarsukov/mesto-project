@@ -144,3 +144,26 @@ function getCardData(evt) {
 
 cardImg.addEventListener("click", () => openImg);
 closeImg.addEventListener("click", () => closeButton(popupImage));
+
+
+// закрытие попапа по клику мимо
+const popupPhotoContainer = document.querySelector(".popup__photo-content");
+//разобратся как убрать ID
+const popupEditContainer = document.querySelector("#popupEditProfileContainer");
+const popupAddCardContainer = document.querySelector("#popupAddCardContainer");
+
+function closePopup(evt, container, isClassActive) {
+  const target = evt.target;
+  const its_popup = target === container || container.contains(target);
+  const popup_is_active = isClassActive.classList.contains("popup_opened");
+
+  if (!its_popup && popup_is_active) {
+    closeButton(isClassActive);
+  }
+}
+
+popupImage.addEventListener("click", (evt) => closePopup(evt, popupPhotoContainer, popupImage));
+popupEditProfile.addEventListener("click", (evt) => closePopup(evt, popupEditContainer, popupEditProfile));
+popupButtonAddCard.addEventListener("click", (evt) => closePopup(evt, popupAddCardContainer, popupButtonAddCard));
+
+
