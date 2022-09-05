@@ -5,12 +5,15 @@
 // const closeButtonAddCard = document.querySelector("#closeButtonAddCard");
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
+
 function openButton(popup) {
   popup.classList.add("popup_opened");
 }
 
 function closeButton(popup) {
   popup.classList.remove("popup_opened");
+  addButton.removeAttribute('disabled');
+  addButton.classList.remove('popup__submit_disabled');
 }
 
 function addDefaultEditPopupData() {
@@ -76,43 +79,6 @@ const nameInput = formElementEditProfile.name;
 const jobInput = formElementEditProfile.profession;
 const profileName = document.querySelector(".profile__name");
 const profession = document.querySelector(".profile__description");
-// валидация формы
-
-
-
-
-
-
-
-function formEditeProfileSubmitHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profession.textContent = jobInput.value;
-  callback(evt)
-  closeButton(popupEditProfile);
-}
-
-
-const addButton = formElementEditProfile.querySelector(".popup__submit");
-console.log(addButton)
-formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler);
-formElementEditProfile.addEventListener('input', callback);
-
-function callback(evt) {
-  const isValid = nameInput.value.length > 0 && jobInput.value.length > 0;
-  setSubmitButtonState (isValid)
-  console.log(`Произошло событие ${evt.data}`);
-}
-
-function setSubmitButtonState (isFormValid) {
-  if (isFormValid === true ) {
-    addButton.removeAttribute('disabled');
-    addButton.classList.remove('popup__submit_disabled');
-  } else {
-    addButton.setAttribute('disabled', true);
-    addButton.classList.add('popup__submit_disabled');
-  }
-}
 
 
 
@@ -242,3 +208,43 @@ function getCardData(evt) {
 // popupImage.addEventListener("click", (evt) => closePopup(evt, popupPhotoContainer, popupImage));
 // popupEditProfile.addEventListener("click", (evt) => closePopup(evt, popupEditContainer, popupEditProfile));
 // popupButtonAddCard.addEventListener("click", (evt) => closePopup(evt, popupAddCardContainer, popupButtonAddCard));
+
+
+
+
+
+
+// ВАЛИДАЦИЯ ФОРМЫ
+const addButton = formElementEditProfile.querySelector(".popup__submit");
+
+function formEditeProfileSubmitHandler(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profession.textContent = jobInput.value;
+  closeButton(popupEditProfile);
+
+}
+
+
+
+function validChecker(evt) {
+  const isValid = nameInput.value.length > 0 && jobInput.value.length > 0;
+  setSubmitButtonState (isValid)
+  console.log(`Произошло событие ${evt.data}`);
+}
+
+function setSubmitButtonState (isFormValid) {
+  if (isFormValid === true ) {
+    addButton.removeAttribute('disabled');
+    addButton.classList.remove('popup__submit_disabled');
+  } else {
+    addButton.setAttribute('disabled', true);
+    addButton.classList.add('popup__submit_disabled');
+  }
+}
+nameInput.addEventListener('input', function (evt) {
+  console.log(evt.target.validity)
+});
+
+formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler);
+formElementEditProfile.addEventListener('input', validChecker);
