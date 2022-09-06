@@ -5,86 +5,28 @@
 // const closeButtonAddCard = document.querySelector("#closeButtonAddCard");
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
-
-function openButton(popup) {
-  popup.classList.add("popup_opened");
-}
-
-function closeButton(popup) {
-  popup.classList.remove("popup_opened");
-  addButton.removeAttribute('disabled');
-  addButton.classList.remove('popup__submit_disabled');
-}
-
-function addDefaultEditPopupData() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profession.textContent;
-}
-
-// openButtonEditProfile.addEventListener("click", function () {
-//   addDefaultEditPopupData();
-//   openButton(popupEditProfile);
-// });
-
-// closeButtonEditProfile.addEventListener("click", () => closeButton(popupEditProfile));
-
-// openButtonAddCard.addEventListener("click", () => openButton(popupButtonAddCard));
-
-// closeButtonAddCard.addEventListener("click", () => closeButton(popupButtonAddCard));
-
-document.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup__close-button')) {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupImage)
-  }
-  if(evt.target.classList.contains('profile__add-button')) {
-    openButton(popupButtonAddCard)
-  }
-  if(evt.target.classList.contains('profile__edit-button')) {
-    addDefaultEditPopupData();
-    openButton(popupEditProfile);
-  }
-  if(evt.target.classList.contains('photo-grid__like')){
-    toggleLike(evt.target)
-  }
-  if(evt.target.classList.contains('photo-grid__del-button')){
-    deleteCard(evt.target)
-  }
-  if(evt.target.classList.contains('photo-grid__picture')){
-   openImg(evt)
-  }
-  if(evt.target.classList.contains('popup_opened')){
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupImage)
-  }
-})
-// закрытие попапов кнопкой
-
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape') {
-    console.log(1)
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupImage)
-  }
-})
-
-//Редактирование Профиля
-
-// const formElementEditProfile = document.querySelector("#form");
+const cardTemplate = document.querySelector("#card-template").content;
+const cardSection = document.querySelector(".photo-grid");
+const formAddPhoto = document.forms.formAddPhoto;
 const formElementEditProfile = document.forms.formProfile;
 const nameInput = formElementEditProfile.name;
 const jobInput = formElementEditProfile.profession;
+const allInputEditProfile =  Array.from(formElementEditProfile.querySelectorAll(".popup__input"));
+const formAddPhotoAllInputs = Array.from(formAddPhoto.querySelectorAll(".popup__input"))
+const allInputs = Array.from(document.querySelectorAll(".popup__input"));
+const cardNameInput = formAddPhoto.namePlace;
+const cardLinkInput = formAddPhoto.linkPicture;
+const addButton = formElementEditProfile.querySelector(".popup__submit");
+const addButtonPhoto = formAddPhoto.querySelector(".popup__submit");
+const errorMessage = formElementEditProfile.querySelector(".popup__input-error_name");
+const errorMessageProf = formElementEditProfile.querySelector(".popup__input-error_job");
+const errorMessagePlace = formAddPhoto.querySelector(".popup__input-error_place");
+const errorMessageLink = formAddPhoto.querySelector(".popup__input-error_link");
 const profileName = document.querySelector(".profile__name");
 const profession = document.querySelector(".profile__description");
-
-
-
-
-// Делаю карточки темплейтом
-// массив с начальными карточками из задания
+const popupImage = document.querySelector("#popupPhoto");
+const img = document.querySelector(".popup__photo");
+const imgDescription = document.querySelector(".popup__photo-title");
 const initialCards = [
   {
     name: "Архыз",
@@ -112,8 +54,93 @@ const initialCards = [
   },
 ];
 
-const cardTemplate = document.querySelector("#card-template").content;
-const cardSection = document.querySelector(".photo-grid");
+function openButton(popup) {
+  popup.classList.add("popup_opened");
+}
+
+function closeButton(popup) {
+  popup.classList.remove("popup_opened");
+}
+
+function addDefaultEditPopupData() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profession.textContent;
+  isValid(nameInput, errorMessage)
+  isValid(jobInput, errorMessageProf)
+}
+
+// openButtonEditProfile.addEventListener("click", function () {
+//   addDefaultEditPopupData();
+//   openButton(popupEditProfile);
+// });
+
+// closeButtonEditProfile.addEventListener("click", () => closeButton(popupEditProfile));
+
+// openButtonAddCard.addEventListener("click", () => openButton(popupButtonAddCard));
+
+// closeButtonAddCard.addEventListener("click", () => closeButton(popupButtonAddCard));
+
+document.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup__close-button')) {
+    closeButton(popupEditProfile)
+    closeButton(popupButtonAddCard)
+    closeButton(popupImage)
+    formAddPhoto.reset()
+    hideValidationErrorAfterClosePopup()
+
+  }
+  if(evt.target.classList.contains('profile__add-button')) {
+    openButton(popupButtonAddCard)
+    toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
+  }
+  if(evt.target.classList.contains('profile__edit-button')) {
+    addDefaultEditPopupData();
+    openButton(popupEditProfile);
+    toggleButtonState(allInputEditProfile, addButton)
+  }
+  if(evt.target.classList.contains('photo-grid__like')){
+    toggleLike(evt.target)
+  }
+  if(evt.target.classList.contains('photo-grid__del-button')){
+    deleteCard(evt.target)
+  }
+  if(evt.target.classList.contains('photo-grid__picture')){
+   openImg(evt)
+  }
+  if(evt.target.classList.contains('popup_opened')){
+    closeButton(popupEditProfile)
+    closeButton(popupButtonAddCard)
+    closeButton(popupImage)
+    hideValidationErrorAfterClosePopup()
+    formAddPhoto.reset()
+  }
+})
+// закрытие попапов кнопкой
+
+document.addEventListener('keydown', function (evt) {
+  if(evt.key === 'Escape') {
+    console.log(1)
+    closeButton(popupEditProfile)
+    closeButton(popupButtonAddCard)
+    closeButton(popupImage)
+    hideValidationErrorAfterClosePopup()
+    formAddPhoto.reset()
+  }
+})
+
+//Редактирование Профиля
+
+// const formElementEditProfile = document.querySelector("#form");
+
+
+
+
+
+// Делаю карточки темплейтом
+// массив с начальными карточками из задания
+
+
+
 
 
 initialCards.forEach(addCard);
@@ -153,7 +180,7 @@ function createNewCard(data) {
   return cardElement;
 }
 
-const formAddPhoto = document.querySelector("#formAddPhoto");
+
 
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
@@ -170,9 +197,7 @@ formAddPhoto.addEventListener("submit", (element) => {
 
 // попап с фото
 
-const popupImage = document.querySelector("#popupPhoto");
-const img = document.querySelector(".popup__photo");
-const imgDescription = document.querySelector(".popup__photo-title");
+
 // const cardImg = document.querySelector(".photo-grid__picture");
 // const closeImg = document.querySelector("#closeButtonPhotoCard");
 
@@ -211,11 +236,8 @@ function getCardData(evt) {
 
 
 
-
-
-
 // ВАЛИДАЦИЯ ФОРМЫ
-const addButton = formElementEditProfile.querySelector(".popup__submit");
+
 
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
@@ -226,25 +248,86 @@ function formEditeProfileSubmitHandler(evt) {
 }
 
 
+//VALIDATION
+/////////////////////////////////////////////
 
-function validChecker(evt) {
-  const isValid = nameInput.value.length > 0 && jobInput.value.length > 0;
-  setSubmitButtonState (isValid)
-  console.log(`Произошло событие ${evt.data}`);
-}
 
-function setSubmitButtonState (isFormValid) {
-  if (isFormValid === true ) {
-    addButton.removeAttribute('disabled');
-    addButton.classList.remove('popup__submit_disabled');
+ console.dir(cardNameInput)
+const showInputError = (element, errorMessage) => {
+  element.classList.add('popup__input-error_active')
+  element.textContent = errorMessage;
+};
+
+const hideInputError = (element) => {
+  element.classList.remove('popup__input-error_active');
+  element.textContent = '';
+};
+
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+};
+
+const toggleButtonState = (inputList, button) => {
+  if (hasInvalidInput(inputList)) {
+    button.classList.add('popup__submit_disabled');
+    button.disabled = true
   } else {
-    addButton.setAttribute('disabled', true);
-    addButton.classList.add('popup__submit_disabled');
+    button.removeAttribute('disabled');
+    button.classList.remove('popup__submit_disabled');
   }
-}
-nameInput.addEventListener('input', function (evt) {
-  console.log(evt.target.validity)
+};
+
+const isValid = (input, element) => {
+  if (!input.validity.valid) {
+    showInputError(element, input.validationMessage);
+    console.log(input.validationMessage)
+  } else {
+    hideInputError(element);
+  }
+};
+
+// allInputs.forEach(element =>{
+//   console.log(element)
+//   element.addEventListener('input', function () {
+//     isValid(cardLinkInput, errorMessageLink)
+//     isValid(cardNameInput, errorMessagePlace)
+//     isValid(jobInput, errorMessageProf)
+//     isValid(nameInput, errorMessage)
+//     toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
+//     toggleButtonState(allInputEditProfile, addButton)
+// });
+//
+// })
+
+
+jobInput.addEventListener('input', function (evt) {
+  isValid(jobInput, errorMessageProf)
+  toggleButtonState(allInputEditProfile, addButton)
 });
 
+nameInput.addEventListener('input', function (evt) {
+  isValid(nameInput, errorMessage)
+  toggleButtonState(allInputEditProfile, addButton)
+});
+
+
+cardNameInput.addEventListener('input', function (evt) {
+  isValid(cardNameInput, errorMessagePlace)
+  toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
+});
+
+cardLinkInput.addEventListener('input', function (evt) {
+  isValid(cardLinkInput, errorMessageLink)
+  toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
+});
+
+function hideValidationErrorAfterClosePopup() {
+  errorMessagePlace.classList.remove('popup__input-error_active');
+  errorMessageLink.classList.remove('popup__input-error_active');
+}
+
 formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler);
-formElementEditProfile.addEventListener('input', validChecker);
+
