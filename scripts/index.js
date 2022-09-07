@@ -7,14 +7,7 @@ const formElementEditProfile = document.forms.formProfile;
 const nameInput = formElementEditProfile.name;
 const jobInput = formElementEditProfile.profession;
 const allInputEditProfile =  Array.from(formElementEditProfile.querySelectorAll(".popup__input"));
-const formAddPhotoAllInputs = Array.from(formAddPhoto.querySelectorAll(".popup__input"))
-const allInputs = Array.from(document.querySelectorAll(".popup__input"));
-const cardNameInput = formAddPhoto.namePlace;
-const cardLinkInput = formAddPhoto.linkPicture;
 const addButton = formElementEditProfile.querySelector(".popup__submit");
-const addButtonPhoto = formAddPhoto.querySelector(".popup__submit");
-const errorMessage = formElementEditProfile.querySelector(".popup__input_name-error");
-const errorMessageProf = formElementEditProfile.querySelector(".popup__input_job-error");
 const errorMessagePlace = formAddPhoto.querySelector(".popup__input_place-error");
 const errorMessageLink = formAddPhoto.querySelector(".popup__input_link-error");
 const profileName = document.querySelector(".profile__name");
@@ -60,8 +53,9 @@ function closeButton(popup) {
 function addDefaultEditPopupData() {
   nameInput.value = profileName.textContent;
   jobInput.value = profession.textContent;
-  isValid(nameInput, errorMessage)
-  isValid(jobInput, errorMessageProf)
+  isValid(nameInput, formElementEditProfile)
+  isValid(jobInput, formElementEditProfile)
+
 }
 
 document.addEventListener('mousedown', function (evt) {
@@ -75,7 +69,7 @@ document.addEventListener('mousedown', function (evt) {
   }
   if(evt.target.classList.contains('profile__add-button')) {
     openButton(popupButtonAddCard)
-    toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
+
   }
   if(evt.target.classList.contains('profile__edit-button')) {
     addDefaultEditPopupData();
@@ -103,7 +97,6 @@ document.addEventListener('mousedown', function (evt) {
 
 document.addEventListener('keydown', function (evt) {
   if(evt.key === 'Escape') {
-    console.log(1)
     closeButton(popupEditProfile)
     closeButton(popupButtonAddCard)
     closeButton(popupImage)
@@ -176,26 +169,17 @@ formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler)
 //VALIDATION
 /////////////////////////////////////////////
 
-const formErrorName = formElementEditProfile.querySelector(`.${nameInput.id}-error`);
-const formErrorProf = formElementEditProfile.querySelector(`.${jobInput.id}-error`);
-const formErrorAddPhotoPlace = formAddPhoto.querySelector(`.${cardNameInput.id}-error`);
-const formErrorAddPhotoLink = formAddPhoto.querySelector(`.${cardLinkInput.id}-error`);
 
-
-console.log(formErrorName)
-console.log(formErrorProf)
-console.log(formErrorAddPhotoPlace)
-console.log(formErrorAddPhotoLink)
-
-
-const showInputError = (spanElement, errorMessage) => {
-  spanElement.classList.add('popup__input-error_active')
-  spanElement.textContent = errorMessage;
+const showInputError = (inputElement, errorMessage, formElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+  errorElement.classList.add('popup__input-error_active')
+  errorElement.textContent = errorMessage;
 }; // показываю текст с ошибкой
 
-const hideInputError = (spanElement) => {
-  spanElement.classList.remove('popup__input-error_active');
-  spanElement.textContent = '';
+const hideInputError = (inputElement, formElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
 }; // скрываю текст с ошибкой
 
 
@@ -215,39 +199,42 @@ const toggleButtonState = (inputList, button) => {
   }
 }; // отключаю кнопку при наличии ошибки
 
-const isValid = (input, spanElement) => {
-  if (!input.validity.valid) {
-    showInputError(spanElement, input.validationMessage);
-    // console.log(input.validationMessage)
+const isValid = (inputElement, formElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(inputElement, inputElement.validationMessage, formElement);
   } else {
-    hideInputError(spanElement);
+    hideInputError(inputElement, formElement);
   }
 };  // показываю и скрываю текст с ошибкой
 
-nameInput.addEventListener('input', function (evt) {
-  isValid(nameInput, errorMessage)
-  toggleButtonState(allInputEditProfile, addButton)
-});  // слушатель поля ввода
 
-jobInput.addEventListener('input', function () {
-  isValid(jobInput, errorMessageProf)
-  toggleButtonState(allInputEditProfile, addButton)
-}); // слушатель поля ввода
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__submit');
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isValid(inputElement, formElement)
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
 
-cardNameInput.addEventListener('input', function () {
-  isValid(cardNameInput, errorMessagePlace)
-  toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
-});  // слушатель поля ввода
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
 
-cardLinkInput.addEventListener('input', function () {
-  isValid(cardLinkInput, errorMessageLink)
-  toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
-});  // слушатель поля ввода
+enableValidation();
 
 function hideValidationErrorAfterClosePopup() {
   errorMessagePlace.classList.remove('popup__input-error_active');
   errorMessageLink.classList.remove('popup__input-error_active');
-}  // слушатель поля ввода
+}  // скрываю валидацию после закрытия попапа
 
 
 
