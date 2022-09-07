@@ -1,8 +1,3 @@
-//Открытие двух попапов
-// const openButtonEditProfile = document.querySelector(".profile__edit-button");
-// const closeButtonEditProfile = document.querySelector(".popup__close-button");
-// const openButtonAddCard = document.querySelector(".profile__add-button");
-// const closeButtonAddCard = document.querySelector("#closeButtonAddCard");
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const cardTemplate = document.querySelector("#card-template").content;
@@ -56,11 +51,11 @@ const initialCards = [
 
 function openButton(popup) {
   popup.classList.add("popup_opened");
-}
+}  // функция открытия попапа
 
 function closeButton(popup) {
   popup.classList.remove("popup_opened");
-}
+}  //функция закрытия попапа
 
 function addDefaultEditPopupData() {
   nameInput.value = profileName.textContent;
@@ -68,17 +63,6 @@ function addDefaultEditPopupData() {
   isValid(nameInput, errorMessage)
   isValid(jobInput, errorMessageProf)
 }
-
-// openButtonEditProfile.addEventListener("click", function () {
-//   addDefaultEditPopupData();
-//   openButton(popupEditProfile);
-// });
-
-// closeButtonEditProfile.addEventListener("click", () => closeButton(popupEditProfile));
-
-// openButtonAddCard.addEventListener("click", () => openButton(popupButtonAddCard));
-
-// closeButtonAddCard.addEventListener("click", () => closeButton(popupButtonAddCard));
 
 document.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
@@ -114,7 +98,7 @@ document.addEventListener('mousedown', function (evt) {
     hideValidationErrorAfterClosePopup()
     formAddPhoto.reset()
   }
-})
+})     // один большой слушатель на все
 // закрытие попапов кнопкой
 
 document.addEventListener('keydown', function (evt) {
@@ -126,51 +110,24 @@ document.addEventListener('keydown', function (evt) {
     hideValidationErrorAfterClosePopup()
     formAddPhoto.reset()
   }
-})
+})   // один большой слушатель на закрытие по esc
 
 //Редактирование Профиля
 
-// const formElementEditProfile = document.querySelector("#form");
-
-
-
-
-
-// Делаю карточки темплейтом
-// массив с начальными карточками из задания
-
-
-
-
-
-initialCards.forEach(addCard);
+initialCards.forEach(addCard); // добавляю карточки из массива на страницу
 
 function addCard(data) {
   const card = createNewCard(data);
   cardSection.prepend(card);
 }
 
-// функция лайка(всплытие) и удаление карточки(всплытие)
 function toggleLike(evt) {
   evt.classList.toggle("photo-grid__like_active")
-}
+}  // переключение лайка карточки
 
 function deleteCard(evt) {
   evt.parentElement.remove();
-  console.dir(evt)
-}
-
-// cardSection.addEventListener('click', function (evt) {
-//   if(evt.target.classList.contains('photo-grid__like')){
-//     toggleLike(evt.target)
-//   }
-//   if(evt.target.classList.contains('photo-grid__del-button')){
-//     deleteCard(evt.target)
-//   }
-//   if(evt.target.classList.contains('photo-grid__picture')){
-//    openImg(evt)
-//   }
-// })
+}  // удаление карточки
 
 function createNewCard(data) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -178,9 +135,7 @@ function createNewCard(data) {
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
   return cardElement;
-}
-
-
+}  // создание карточки
 
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
@@ -193,51 +148,22 @@ formAddPhoto.addEventListener("submit", (element) => {
   addCard(newCard);
   closeButton(popupButtonAddCard);
   element.target.reset();
-});
+}); // создание карточки из попапа
 
 // попап с фото
-
-
-// const cardImg = document.querySelector(".photo-grid__picture");
-// const closeImg = document.querySelector("#closeButtonPhotoCard");
 
 function openImg(evt) {
   openButton(popupImage)
   getCardData(evt)
-}
+} // открытие попапа с фото
 
 function getCardData(evt) {
   imgDescription.textContent = evt.target.nextElementSibling.textContent;
   img.src = evt.target.src;
   img.alt = imgDescription.textContent;
-}
-
-// closeImg.addEventListener("click", () => closeButton(popupImage));
-
-
-// закрытие попапа по клику мимо
-// const popupPhotoContainer = document.querySelector(".popup__photo-content");
-// const popupEditContainer = document.querySelector("#popupEditProfileContainer");
-// const popupAddCardContainer = document.querySelector("#popupAddCardContainer");
-//
-// function closePopup(evt, container, isClassActive) {
-//   const target = evt.target;
-//   const its_popup = target === container || container.contains(target);
-//   const popup_is_active = isClassActive.classList.contains("popup_opened");
-//
-//   if (!its_popup && popup_is_active) {
-//     closeButton(isClassActive);
-//   }
-// }
-
-// popupImage.addEventListener("click", (evt) => closePopup(evt, popupPhotoContainer, popupImage));
-// popupEditProfile.addEventListener("click", (evt) => closePopup(evt, popupEditContainer, popupEditProfile));
-// popupButtonAddCard.addEventListener("click", (evt) => closePopup(evt, popupAddCardContainer, popupButtonAddCard));
-
-
+} // получение данных из попапа для добавления новой карточки
 
 // ВАЛИДАЦИЯ ФОРМЫ
-
 
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
@@ -245,8 +171,8 @@ function formEditeProfileSubmitHandler(evt) {
   profession.textContent = jobInput.value;
   closeButton(popupEditProfile);
 
-}
-
+} //добавление значения по умолчанию в попап с именем
+formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавление значения по умолчанию в попап с именем
 
 //VALIDATION
 /////////////////////////////////////////////
@@ -256,19 +182,19 @@ function formEditeProfileSubmitHandler(evt) {
 const showInputError = (element, errorMessage) => {
   element.classList.add('popup__input-error_active')
   element.textContent = errorMessage;
-};
+}; // показываю текст с ошибкой
 
 const hideInputError = (element) => {
   element.classList.remove('popup__input-error_active');
   element.textContent = '';
-};
+}; // скрываю текст с ошибкой
 
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   })
-};
+}; // проверяю поле ввода на наличие ошибок
 
 const toggleButtonState = (inputList, button) => {
   if (hasInvalidInput(inputList)) {
@@ -278,7 +204,7 @@ const toggleButtonState = (inputList, button) => {
     button.removeAttribute('disabled');
     button.classList.remove('popup__submit_disabled');
   }
-};
+}; // отключаю кнопку при наличии ошибки
 
 const isValid = (input, element) => {
   if (!input.validity.valid) {
@@ -287,47 +213,32 @@ const isValid = (input, element) => {
   } else {
     hideInputError(element);
   }
-};
-
-// allInputs.forEach(element =>{
-//   console.log(element)
-//   element.addEventListener('input', function () {
-//     isValid(cardLinkInput, errorMessageLink)
-//     isValid(cardNameInput, errorMessagePlace)
-//     isValid(jobInput, errorMessageProf)
-//     isValid(nameInput, errorMessage)
-//     toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
-//     toggleButtonState(allInputEditProfile, addButton)
-// });
-//
-// })
-
+};  // показываю и скрываю текст с ошибкой
 
 jobInput.addEventListener('input', function (evt) {
   isValid(jobInput, errorMessageProf)
   toggleButtonState(allInputEditProfile, addButton)
-});
+}); // слушатель поля ввода
 
 nameInput.addEventListener('input', function (evt) {
   isValid(nameInput, errorMessage)
   toggleButtonState(allInputEditProfile, addButton)
-});
-
+});  // слушатель поля ввода
 
 cardNameInput.addEventListener('input', function (evt) {
   isValid(cardNameInput, errorMessagePlace)
   toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
-});
+});  // слушатель поля ввода
 
 cardLinkInput.addEventListener('input', function (evt) {
   isValid(cardLinkInput, errorMessageLink)
   toggleButtonState(formAddPhotoAllInputs, addButtonPhoto)
-});
+});  // слушатель поля ввода
 
 function hideValidationErrorAfterClosePopup() {
   errorMessagePlace.classList.remove('popup__input-error_active');
   errorMessageLink.classList.remove('popup__input-error_active');
-}
+}  // слушатель поля ввода
 
-formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler);
+
 
