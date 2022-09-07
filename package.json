@@ -1,0 +1,25 @@
+{
+  "name": "yandex_praktikum",
+  "version": "0.0.1",
+  "description": "Проект для платформы яндекс практикум. Проект построен с применением Fluxbox и grid вёрстки, адаптивный для мобильых и десктопных устройств. Реализовано окно popup, различные кнопки. https://github.com/vladbarsukov/mesto-project.git",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladbarsukov/mesto-project.git"
+  },
+  "author": "vlad barsukov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vladbarsukov/mesto-project/issues"
+  },
+  "homepage": "https://github.com/vladbarsukov/mesto-project#readme",
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.1"
+  }
+}
