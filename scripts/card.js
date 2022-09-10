@@ -1,6 +1,9 @@
 import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
 
 const cardSection = document.querySelector(".photo-grid");
+const cardTemplate = document.querySelector("#card-template").content;
+const popupImage = document.querySelector("#popupPhoto");
+const imgDescription = document.querySelector(".popup__photo-title");
 const initialCards = [
   {
     name: "Архыз",
@@ -27,10 +30,6 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
-const cardTemplate = document.querySelector("#card-template").content;
-const popupImage = document.querySelector("#popupPhoto");
-const imgDescription = document.querySelector(".popup__photo-title");
-
 
 const img = document.querySelector(".popup__photo");
 function openButton(popup) {

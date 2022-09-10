@@ -24,8 +24,112 @@ function addDefaultEditPopupData() {
   jobInput.value = profession.textContent;
   isValid(nameInput, formElementEditProfile)
   isValid(jobInput, formElementEditProfile)
-
 }
+
+
+
+function formEditeProfileSubmitHandler(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profession.textContent = jobInput.value;
+  closeButton(popupEditProfile);
+
+} //добавление значения по умолчанию в попап с именем
+formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения по умолчанию в попап с именем
+
+
+
+
+/////////////////////////////////////////////
+//VALIDATION
+/////////////////////////////////////////////
+
+
+const showInputError = (inputElement, errorMessage, formElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+  errorElement.classList.add('popup__input-error_active')
+  if (inputElement.validity.patternMismatch) {
+    errorElement.textContent = inputElement.dataset.pattern;
+  } else {
+    errorElement.textContent = errorMessage;
+  }
+
+
+}; // показываю текст с ошибкой
+
+const hideInputError = (inputElement, formElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+}; // скрываю текст с ошибкой
+
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+}; // проверяю поле ввода на наличие ошибок
+
+const toggleButtonState = (inputList, button) => {
+  if (hasInvalidInput(inputList)) {
+    button.classList.add('popup__submit_disabled');
+    button.disabled = true
+  } else {
+    button.removeAttribute('disabled');
+    button.classList.remove('popup__submit_disabled');
+  }
+}; // отключаю кнопку при наличии ошибки
+
+const isValid = (inputElement, formElement) => {
+  const errorMessage = `${inputElement.validationMessage} ${inputElement.dataset.pattern}`
+  if (!inputElement.validity.valid) {
+    showInputError(inputElement, inputElement.validationMessage, formElement);
+    console.log(inputElement.validity)
+  } else {
+    hideInputError(inputElement, formElement);
+  }
+};  // показываю и скрываю текст с ошибкой
+
+// const isValid = (inputElement, formElement) => {
+//   const errorMessage = `${inputElement.validationMessage} ${inputElement.dataset.pattern}`
+//   if (!inputElement.validity.valid) {
+//     showInputError(inputElement, inputElement.validationMessage, formElement);
+//     console.log(inputElement.validity)
+//   }
+//   if (inputElement.validity.patternMismatch) {
+//     showInputError(inputElement, inputElement.dataset.pattern, formElement);
+//   }
+//     hideInputError(inputElement, formElement);
+//
+// };  // показываю и скрываю текст с ошибкой
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__submit');
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isValid(inputElement, formElement)
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+
+enableValidation();
+
+function hideValidationErrorAfterClosePopup() {
+  errorMessagePlace.classList.remove('popup__input-error_active');
+  errorMessageLink.classList.remove('popup__input-error_active');
+}  // скрываю валидацию после закрытия попапа
 
 document.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
@@ -60,88 +164,5 @@ document.addEventListener('keydown', function (evt) {
   }
 })   // один большой слушатель на закрытие по esc
 
-
-function formEditeProfileSubmitHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profession.textContent = jobInput.value;
-  closeButton(popupEditProfile);
-
-} //добавление значения по умолчанию в попап с именем
-formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения по умолчанию в попап с именем
-
-
-
-
-/////////////////////////////////////////////
-//VALIDATION
-/////////////////////////////////////////////
-
-
-const showInputError = (inputElement, errorMessage, formElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
-  errorElement.classList.add('popup__input-error_active')
-  errorElement.textContent = errorMessage;
-}; // показываю текст с ошибкой
-
-const hideInputError = (inputElement, formElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
-  errorElement.classList.remove('popup__input-error_active');
-  errorElement.textContent = '';
-}; // скрываю текст с ошибкой
-
-
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-}; // проверяю поле ввода на наличие ошибок
-
-const toggleButtonState = (inputList, button) => {
-  if (hasInvalidInput(inputList)) {
-    button.classList.add('popup__submit_disabled');
-    button.disabled = true
-  } else {
-    button.removeAttribute('disabled');
-    button.classList.remove('popup__submit_disabled');
-  }
-}; // отключаю кнопку при наличии ошибки
-
-const isValid = (inputElement, formElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(inputElement, inputElement.validationMessage, formElement);
-  } else {
-    hideInputError(inputElement, formElement);
-  }
-};  // показываю и скрываю текст с ошибкой
-
-
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-  const buttonElement = formElement.querySelector('.popup__submit');
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      isValid(inputElement, formElement)
-      toggleButtonState(inputList, buttonElement);
-    });
-  });
-};
-
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement);
-  });
-};
-
-enableValidation();
-
-function hideValidationErrorAfterClosePopup() {
-  errorMessagePlace.classList.remove('popup__input-error_active');
-  errorMessageLink.classList.remove('popup__input-error_active');
-}  // скрываю валидацию после закрытия попапа
 
 export {formAddPhoto, popupButtonAddCard};
