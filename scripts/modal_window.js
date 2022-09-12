@@ -81,7 +81,6 @@ const toggleButtonState = (inputList, button) => {
 }; // отключаю кнопку при наличии ошибки
 
 const isValid = (inputElement, formElement) => {
-  const errorMessage = `${inputElement.validationMessage} ${inputElement.dataset.pattern}`
   if (!inputElement.validity.valid) {
     showInputError(inputElement, inputElement.validationMessage, formElement);
     console.log(inputElement.validity)
