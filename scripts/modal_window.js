@@ -1,3 +1,4 @@
+import {pushDataProfile} from './api.js'
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const formAddPhoto = document.forms.formAddPhoto;
@@ -30,8 +31,9 @@ function addDefaultEditPopupData() {
 
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profession.textContent = jobInput.value;
+  // profileName.textContent = nameInput.value;
+  // profession.textContent = jobInput.value;
+  pushDataProfile(nameInput.value, jobInput.value)
   closeButton(popupEditProfile);
 
 } //добавление значения по умолчанию в попап с именем
@@ -83,7 +85,7 @@ const toggleButtonState = (inputList, button) => {
 const isValid = (inputElement, formElement) => {
   if (!inputElement.validity.valid) {
     showInputError(inputElement, inputElement.validationMessage, formElement);
-    console.log(inputElement.validity)
+
   } else {
     hideInputError(inputElement, formElement);
   }
@@ -164,4 +166,4 @@ document.addEventListener('keydown', function (evt) {
 })   // один большой слушатель на закрытие по esc
 
 
-export {formAddPhoto, popupButtonAddCard};
+export {formAddPhoto, popupButtonAddCard, profileName, profession};
