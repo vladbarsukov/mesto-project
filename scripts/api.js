@@ -8,13 +8,12 @@ function getData() {
     }
   })
     .then(res => res.json())
-
     .then((data) => {
       profileName.textContent = data.name
       profession.textContent = data.about
       avatar.src = data.avatar
       console.log(data.avatar)
-      console.log(avatar.src)
+      console.log(data)
     });
 }
 
@@ -33,14 +32,29 @@ function pushDataProfile(name, prof) {
     .then(res => res.json())
 
     .then((data) => {
-
       profileName.textContent = data.name
       profession.textContent = data.about
-      console.log(data.name)
-      console.log(profileName.textContent)
     });
 }
+function pushDataAvatar(link) {
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me/avatar', {
+    method: 'PATCH',
+    headers: {
+      authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      avatar: link,
+    })
+  })
+    .then(res => res.json())
 
+    .then((data) => {
+      avatar.src = data.avatar
+    });
+}
+// pushDataAvatar("https://i.imgur.com/8nLFCVP.png")
 getData()
 
-export {pushDataProfile};
+
+export {pushDataProfile, pushDataAvatar};

@@ -10,6 +10,5 @@
 
 .profile__image:hover {
   opacity: 0.2;
-  background-image: url(../images/vectorProfile.svg);
-  z-index: 2;
+  /*background-image: url(../../../images/vectorProfile.svg);*/
 }
