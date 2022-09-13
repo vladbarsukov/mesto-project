@@ -12,7 +12,7 @@
 </header>
 <main class="main">
   <section class="profile">
-    <img class="profile__image" src="images/kusto.jpg" alt="Кусто"/>
+    <img class="profile__image"  alt="Кусто"/>
     <div class="profile__info">
       <h1 class="profile__name"><!--Жак-Ив Кусто--></h1>
       <button type="button" class="profile__edit-button" aria-label="редактировать профиль"></button>
@@ -57,6 +57,22 @@
     </form>
   </div>
 </div>
+
+<div id="popupProfileImage" class="popup">
+  <div id="popupProfileImageContainer" class="popup__content">
+    <button id="closeButtonAvatar" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
+    <h2 class="popup__title">Новое место</h2>
+    <form id="formAvatar" class="popup__form" novalidate name="formAvatar">
+      <input id="popup__input_avatar" required type="url" name="linkAvatar" placeholder="Ссылка на картинку"
+             class="popup__input"/>
+      <span class="popup__input-error popup__input_avatar-error"></span>
+      <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
+        Создать
+      </button>
+    </form>
+  </div>
+</div>
+
 <div id="popupAddCard" class="popup">
   <div id="popupAddCardContainer" class="popup__content">
     <button id="closeButtonAddCard" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
@@ -86,6 +102,7 @@
 <script type="module" src="scripts/api.js"></script>
 <!--<script type="module" src="scripts/validation.js"></script>-->
 <script type="module" src="scripts/modal_window.js"></script>
+<script type="module" src="scripts/avatar.js"></script>
 <script type="module" src="scripts/card.js"></script>
 </body>
 </html>

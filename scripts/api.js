@@ -1,5 +1,5 @@
 import {profileName, profession} from './modal_window.js'
-
+let avatar = document.querySelector('.profile__image')
 
 function getData() {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
@@ -12,6 +12,9 @@ function getData() {
     .then((data) => {
       profileName.textContent = data.name
       profession.textContent = data.about
+      avatar.src = data.avatar
+      console.log(data.avatar)
+      console.log(avatar.src)
     });
 }
 

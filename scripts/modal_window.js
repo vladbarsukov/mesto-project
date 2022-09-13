@@ -149,6 +149,11 @@ document.addEventListener('mousedown', function (evt) {
     openButton(popupEditProfile);
     toggleButtonState(allInputEditProfile, addButton)
   }
+  // if(evt.target.classList.contains('profile__edit-button')) {
+  //   addDefaultEditPopupData();
+  //   openButton(popupEditProfile);
+  //   toggleButtonState(allInputEditProfile, addButton)
+  // }
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupEditProfile)
     closeButton(popupButtonAddCard)
