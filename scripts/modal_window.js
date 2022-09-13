@@ -105,18 +105,6 @@ const isValid = (inputElement, formElement) => {
   }
 };  // показываю и скрываю текст с ошибкой
 
-// const isValid = (inputElement, formElement) => {
-//   const errorMessage = `${inputElement.validationMessage} ${inputElement.dataset.pattern}`
-//   if (!inputElement.validity.valid) {
-//     showInputError(inputElement, inputElement.validationMessage, formElement);
-//     console.log(inputElement.validity)
-//   }
-//   if (inputElement.validity.patternMismatch) {
-//     showInputError(inputElement, inputElement.dataset.pattern, formElement);
-//   }
-//     hideInputError(inputElement, formElement);
-//
-// };  // показываю и скрываю текст с ошибкой
 
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
