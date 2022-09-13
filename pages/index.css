@@ -22,6 +22,7 @@
 @import url(../blocks/photo-grid/__like/photo-grid__like.css);
 @import url(../blocks/photo-grid/__like/_active/photo-grid__like_active.css);
 @import url(../blocks/photo-grid/__del-button/photo-grid__del-button.css);
+@import url(../blocks/photo-grid/__like-counter/photo-grid__like-counter.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__author/footer__author.css);
