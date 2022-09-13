@@ -1,4 +1,5 @@
 import {pushDataProfile} from './api.js'
+// import {isValid} from './validation.js'
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const formAddPhoto = document.forms.formAddPhoto;
@@ -166,4 +167,4 @@ document.addEventListener('keydown', function (evt) {
 })   // один большой слушатель на закрытие по esc
 
 
-export {formAddPhoto, popupButtonAddCard, profileName, profession};
+export {formAddPhoto, popupButtonAddCard, profileName, profession, addButton, popupEditProfile, allInputEditProfile, openButton, closeButton, addDefaultEditPopupData};

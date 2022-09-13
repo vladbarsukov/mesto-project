@@ -1,6 +1,5 @@
 import {profileName, profession} from './modal_window.js'
-// const profileName = document.querySelector(".profile__name");
-// const profession = document.querySelector(".profile__description");
+
 
 function getData() {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
@@ -11,7 +10,6 @@ function getData() {
     .then(res => res.json())
 
     .then((data) => {
-      console.log(data);
       profileName.textContent = data.name
       profession.textContent = data.about
     });
