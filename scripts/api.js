@@ -17,6 +17,20 @@ function getData() {
     });
 }
 
+function getCard() {
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards ', {
+    headers: {
+      authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea'
+    }
+  })
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
+    });
+}
+
+getCard()
+
 function pushDataProfile(name, prof) {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
     method: 'PATCH',
@@ -53,7 +67,9 @@ function pushDataAvatar(link) {
       avatar.src = data.avatar
     });
 }
-// pushDataAvatar("https://i.imgur.com/8nLFCVP.png")
+
+
+
 getData()
 
 
