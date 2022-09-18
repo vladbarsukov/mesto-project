@@ -1,5 +1,7 @@
 import {profileName, profession} from './modal_window.js'
+import {addCard} from './card.js'
 let avatar = document.querySelector('.profile__image')
+let cards = []
 
 function getData() {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
@@ -12,8 +14,8 @@ function getData() {
       profileName.textContent = data.name
       profession.textContent = data.about
       avatar.src = data.avatar
-      console.log(data.avatar)
-      console.log(data)
+      // console.log(data.avatar)
+      // console.log(data)
     });
 }
 
@@ -26,10 +28,12 @@ function getCard() {
     .then(res => res.json())
     .then((data) => {
       console.log(data)
+      // cards.push(...data)
+      data.forEach(addCard);
     });
 }
 
-getCard()
+
 
 function pushDataProfile(name, prof) {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
@@ -71,6 +75,7 @@ function pushDataAvatar(link) {
 
 
 getData()
-
+getCard()
 
 export {pushDataProfile, pushDataAvatar};
+

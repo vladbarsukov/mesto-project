@@ -1,5 +1,4 @@
 import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
-
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
@@ -44,7 +43,7 @@ function addCard(data) {
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
-initialCards.forEach(addCard); // добавляю карточки из массива на страницу
+// cards.forEach(addCard); // добавляю карточки из массива на страницу
 
 function toggleLike(evt) {
   evt.classList.toggle("photo-grid__like_active")
@@ -111,3 +110,6 @@ document.addEventListener('keydown', function (evt) {
     closeButton(popupImage)
   }
 })   // слушатель на закрытие по esc
+
+
+export {addCard};
