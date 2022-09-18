@@ -18,8 +18,7 @@ const addButton = formElementEditProfile.querySelector(".popup__submit");
 const errorMessagePlace = formAddPhoto.querySelector(".popup__input_place-error");
 const errorMessageLink = formAddPhoto.querySelector(".popup__input_link-error");
 const errorMessageAvatar = formElementEditAvatar.querySelector(".popup__input_avatar-error");
-console.log(errorMessageAvatar)
-console.log(avatarAddButton)
+
 function openButton(popup) {
   popup.classList.add("popup_opened");
 }  // функция открытия попапа

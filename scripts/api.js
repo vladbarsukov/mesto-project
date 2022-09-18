@@ -1,13 +1,14 @@
 import {profileName, profession, formAddPhoto} from './modal_window.js'
 import {addCard} from './card.js'
 let avatar = document.querySelector('.profile__image');
+let myId
 
 const onResponce = (res) => {
   return res.ok ? res.json() : Promise.reject(res)
 }
 
 function getData() {
-  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
+ fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea'
     }
@@ -17,8 +18,8 @@ function getData() {
       profileName.textContent = data.name
       profession.textContent = data.about
       avatar.src = data.avatar
-      // console.log(data.avatar)
-      // console.log(data)
+      myId = data._id
+      // console.log(myId)
     });
 } //получаю данные профиля с сервера
 
@@ -30,8 +31,10 @@ function getCard() {
   })
     .then(res => res.json())
     .then((data) => {
-      console.log(data)
+      console.log(myId)
       data.reverse().forEach(addCard);
+
+
     });
 } //получаю карточки с сервера
 
@@ -113,6 +116,5 @@ function deleteCard(link) {
 // pushCard()
 getData()
 getCard()
-
-export {pushDataProfile, pushDataAvatar, pushCard};
+export {pushDataProfile, pushDataAvatar, pushCard, myId};
 
