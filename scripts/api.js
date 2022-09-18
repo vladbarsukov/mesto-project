@@ -1,7 +1,10 @@
-import {profileName, profession} from './modal_window.js'
+import {profileName, profession, formAddPhoto} from './modal_window.js'
 import {addCard} from './card.js'
-let avatar = document.querySelector('.profile__image')
-let cards = []
+let avatar = document.querySelector('.profile__image');
+
+const onResponce = (res) => {
+  return res.ok ? res.json() : Promise.reject(res)
+}
 
 function getData() {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
@@ -17,7 +20,7 @@ function getData() {
       // console.log(data.avatar)
       // console.log(data)
     });
-}
+} //получаю данные профиля с сервера
 
 function getCard() {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/cards ', {
@@ -28,12 +31,9 @@ function getCard() {
     .then(res => res.json())
     .then((data) => {
       console.log(data)
-      // cards.push(...data)
-      data.forEach(addCard);
+      data.reverse().forEach(addCard);
     });
-}
-
-
+} //получаю карточки с сервера
 
 function pushDataProfile(name, prof) {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
@@ -53,7 +53,8 @@ function pushDataProfile(name, prof) {
       profileName.textContent = data.name
       profession.textContent = data.about
     });
-}
+} //отправляю данные профиля на сервер
+
 function pushDataAvatar(link) {
   fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me/avatar', {
     method: 'PATCH',
@@ -70,12 +71,48 @@ function pushDataAvatar(link) {
     .then((data) => {
       avatar.src = data.avatar
     });
+} //отправляю данные профиля на сервер
+
+function pushCard(cardLink, cardName) {
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards', {
+    method: 'POST',
+    headers: {
+      authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      link: cardLink,
+      name: cardName,
+    })
+ })
+    .then(res => res.json())
+
+    .then((data) => {
+      console.log(data)
+    });
+}
+
+function deleteCard(link) {
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards/632753d556becd00574228fb', {
+    method: 'DELETE',
+    headers: {
+      authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
+      'Content-Type': 'application/json'
+    },
+
+  })
+    .then(res => res.json())
+
+    .then((data) => {
+      console.log(data)
+    });
 }
 
 
-
+// deleteCard()
+// pushCard()
 getData()
 getCard()
 
-export {pushDataProfile, pushDataAvatar};
+export {pushDataProfile, pushDataAvatar, pushCard};
 
