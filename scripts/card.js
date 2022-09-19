@@ -1,5 +1,5 @@
 import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
-import {pushCard, myId} from './api.js'
+import {pushCard, myId, onResponce} from './api.js'
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
@@ -14,34 +14,37 @@ function closeButton(popup) {
   popup.classList.remove("popup_opened");
 }
 /////////////////////
-function addCard(data) {
-  const card = createNewCard(data);
+function addCard(data, myId) {
+  // console.log(myId)
+  const card = createNewCard(data, myId);
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
 // cards.forEach(addCard); // добавляю карточки из массива на страницу
 
 function toggleLike(evt) {
-  evt.classList.toggle("photo-grid__like_active")
+  evt.classList.toggle("photo-grid__l ike_active")
 }  // переключение лайка карточки
 
 function deleteCard(evt) {
-  evt.parentElement.remove();
+      evt.parentElement.remove();
 }  // удаление карточки
 
-function createNewCard(data) {
+function createNewCard(data, myId) {
   const cardElement = cardTemplate.cloneNode(true);
+  // const delButtonId = cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
+  const likes = cardElement.querySelector(".photo-grid__like-counter")
   console.log(data.owner._id === myId)
-  console.log(cardElement.querySelector(".photo-grid__del-button"))
-
-  if (!data.owner._id === myId) {
-    cardElement.querySelector(".photo-grid__del-button").remove();
-  }
-
+  // console.log(data.owner._id)
+  // console.log(data._id)
+  // console.dir(delButtonId)
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
-  cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
+  // cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
+  if (data.owner._id !== myId) {
+    cardElement.querySelector(".photo-grid__del-button").remove()
+  }
   return cardElement;
 }  // создание карточки
 
@@ -62,7 +65,12 @@ function addNewCard() {
   newCard.name = formAddPhoto.namePlace.value;
   newCard.link = formAddPhoto.linkPicture.value;
   pushCard(newCard.link, newCard.name)
-  addCard(newCard);
+    // .then((data) => {
+    //    addCard(data, myId);
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
 }
 
 // попап с фото
