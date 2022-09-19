@@ -14,34 +14,35 @@ function closeButton(popup) {
   popup.classList.remove("popup_opened");
 }
 /////////////////////
-function addCard(data) {
-  const card = createNewCard(data);
+function addCard(data, myId) {
+  console.log(myId)
+  const card = createNewCard(data, myId);
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
 // cards.forEach(addCard); // добавляю карточки из массива на страницу
 
 function toggleLike(evt) {
-  evt.classList.toggle("photo-grid__like_active")
+  evt.classList.toggle("photo-grid__l ike_active")
 }  // переключение лайка карточки
 
 function deleteCard(evt) {
   evt.parentElement.remove();
 }  // удаление карточки
 
-function createNewCard(data) {
+function createNewCard(data, myId) {
   const cardElement = cardTemplate.cloneNode(true);
+  // const delButton = cardElement.querySelector(".photo-grid__del-button")
   console.log(data.owner._id === myId)
-  console.log(cardElement.querySelector(".photo-grid__del-button"))
-
-  if (!data.owner._id === myId) {
-    cardElement.querySelector(".photo-grid__del-button").remove();
-  }
+  // console.log(delButton)
 
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
   cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
+  if (data.owner._id !== myId) {
+    cardElement.querySelector(".photo-grid__del-button").remove()
+  }
   return cardElement;
 }  // создание карточки
 
@@ -62,7 +63,7 @@ function addNewCard() {
   newCard.name = formAddPhoto.namePlace.value;
   newCard.link = formAddPhoto.linkPicture.value;
   pushCard(newCard.link, newCard.name)
-  addCard(newCard);
+  addCard(newCard, myId);
 }
 
 // попап с фото
