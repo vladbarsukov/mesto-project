@@ -1,5 +1,5 @@
 import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
-import {pushCard, myId, onResponce, deleteCardFromServer} from './api.js'
+import {pushCard, myId, onResponce, deleteCardFromServer, toggleLikeInServer} from './api.js'
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
@@ -14,16 +14,48 @@ function closeButton(popup) {
   popup.classList.remove("popup_opened");
 }
 /////////////////////
+
+
+const likeChecker = (id, IfLike, cardElement) => {
+  toggleLikeInServer(id, IfLike)
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data.likes)
+      console.log(cardElement)
+      updateLikeData(cardElement, data.likes, myId)
+    })
+}
+
+function ifLike (likeArr, myId) {
+ return Boolean(likeArr.find((element) => {
+  return element._id === myId
+ }
+ ))
+}// сравниваю id, проверяю есть ли лайк в массиве лайков
+
+function updateLikeData (cardElement, likeArr, myId) {
+  const likeButton = cardElement.querySelector(".photo-grid__like")
+  const likeCounter = cardElement.querySelector(".photo-grid__like-counter")
+  likeCounter.textContent  = likeArr.length;
+  console.log(likeArr.length)
+
+  if(ifLike(likeArr, myId)) {
+    likeButton.classList.add("photo-grid__like_active")
+  } else {
+    likeButton.classList.remove("photo-grid__like_active")
+  }
+}
+
 function addCard(data, myId) {
   // console.log(myId)
-  const card = createNewCard(data, myId);
+  const card = createNewCard(data, myId, likeChecker);
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
 // cards.forEach(addCard); // добавляю карточки из массива на страницу
 
 function toggleLike(evt) {
-  evt.classList.toggle("photo-grid__l ike_active")
+  evt.classList.toggle("photo-grid__like_active")
 }  // переключение лайка карточки
 
 function deleteCard(evt) {
@@ -35,10 +67,12 @@ function deleteCard(evt) {
       // evt.parentElement.remove();
 }  // удаление карточки
 
-function createNewCard(data, myId) {
+function createNewCard(data, myId, likeChecker) {
   const cardElement = cardTemplate.cloneNode(true);
   const delButtonId = cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
-  const likes = cardElement.querySelector(".photo-grid__like-counter")
+  const likeButton = cardElement.querySelector(".photo-grid__like")
+  // console.log(likeButton)
+
   console.log(data.owner._id === myId)
   // console.log(data.owner._id)
   // console.log(data._id)
@@ -46,10 +80,15 @@ function createNewCard(data, myId) {
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
-  cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
+  // cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
+  updateLikeData(cardElement, data.likes, myId)
   if (data.owner._id !== myId) {
     cardElement.querySelector(".photo-grid__del-button").remove()
   }
+likeButton.addEventListener("click", () => {
+  likeChecker(data._id, ifLike(data.likes, myId), cardElement)
+  console.log(data.likes)
+});
   return cardElement;
 }  // создание карточки
 
@@ -117,9 +156,10 @@ document.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
     closeButton(popupImage)
   }
-  if(evt.target.classList.contains('photo-grid__like')){
-    toggleLike(evt.target)
-  }
+  // if(evt.target.classList.contains('photo-grid__like')){
+  //   toggleLike(evt.target)
+  //   // likeChecker (id, IfLike)
+  // }
   if(evt.target.classList.contains('photo-grid__del-button')){
     deleteCard(evt.target)
   }

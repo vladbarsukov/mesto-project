@@ -38,7 +38,6 @@ function pushDataProfile(name, prof) {
     })
   })
 
-
 } //отправляю данные профиля на сервер
 
 function pushDataAvatar(link) {
@@ -80,6 +79,20 @@ function deleteCardFromServer(id) {
   })
 }
 
+function toggleLikeInServer(id, IfLike) {
+  return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/likes/${id}`, {
+    method: IfLike ? 'DELETE' : 'PUT',
+    headers: {
+      authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
+      'Content-Type': 'application/json'
+    },
+    }
+
+  )
+}
+
+
+
 function getAllData() {
   return Promise.all([getCard(), getData()])
 }
@@ -101,5 +114,5 @@ getAllData()
       addCard(element, myId);
     });
   })
-export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, onResponce, avatar};
+export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, onResponce, avatar, toggleLikeInServer};
 
