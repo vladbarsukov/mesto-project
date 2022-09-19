@@ -26,7 +26,7 @@ function getCard() {
 } //получаю карточки с сервера
 
 function pushDataProfile(name, prof) {
-  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
+ return  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', {
     method: 'PATCH',
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
@@ -37,16 +37,12 @@ function pushDataProfile(name, prof) {
       about: prof,
     })
   })
-    .then(res => res.json())
 
-    .then((data) => {
-      profileName.textContent = data.name
-      profession.textContent = data.about
-    });
+
 } //отправляю данные профиля на сервер
 
 function pushDataAvatar(link) {
-  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me/avatar', {
+ return  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me/avatar', {
     method: 'PATCH',
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
@@ -56,11 +52,7 @@ function pushDataAvatar(link) {
       avatar: link,
     })
   })
-    .then(res => res.json())
 
-    .then((data) => {
-      avatar.src = data.avatar
-    });
 } //отправляю данные профиля на сервер
 
 function pushCard(cardLink, cardName) {
@@ -75,11 +67,7 @@ function pushCard(cardLink, cardName) {
       name: cardName,
     })
  })
-    // .then(res => res.json())
-    // .then((data) => {
-    //   console.log(data)
-    //   addCard(data, myId);
-    // });
+
 }
 
 function deleteCardFromServer(id) {
@@ -113,5 +101,5 @@ getAllData()
       addCard(element, myId);
     });
   })
-export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, onResponce};
+export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, onResponce, avatar};
 

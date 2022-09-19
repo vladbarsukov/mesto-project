@@ -1,4 +1,4 @@
-import {pushDataProfile, pushDataAvatar} from './api.js'
+import {pushDataProfile, pushDataAvatar, avatar} from './api.js'
 // import {isValid} from './validation.js'
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
@@ -39,12 +39,22 @@ function addDefaultEditPopupData() {
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
   pushDataProfile(nameInput.value, jobInput.value)
+    .then(res => res.json())
+
+    .then((data) => {
+      profileName.textContent = data.name
+      profession.textContent = data.about
+    });
   closeButton(popupEditProfile);
 } //добавление значения с сервера в попап с именем
 
 function formEditeAvatarHandler(evt) {
   evt.preventDefault();
   pushDataAvatar(avatarInput.value)
+    .then(res => res.json())
+    .then((data) => {
+      avatar.src = data.avatar
+    });
   closeButton(popupEditAvatar)
   formElementEditAvatar.reset()
 } //добавление значения с сервера в попап с аватаром
