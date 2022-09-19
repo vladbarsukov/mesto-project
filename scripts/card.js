@@ -1,5 +1,5 @@
 import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
-import {pushCard, myId, onResponce} from './api.js'
+import {pushCard, myId, onResponce, deleteCardFromServer} from './api.js'
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
@@ -27,12 +27,17 @@ function toggleLike(evt) {
 }  // переключение лайка карточки
 
 function deleteCard(evt) {
+  deleteCardFromServer(evt.parentElement.children[1].owner)
+    .then(() => {
       evt.parentElement.remove();
+      console.dir(evt.parentElement.children[1].owner)
+    })
+      // evt.parentElement.remove();
 }  // удаление карточки
 
 function createNewCard(data, myId) {
   const cardElement = cardTemplate.cloneNode(true);
-  // const delButtonId = cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
+  const delButtonId = cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
   const likes = cardElement.querySelector(".photo-grid__like-counter")
   console.log(data.owner._id === myId)
   // console.log(data.owner._id)
@@ -41,7 +46,7 @@ function createNewCard(data, myId) {
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
-  // cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
+  cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
   if (data.owner._id !== myId) {
     cardElement.querySelector(".photo-grid__del-button").remove()
   }
@@ -57,21 +62,43 @@ formAddPhoto.addEventListener("submit", (element) => {
   element.target.reset();
 }); // создание карточки из попапа
 
+// function addNewCard() {
+//   const newCard = {
+//     name: "",
+//     link: "",
+//   };
+//   newCard.name = formAddPhoto.namePlace.value;
+//   newCard.link = formAddPhoto.linkPicture.value;
+//   pushCard(newCard.link, newCard.name)
+//     .then(() => {
+//        addCard(newCard, myId);
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     })
+// }
+
+
+
 function addNewCard() {
-  const newCard = {
-    name: "",
-    link: "",
-  };
-  newCard.name = formAddPhoto.namePlace.value;
-  newCard.link = formAddPhoto.linkPicture.value;
-  pushCard(newCard.link, newCard.name)
-    // .then((data) => {
-    //    addCard(data, myId);
-    // })
-    // .catch((err) => {
-    //   console.log(err)
-    // })
+  // const newCard = {
+  //   name: "",
+  //   link: "",
+  // };
+  // newCard.name = formAddPhoto.namePlace.value;
+  // newCard.link = formAddPhoto.linkPicture.value;
+  pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
+    .then(res => res.json())
+    .then((data) => {
+      addCard(data, myId);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
+
+
+
 
 // попап с фото
 

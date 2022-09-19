@@ -64,7 +64,7 @@ function pushDataAvatar(link) {
 } //отправляю данные профиля на сервер
 
 function pushCard(cardLink, cardName) {
-  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards', {
+ return  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards', {
     method: 'POST',
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
@@ -75,14 +75,14 @@ function pushCard(cardLink, cardName) {
       name: cardName,
     })
  })
-    .then(res => res.json())
-    .then((data) => {
-      console.log(data)
-      addCard(data, myId);
-    });
+    // .then(res => res.json())
+    // .then((data) => {
+    //   console.log(data)
+    //   addCard(data, myId);
+    // });
 }
 
-function deleteCard(id) {
+function deleteCardFromServer(id) {
  return  fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/${id}`, {
     method: 'DELETE',
     headers: {
@@ -99,7 +99,7 @@ function getAllData() {
 
 
 
-deleteCard("63287d2434ecf800c8df7953")
+// deleteCardFromServer("63287e8f56becd005743aefa")
 
 getAllData()
   .then(([cards, data]) => {
@@ -113,5 +113,5 @@ getAllData()
       addCard(element, myId);
     });
   })
-export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCard, onResponce};
+export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, onResponce};
 
