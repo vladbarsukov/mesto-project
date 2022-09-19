@@ -1,41 +1,41 @@
 import {profileName, profession, formAddPhoto} from './modal_window.js'
 import {addCard} from './card.js'
 let avatar = document.querySelector('.profile__image');
-let myId = null;
+let myId
 
 const onResponce = (res) => {
   return res.ok ? res.json() : Promise.reject(res)
-};
+}
 
 function getData() {
-return  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
+ fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me ', {
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea'
     }
   })
-    // .then(res => res.json())
-    // .then((data) => {
-    //   profileName.textContent = data.name
-    //   profession.textContent = data.about
-    //   avatar.src = data.avatar
-    //   myId = data._id
-    //   // console.log(myId)
-    // })
-   .then(onResponce);
+    .then(res => res.json())
+    .then((data) => {
+      profileName.textContent = data.name
+      profession.textContent = data.about
+      avatar.src = data.avatar
+      myId = data._id
+      // console.log(myId)
+    });
 } //получаю данные профиля с сервера
 
 function getCard() {
- return  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards ', {
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards ', {
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea'
     }
   })
-    // .then(res => res.json())
-    // .then((data) => {
-    //   console.log(myId)
-    //   data.reverse().forEach(addCard);
-    // })
-    .then(onResponce);
+    .then(res => res.json())
+    .then((data) => {
+      console.log(myId)
+      data.reverse().forEach(addCard);
+
+
+    });
 } //получаю карточки с сервера
 
 function pushDataProfile(name, prof) {
@@ -111,23 +111,10 @@ function deleteCard(link) {
     });
 }
 
-function getAllData() {
-  return Promise.all([getCard(), getData()])
-}
+
 // deleteCard()
 // pushCard()
-// getData()
-// getCard()
-getAllData()
-  .then(([cards, data]) => {
-    profileName.textContent = data.name
-    profession.textContent = data.about
-    avatar.src = data.avatar
-    myId = data._id
-    // cards.reverse().forEach(addCard);
-    cards.reverse().forEach((element) =>{
-      addCard(element, myId);
-    });
-  })
-export {pushDataProfile, pushDataAvatar, pushCard, myId, };
+getData()
+getCard()
+export {pushDataProfile, pushDataAvatar, pushCard, myId};
 
