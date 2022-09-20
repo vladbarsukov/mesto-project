@@ -111,5 +111,5 @@ getAllData()
       addCard(element, myId);
     });
   })
-export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, onResponce, avatar, toggleLikeInServer};
+export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, avatar, toggleLikeInServer};
 

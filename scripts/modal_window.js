@@ -42,7 +42,10 @@ function formEditeProfileSubmitHandler(evt) {
     .then((data) => {
       profileName.textContent = data.name
       profession.textContent = data.about
-    });
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   closeButton(popupEditProfile);
 } //добавление значения с сервера в попап с именем
 
@@ -51,7 +54,10 @@ function formEditeAvatarHandler(evt) {
   pushDataAvatar(avatarInput.value)
     .then((data) => {
       avatar.src = data.avatar
-    });
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   closeButton(popupEditAvatar)
   formElementEditAvatar.reset()
 } //добавление значения с сервера в попап с аватаром

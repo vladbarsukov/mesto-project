@@ -1,5 +1,5 @@
 import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
-import {pushCard, myId, onResponce, deleteCardFromServer, toggleLikeInServer} from './api.js'
+import {pushCard, myId, deleteCardFromServer, toggleLikeInServer} from './api.js'
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
@@ -23,7 +23,6 @@ const handleLikeChangeStatus = (id, isLike, cardElement) => {
       // console.log(cardElement)
       updateLikeStatus(cardElement, data.likes, myId)
     })
-
     .catch((err) => {
     console.log(err)
   })
@@ -71,6 +70,9 @@ function deleteCard(evt) {
     .then(() => {
       evt.parentElement.remove();
       console.dir(evt.parentElement.children[1].owner)
+    })
+    .catch((err) => {
+      console.log(err)
     })
       // evt.parentElement.remove();
 }  // удаление карточки
