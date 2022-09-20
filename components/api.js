@@ -1,4 +1,4 @@
-import {profileName, profession, formAddPhoto} from './modal_window.js'
+import {profileName, profession} from './modal_window.js'
 import {addCard} from './card.js'
 let avatar = document.querySelector('.profile__image');
 let myId = null;
@@ -89,16 +89,9 @@ function toggleLikeInServer(id, isLike) {
   ).then(onResponce);
 } //запрос на сервер удаление или нажатие лайка
 
-
-
 function getAllData() {
   return Promise.all([getCard(), getData()])
 }
-
-
-
-
-// deleteCardFromServer("63287e8f56becd005743aefa")
 
 getAllData()
   .then(([cards, data]) => {
@@ -111,5 +104,15 @@ getAllData()
       addCard(element, myId);
     });
   })
-export {pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, avatar, toggleLikeInServer};
+
+export {pushDataProfile,
+   pushDataAvatar,
+   pushCard,
+   myId,
+   deleteCardFromServer,
+   avatar,
+   toggleLikeInServer,
+   getCard,
+   getData,
+};
 

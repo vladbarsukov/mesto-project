@@ -1,5 +1,4 @@
 import {pushDataProfile, pushDataAvatar, avatar} from './api.js'
-// import {isValid} from './validation.js'
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const popupEditAvatar = document.querySelector("#popupProfileImage");
@@ -34,8 +33,6 @@ function addDefaultEditPopupData() {
   isValid(jobInput, formElementEditProfile)
 }
 
-
-
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
   pushDataProfile(nameInput.value, jobInput.value)
@@ -63,11 +60,6 @@ function formEditeAvatarHandler(evt) {
 } //добавление значения с сервера в попап с аватаром
 
 
-formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
-formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
-
-
-
 /////////////////////////////////////////////
 //VALIDATION
 /////////////////////////////////////////////
@@ -81,8 +73,6 @@ const showInputError = (inputElement, errorMessage, formElement) => {
   } else {
     errorElement.textContent = errorMessage;
   }
-
-
 }; // показываю текст с ошибкой
 
 const hideInputError = (inputElement, formElement) => {
@@ -139,59 +129,32 @@ const enableValidation = () => {
   });
 };
 
-enableValidation();
-
 function hideValidationErrorAfterClosePopup() {
   errorMessagePlace.classList.remove('popup__input-error_active');
   errorMessageLink.classList.remove('popup__input-error_active');
   errorMessageAvatar.classList.remove('popup__input-error_active');
 }  // скрываю валидацию после закрытия попапа
 
-document.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup__close-button')) {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-    hideValidationErrorAfterClosePopup()
-  }
-  if(evt.target.classList.contains('profile__add-button')) {
-    openButton(popupButtonAddCard)
 
-  }
-  if(evt.target.classList.contains('profile__edit-button')) {
-    addDefaultEditPopupData();
-    openButton(popupEditProfile);
-    toggleButtonState(allInputEditProfile, addButton)
-  }
-  if(evt.target.classList.contains('profile__image')) {
-    addDefaultEditPopupData();
-    openButton(popupEditAvatar);
-    toggleButtonState(allAvatarInput, avatarAddButton)
+export {formAddPhoto,
+  popupButtonAddCard,
+  profileName,
+  profession,
+  addButton,
+  popupEditProfile,
+  allInputEditProfile,
+  openButton,
+  closeButton,
+  addDefaultEditPopupData,
+  formElementEditAvatar,
+  popupEditAvatar,
+  allAvatarInput,
+  avatarAddButton,
+  hideValidationErrorAfterClosePopup,
+  toggleButtonState,
+  enableValidation,
+  formElementEditProfile,
+  formEditeProfileSubmitHandler,
+  formEditeAvatarHandler
 
-  }
-  if(evt.target.classList.contains('popup_opened')){
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup()
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-
-  }
-})     // один большой слушатель на все
-
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape') {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup()
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-  }
-})   // один большой слушатель на закрытие по esc
-
-
-export {formAddPhoto, popupButtonAddCard, profileName, profession, addButton, popupEditProfile, allInputEditProfile, openButton, closeButton, addDefaultEditPopupData};
+};
