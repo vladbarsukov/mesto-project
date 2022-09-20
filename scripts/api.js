@@ -79,9 +79,9 @@ function deleteCardFromServer(id) {
   })
 }
 
-function toggleLikeInServer(id, IfLike) {
+function toggleLikeInServer(id, isLike) {
   return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/likes/${id}`, {
-    method: IfLike ? 'DELETE' : 'PUT',
+    method: isLike ? 'DELETE' : 'PUT',
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
       'Content-Type': 'application/json'

@@ -16,36 +16,37 @@ function closeButton(popup) {
 /////////////////////
 
 
-const likeChecker = (id, IfLike, cardElement) => {
-  toggleLikeInServer(id, IfLike)
+const handleLikeChangeStatus = (id, isLike, cardElement) => {
+  toggleLikeInServer(id, isLike)
     .then(res => res.json())
     .then((data) => {
       console.log(data.likes.length)
       // console.log(cardElement)
-      updateLikeData(cardElement, data.likes, myId)
+      updateLikeStatus(cardElement, data.likes, myId)
     })
+
     .catch((err) => {
     console.log(err)
   })
 }
 
-function ifLike (likeArr, myId) {
+function isLike (likeArr, myId) {
  return Boolean(likeArr.find((element) => {
   return element._id === myId
  }
  ))
 }// сравниваю id, проверяю есть ли лайк в массиве лайков
 
-function updateLikeData (cardElement, likeArr, myId) {
+function updateLikeStatus (cardElement, likeArr, myId) {
   const likeButton = cardElement.querySelector(".photo-grid__like")
   const likeCounter = cardElement.querySelector(".photo-grid__like-counter")
-  console.log(likeArr)
+  // console.log(likeArr)
   // console.log(likeCounter.textContent)
-  likeCounter.textContent  = likeArr.length;
-  console.log(likeCounter.textContent)
-  // console.log(likeArr.length)
+  likeCounter.textContent  = likeArr.length
+  // console.log(likeCounter.textContent)
+  console.log(likeArr.length)
 
-  if(ifLike(likeArr, myId)) {
+  if(isLike(likeArr, myId)) {
     likeButton.classList.add("photo-grid__like_active")
   } else {
     likeButton.classList.remove("photo-grid__like_active")
@@ -55,15 +56,15 @@ function updateLikeData (cardElement, likeArr, myId) {
 
 function addCard(data, myId) {
   // console.log(myId)
-  const card = createNewCard(data, myId, likeChecker);
+  const card = createNewCard(data, myId, handleLikeChangeStatus);
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
 // cards.forEach(addCard); // добавляю карточки из массива на страницу
 
-function toggleLike(evt) {
-  evt.classList.toggle("photo-grid__like_active")
-}  // переключение лайка карточки
+// function toggleLike(evt) {
+//   evt.classList.toggle("photo-grid__like_active")
+// }  // переключение лайка карточки
 
 function deleteCard(evt) {
   deleteCardFromServer(evt.parentElement.children[1].owner)
@@ -74,26 +75,27 @@ function deleteCard(evt) {
       // evt.parentElement.remove();
 }  // удаление карточки
 
-function createNewCard(data, myId, likeChecker) {
+function createNewCard(data, myId, handleLikeChangeLikeStatus) {
   const cardElement = cardTemplate.cloneNode(true);
-  const delButtonId = cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
+
   const likeButton = cardElement.querySelector(".photo-grid__like")
   // console.log(likeButton)
   // console.log(data.owner._id === myId)
   // console.log(data._id)
   // console.dir(delButtonId)
+  cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
   // cardElement.querySelector(".photo-grid__like-counter").textContent = data.likes.length;
-  updateLikeData(cardElement, data.likes, myId)
+  updateLikeStatus(cardElement, data.likes, myId)
   if (data.owner._id !== myId) {
     cardElement.querySelector(".photo-grid__del-button").remove()
   }
 likeButton.addEventListener("click", () => {
   // likeChecker(data._id, ifLike(data.likes, myId), cardElement)
-  likeChecker(data._id, likeButton.classList.contains('photo-grid__like_active'), cardElement)
-  console.log(data.likes)
+  handleLikeChangeStatus(data._id, likeButton.classList.contains('photo-grid__like_active'), cardElement)
+  console.log(data.likes.length)
 });
   return cardElement;
 }  // создание карточки
@@ -141,8 +143,6 @@ function addNewCard() {
       console.log(err)
     })
 }
-
-
 
 
 // попап с фото
