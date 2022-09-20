@@ -103,7 +103,7 @@ function getAllData() {
 
 getAllData()
   .then(([cards, data]) => {
-    console.log(cards)
+    // console.log(cards)
     profileName.textContent = data.name
     profession.textContent = data.about
     avatar.src = data.avatar
