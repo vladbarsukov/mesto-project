@@ -21,8 +21,7 @@ function getCard() {
     headers: {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea'
     }
-  })
-    .then(onResponce);
+  }).then(onResponce);
 } //получаю карточки с сервера
 
 function pushDataProfile(name, prof) {
@@ -36,7 +35,7 @@ function pushDataProfile(name, prof) {
       name: name,
       about: prof,
     })
-  })
+  }).then(onResponce);
 
 } //отправляю данные профиля на сервер
 
@@ -50,7 +49,7 @@ function pushDataAvatar(link) {
     body: JSON.stringify({
       avatar: link,
     })
-  })
+  }).then(onResponce);
 
 } //отправляю данные профиля на сервер
 
@@ -65,7 +64,7 @@ function pushCard(cardLink, cardName) {
       link: cardLink,
       name: cardName,
     })
- })
+ }).then(onResponce);
 
 }
 
@@ -76,18 +75,18 @@ function deleteCardFromServer(id) {
       authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
       'Content-Type': 'application/json'
     },
-  })
+  }).then(onResponce);
 }
 
 function toggleLikeInServer(id, isLike) {
   return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/likes/${id}`, {
-    method: isLike ? 'DELETE' : 'PUT',
-    headers: {
-      authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
-      'Content-Type': 'application/json'
-    },
+      method: isLike ? 'DELETE' : 'PUT',
+      headers: {
+        authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
+        'Content-Type': 'application/json'
+      },
     }
-  )
+  ).then(onResponce);
 } //запрос на сервер удаление или нажатие лайка
 
 
@@ -103,7 +102,6 @@ function getAllData() {
 
 getAllData()
   .then(([cards, data]) => {
-    // console.log(cards)
     profileName.textContent = data.name
     profession.textContent = data.about
     avatar.src = data.avatar

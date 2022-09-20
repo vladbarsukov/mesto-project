@@ -39,8 +39,6 @@ function addDefaultEditPopupData() {
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
   pushDataProfile(nameInput.value, jobInput.value)
-    .then(res => res.json())
-
     .then((data) => {
       profileName.textContent = data.name
       profession.textContent = data.about
@@ -51,7 +49,6 @@ function formEditeProfileSubmitHandler(evt) {
 function formEditeAvatarHandler(evt) {
   evt.preventDefault();
   pushDataAvatar(avatarInput.value)
-    .then(res => res.json())
     .then((data) => {
       avatar.src = data.avatar
     });

@@ -18,7 +18,6 @@ function closeButton(popup) {
 
 const handleLikeChangeStatus = (id, isLike, cardElement) => {
   toggleLikeInServer(id, isLike)
-    .then(res => res.json())
     .then((data) => {
       // console.log(data.likes)
       // console.log(cardElement)
@@ -135,7 +134,6 @@ function addNewCard() {
   // newCard.name = formAddPhoto.namePlace.value;
   // newCard.link = formAddPhoto.linkPicture.value;
   pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
-    .then(res => res.json())
     .then((data) => {
       addCard(data, myId);
     })
