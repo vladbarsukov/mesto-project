@@ -20,10 +20,13 @@ const likeChecker = (id, IfLike, cardElement) => {
   toggleLikeInServer(id, IfLike)
     .then(res => res.json())
     .then((data) => {
-      console.log(data.likes)
-      console.log(cardElement)
+      console.log(data.likes.length)
+      // console.log(cardElement)
       updateLikeData(cardElement, data.likes, myId)
     })
+    .catch((err) => {
+    console.log(err)
+  })
 }
 
 function ifLike (likeArr, myId) {
@@ -36,14 +39,18 @@ function ifLike (likeArr, myId) {
 function updateLikeData (cardElement, likeArr, myId) {
   const likeButton = cardElement.querySelector(".photo-grid__like")
   const likeCounter = cardElement.querySelector(".photo-grid__like-counter")
+  console.log(likeArr)
+  // console.log(likeCounter.textContent)
   likeCounter.textContent  = likeArr.length;
-  console.log(likeArr.length)
+  console.log(likeCounter.textContent)
+  // console.log(likeArr.length)
 
   if(ifLike(likeArr, myId)) {
     likeButton.classList.add("photo-grid__like_active")
   } else {
     likeButton.classList.remove("photo-grid__like_active")
   }
+
 }
 
 function addCard(data, myId) {
@@ -72,9 +79,7 @@ function createNewCard(data, myId, likeChecker) {
   const delButtonId = cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
   const likeButton = cardElement.querySelector(".photo-grid__like")
   // console.log(likeButton)
-
-  console.log(data.owner._id === myId)
-  // console.log(data.owner._id)
+  // console.log(data.owner._id === myId)
   // console.log(data._id)
   // console.dir(delButtonId)
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
@@ -86,7 +91,8 @@ function createNewCard(data, myId, likeChecker) {
     cardElement.querySelector(".photo-grid__del-button").remove()
   }
 likeButton.addEventListener("click", () => {
-  likeChecker(data._id, ifLike(data.likes, myId), cardElement)
+  // likeChecker(data._id, ifLike(data.likes, myId), cardElement)
+  likeChecker(data._id, likeButton.classList.contains('photo-grid__like_active'), cardElement)
   console.log(data.likes)
 });
   return cardElement;

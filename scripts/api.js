@@ -87,9 +87,8 @@ function toggleLikeInServer(id, IfLike) {
       'Content-Type': 'application/json'
     },
     }
-
   )
-}
+} //запрос на сервер удаление или нажатие лайка
 
 
 
