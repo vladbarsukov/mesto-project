@@ -17,7 +17,7 @@ import {
   enableValidation,
   formElementEditProfile, formEditeProfileSubmitHandler, formEditeAvatarHandler
 } from './components/modal_window.js'
-import {addCard, closeButton, deleteCard, openImg, popupImage} from './components/card.js'
+import {addCard, closeButton, deleteCard, openImg, popupImage, addNewCard} from './components/card.js'
 import {avatar, myId, getCard, getData} from "./components/api.js";
 
 // function getAllData() {
@@ -41,7 +41,15 @@ import {avatar, myId, getCard, getData} from "./components/api.js";
 formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
 formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
 
-enableValidation();
+formAddPhoto.addEventListener("submit", (element) => {
+  element.preventDefault();
+  addNewCard()
+  closeButton(popupButtonAddCard);
+  element.target.reset();
+}); // создание карточки из попапа
+
+enableValidation(); //подключение валидации
+
 document.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
     closeButton(popupImage)

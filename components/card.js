@@ -84,12 +84,12 @@ likeButton.addEventListener("click", () => {
   return cardElement;
 }  // создание карточки
 
-formAddPhoto.addEventListener("submit", (element) => {
-  element.preventDefault();
-  addNewCard()
-  closeButton(popupButtonAddCard);
-  element.target.reset();
-}); // создание карточки из попапа
+// formAddPhoto.addEventListener("submit", (element) => {
+//   element.preventDefault();
+//   addNewCard()
+//   closeButton(popupButtonAddCard);
+//   element.target.reset();
+// }); // создание карточки из попапа
 
 function addNewCard() {
   pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
@@ -137,4 +137,4 @@ function getCardData(evt) {
 // })   // слушатель на закрытие по esc
 
 
-export {addCard, closeButton, deleteCard, openImg, popupImage};
+export {addCard, closeButton, deleteCard, openImg, popupImage, addNewCard};
