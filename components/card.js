@@ -1,13 +1,19 @@
-import {formAddPhoto, popupButtonAddCard} from './modal_window.js'
+import {
+  formAddPhoto,
+  popupButtonAddCard
+} from './modal_window.js'
 
-import {pushCard,
+import {
+  pushCard,
   myId,
   deleteCardFromServer,
-  toggleLikeInServer} from './api.js'
+  toggleLikeInServer,
+} from './api.js'
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
+const cardAddButton = formAddPhoto.querySelector(".popup__submit")
 
 
 const img = document.querySelector(".popup__photo");
@@ -21,8 +27,6 @@ function closeButton(popup) {
 const handleLikeChangeStatus = (id, isLike, cardElement) => {
   toggleLikeInServer(id, isLike)
     .then((data) => {
-      // console.log(data.likes)
-      // console.log(cardElement)
       updateLikeStatus(cardElement, data.likes, myId)
     })
     .catch((err) => {
@@ -50,25 +54,37 @@ function updateLikeStatus (cardElement, likeArr, myId) {
 }
 
 function addCard(data, myId) {
-  const card = createNewCard(data, myId, handleLikeChangeStatus);
+  const card = createNewCard(data, myId, handleLikeChangeStatus, deleteCard);
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
-function deleteCard(evt) {
-  deleteCardFromServer(evt.parentElement.children[1].owner)
+// function deleteCard(evt) {
+//   deleteCardFromServer(evt.parentElement.children[1].owner)
+//     .then(() => {
+//       evt.parentElement.remove();
+//       console.dir(evt.parentElement.children[1].owner)
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     })
+// }  // удаление карточки
+
+function deleteCard(card, cardId) {
+  deleteCardFromServer(cardId)
     .then(() => {
-      evt.parentElement.remove();
-      console.dir(evt.parentElement.children[1].owner)
+      card.remove();
     })
     .catch((err) => {
       console.log(err)
     })
 }  // удаление карточки
 
-function createNewCard(data, myId, handleLikeChangeStatus) {
+
+function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
   const cardElement = cardTemplate.cloneNode(true);
   const likeButton = cardElement.querySelector(".photo-grid__like")
   const card = cardElement.querySelector(".photo-grid__item")
+  const deleteButton = cardElement.querySelector('.photo-grid__del-button')
 
   cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
@@ -78,8 +94,13 @@ function createNewCard(data, myId, handleLikeChangeStatus) {
   if (data.owner._id !== myId) {
     cardElement.querySelector(".photo-grid__del-button").remove()
   }
-likeButton.addEventListener("click", () => {
-  handleLikeChangeStatus(data._id, likeButton.classList.contains('photo-grid__like_active'), card)
+
+  deleteButton.addEventListener("click", () => {
+    deleteCard(card, data._id)
+  });
+
+  likeButton.addEventListener("click", () => {
+    handleLikeChangeStatus(data._id, likeButton.classList.contains('photo-grid__like_active'), card)
 });
   return cardElement;
 }  // создание карточки
@@ -94,8 +115,12 @@ likeButton.addEventListener("click", () => {
 function addNewCard() {
   pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
+      cardAddButton.textContent = "Создание..."
       addCard(data, myId);
     })
+    .finally(() => {
+    cardAddButton.textContent = "Создать"
+  })
     .catch((err) => {
       console.log(err)
     })
@@ -137,4 +162,4 @@ function getCardData(evt) {
 // })   // слушатель на закрытие по esc
 
 
-export {addCard, closeButton, deleteCard, openImg, popupImage, addNewCard};
+export {addCard, closeButton, openImg, popupImage, addNewCard};

@@ -37,25 +37,40 @@ function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
   pushDataProfile(nameInput.value, jobInput.value)
     .then((data) => {
+      addButton.textContent = "Сохранение..."
       profileName.textContent = data.name
       profession.textContent = data.about
+    })
+    .then(() => {
+    closeButton(popupEditProfile)
+  })
+    .finally(() => {
+      addButton.textContent = "Сохранить"
     })
     .catch((err) => {
       console.log(err)
     })
-  closeButton(popupEditProfile);
+
+
 } //добавление значения с сервера в попап с именем
 
 function formEditeAvatarHandler(evt) {
   evt.preventDefault();
   pushDataAvatar(avatarInput.value)
     .then((data) => {
+      avatarAddButton.textContent = "Создание..."
       avatar.src = data.avatar
+    })
+    .then(() => {
+      closeButton(popupEditAvatar)
+    })
+    .finally(() => {
+      avatarAddButton.textContent = "Создать"
     })
     .catch((err) => {
       console.log(err)
     })
-  closeButton(popupEditAvatar)
+
   formElementEditAvatar.reset()
 } //добавление значения с сервера в попап с аватаром
 

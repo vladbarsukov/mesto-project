@@ -111,7 +111,6 @@ export {pushDataProfile,
    deleteCardFromServer,
    avatar,
    toggleLikeInServer,
-   getCard,
-   getData,
+   getAllData
 };
 

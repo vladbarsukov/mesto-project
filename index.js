@@ -17,8 +17,15 @@ import {
   enableValidation,
   formElementEditProfile, formEditeProfileSubmitHandler, formEditeAvatarHandler
 } from './components/modal_window.js'
-import {addCard, closeButton, deleteCard, openImg, popupImage, addNewCard} from './components/card.js'
-import {avatar, myId, getCard, getData} from "./components/api.js";
+import {
+  addCard,
+  closeButton,
+  // deleteCard,
+  openImg,
+  popupImage,
+  addNewCard,
+} from './components/card.js'
+import {avatar, myId, getAllData} from "./components/api.js";
 
 // function getAllData() {
 //   return Promise.all([getCard(), getData()])
@@ -55,9 +62,9 @@ document.addEventListener('mousedown', function (evt) {
     closeButton(popupImage)
   }
 
-  if(evt.target.classList.contains('photo-grid__del-button')){
-    deleteCard(evt.target)
-  }
+  // if(evt.target.classList.contains('photo-grid__del-button')){
+  //   deleteCard(evt.target)
+  // }
   if(evt.target.classList.contains('photo-grid__picture')){
     openImg(evt)
   }
