@@ -1,4 +1,7 @@
-import {pushDataProfile, pushDataAvatar, avatar} from './api.js'
+import {pushDataProfile, pushDataAvatar} from './api.js'
+import {
+  avatar,
+} from './avatar.js'
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const popupEditAvatar = document.querySelector("#popupProfileImage");

@@ -1,7 +1,8 @@
-import {avatar} from './api.js'
+// import {avatar} from './api.js'
 
 const avatarContainer = document.querySelector('.profile__image-container');
 const avatarEditIcon = document.querySelector('.profile__edit-icon');
+const avatar = document.querySelector('.profile__image');
 
 
 function avatarEditShow () {
@@ -16,4 +17,4 @@ function avatarEditHide () {
 
 
 
-export {avatarContainer, avatarEditIcon, avatarEditShow, avatarEditHide};
+export {avatarContainer, avatarEditShow, avatarEditHide, avatar};

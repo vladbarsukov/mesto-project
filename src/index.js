@@ -35,13 +35,13 @@ import {
 
 import {
   avatarContainer,
-  avatarEditIcon,
   avatarEditShow,
   avatarEditHide,
+  avatar,
 } from '../components/avatar.js'
 
 // import {avatar, myId, getAllData} from "./components/api.js";
-// import {avatar, getAllData} from "./components/api.js";
+// import {getAllData} from "./components/api.js";
 
 // let myId = null
 //

@@ -1,6 +1,9 @@
 import {profileName, profession} from './modal_window.js'
 import {addCard} from './card.js'
-let avatar = document.querySelector('.profile__image');
+import {
+avatar,
+} from './avatar.js'
+// const avatar = document.querySelector('.profile__image');
 let myId = null;
 
 const onResponce = (res) => {
@@ -109,7 +112,6 @@ export {pushDataProfile,
    pushCard,
    myId,
    deleteCardFromServer,
-   avatar,
    toggleLikeInServer,
    getAllData
 };
