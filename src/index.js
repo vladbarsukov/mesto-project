@@ -68,7 +68,6 @@ formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // с�
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
   addNewCard()
-  // closeButton(popupButtonAddCard);
   element.target.reset();
 }); // создание карточки из попапа
 
