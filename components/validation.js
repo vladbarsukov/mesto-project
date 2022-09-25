@@ -1,8 +1,8 @@
 const formElementEditAvatar = document.forms.formAvatar;
 const formAddPhoto = document.forms.formAddPhoto;
-const errorMessagePlace = formAddPhoto.querySelector(".popup__input_place-error");
-const errorMessageLink = formAddPhoto.querySelector(".popup__input_link-error");
-const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input_avatar-error")
+const errorMessagePlace = formAddPhoto.querySelector(".popup__input-place-error");
+const errorMessageLink = formAddPhoto.querySelector(".popup__input-link-error");
+const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input-avatar-error")
 
 const showInputError = (inputElement, errorMessage, formElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Место</title>
-  <link rel="stylesheet" href="../pages/index.css" />
+  <link rel="stylesheet" href="../pages/index.css"/>
 </head>
 <body class="root">
 <header class="header">
@@ -13,8 +13,8 @@
 <main class="main">
   <section class="profile">
     <div class="profile__image-container">
-      <img class="profile__image" alt="Аватар" />
-      <img src="/images/Vector_edit.svg" class="profile__edit-icon" alt="Аватар" />
+      <img class="profile__image"  alt="Аватар"/>
+      <img src="/images/Vector_edit.svg" class="profile__edit-icon"  alt="Аватар"/>
     </div>
 
     <div class="profile__info">
@@ -28,13 +28,14 @@
     <template id="card-template">
       <div class="photo-grid__item">
         <button aria-label="кнопка удалить" type="button" class="photo-grid__del-button"></button>
-        <img class="photo-grid__picture" alt="" />
+        <img class="photo-grid__picture" alt=""/>
         <div class="photo-grid__description">
           <h2 class="photo-grid__text"></h2>
           <div class="photo-grid__like-container">
             <button aria-label="отметить как понравившееся" type="button" class="photo-grid__like"></button>
             <span class="photo-grid__like-counter"></span>
           </div>
+
         </div>
       </div>
     </template>
@@ -48,32 +49,16 @@
     <button aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
     <h2 class="popup__title">Редактировать профиль</h2>
     <form class="popup__form" novalidate name="formProfile">
-      <input
-          pattern="[A-Za-zА-Яа-яЁё\-\s]{1,}"
-          data-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-          id="popup__input_name"
-          required
-          type="text"
-          name="name"
-          placeholder="Имя"
-          class="popup__input popup__input"
-          minlength="2"
-          maxlength="40"
-      />
-      <span class="popup__input-error popup__input_name-error"></span>
-      <input
-          pattern="[A-Za-zА-Яа-яЁё\-\s]{1,}"
-          data-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-          id="popup__input_job"
-          required
-          type="text"
-          name="profession"
-          placeholder="Профессия"
-          class="popup__input"
-          minlength="2"
-          maxlength="200"
-      />
-      <span id="profileProf" class="popup__input-error popup__input_job-error"></span>
+      <input pattern="[A-Za-zА-Яа-яЁё\-\s]{1,}"
+             data-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+             id="popup__input-name" required type="text" name="name" placeholder="Имя" class="popup__input popup__input"
+             minlength="2" maxlength="40"/>
+      <span class="popup__input-error popup__input-name-error"></span>
+      <input pattern="[A-Za-zА-Яа-яЁё\-\s]{1,}"
+             data-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+             id="popup__input-job" required type="text" name="profession" placeholder="Профессия" class="popup__input"
+             minlength="2" maxlength="200"/>
+      <span id="profileProf" class="popup__input-error popup__input-job-error"></span>
       <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
         Сохранить
       </button>
@@ -86,8 +71,9 @@
     <button id="closeButtonAvatar" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
     <h2 class="popup__title">Обновить аватар</h2>
     <form id="formAvatar" class="popup__form" novalidate name="formAvatar">
-      <input id="popup__input_avatar" required type="url" name="linkAvatar" placeholder="Ссылка на картинку" class="popup__input" />
-      <span class="popup__input-error popup__input_avatar-error"></span>
+      <input id="popup__input-avatar" required type="url" name="linkAvatar" placeholder="Ссылка на картинку"
+             class="popup__input"/>
+      <span class="popup__input-error popup__input-avatar-error"></span>
       <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
         Создать
       </button>
@@ -100,21 +86,14 @@
     <button id="closeButtonAddCard" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
     <h2 class="popup__title">Новое место</h2>
     <form id="formAddPhoto" class="popup__form" novalidate name="formAddPhoto">
-      <input
-          pattern="[A-Za-zА-Яа-яЁё\-\s]{1,}"
-          data-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-          id="popup__input_place"
-          required
-          type="text"
-          minlength="2"
-          maxlength="40"
-          name="namePlace"
-          placeholder="Название"
-          class="popup__input"
-      />
-      <span class="popup__input-error popup__input_place-error"></span>
-      <input id="popup__input_link" required type="url" name="linkPicture" placeholder="Ссылка на картинку" class="popup__input" />
-      <span class="popup__input-error popup__input_link-error"></span>
+      <input pattern="[A-Za-zА-Яа-яЁё\-\s]{1,}"
+             data-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+             id="popup__input-place" required type="text" minlength="2" maxlength="40" name="namePlace"
+             placeholder="Название" class="popup__input"/>
+      <span class="popup__input-error popup__input-place-error"></span>
+      <input id="popup__input-link" required type="url" name="linkPicture" placeholder="Ссылка на картинку"
+             class="popup__input"/>
+      <span class="popup__input-error popup__input-link-error"></span>
       <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
         Создать
       </button>
@@ -124,7 +103,7 @@
 <div id="popupPhoto" class="popup">
   <div class="popup__photo-content">
     <button id="closeButtonPhotoCard" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
-    <img src="" class="popup__photo" alt="фото" />
+    <img src="" class="popup__photo" alt="фото"/>
     <h2 class="popup__photo-title"></h2>
   </div>
 </div>

@@ -24,7 +24,6 @@ import {
   formElementEditAvatar,
 } from '../components/validation.js'
 
-
 import {
   openImg,
   popupImage,
