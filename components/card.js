@@ -1,10 +1,6 @@
 import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton } from "./modal_window.js";
 
-import { pushCard, myId, deleteCardFromServer, toggleLikeInServer } from "./api.js";
-
-// import {
-//   myId,
-// } from './../index.js'
+import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
@@ -17,7 +13,7 @@ function openButton(popup) {
   popup.classList.add("popup_opened");
 }
 
-const handleLikeChangeStatus = (id, isLike, cardElement) => {
+const handleLikeChangeStatus = (id, isLike, cardElement, myId) => {
   toggleLikeInServer(id, isLike)
     .then((data) => {
       updateLikeStatus(cardElement, data.likes, myId);
@@ -52,17 +48,6 @@ function addCard(data, myId) {
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
-// function deleteCard(evt) {
-//   deleteCardFromServer(evt.parentElement.children[1].owner)
-//     .then(() => {
-//       evt.parentElement.remove();
-//       console.dir(evt.parentElement.children[1].owner)
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//     })
-// }  // удаление карточки
-
 function deleteCard(card, cardId) {
   deleteCardFromServer(cardId)
     .then(() => {
@@ -93,19 +78,12 @@ function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
   });
 
   likeButton.addEventListener("click", () => {
-    handleLikeChangeStatus(data._id, likeButton.classList.contains("photo-grid__like_active"), card);
+    handleLikeChangeStatus(data._id, likeButton.classList.contains("photo-grid__like_active"), card, myId);
   });
   return cardElement;
 } // создание карточки
 
-// formAddPhoto.addEventListener("submit", (element) => {
-//   element.preventDefault();
-//   addNewCard()
-//   closeButton(popupButtonAddCard);
-//   element.target.reset();
-// }); // создание карточки из попапа
-
-function addNewCard() {
+function addNewCard(myId) {
   saveMessage(cardAddButton);
   pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {

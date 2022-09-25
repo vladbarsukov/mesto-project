@@ -15,6 +15,8 @@ import {
   formEditeProfileSubmitHandler,
   formEditeAvatarHandler,
   closeButton,
+  profileName,
+  profession
 } from '../components/modal_window.js'
 
 import {
@@ -28,32 +30,34 @@ import {
   openImg,
   popupImage,
   addNewCard,
+  addCard,
 } from '../components/card.js'
 
 import {
   avatarContainer,
   avatarEditShow,
   avatarEditHide,
+  avatar,
 } from '../components/avatar.js'
 
 // import {avatar, myId, getAllData} from "./components/api.js";
-// import {getAllData} from "./components/api.js";
+import {getAllData,} from "../components/api.js";
 
-// let myId = null
-//
-// getAllData()
-//   .then(([cards, data]) => {
-//     profileName.textContent = data.name
-//     profession.textContent = data.about
-//     avatar.src = data.avatar
-//     myId = data._id
-//     cards.reverse().forEach((element) => {
-//       addCard(element, myId);
-//     })
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   })
+let myId = null
+
+getAllData()
+  .then(([cards, data]) => {
+    profileName.textContent = data.name
+    profession.textContent = data.about
+    avatar.src = data.avatar
+    myId = data._id
+    cards.reverse().forEach((element) => {
+      addCard(element, myId);
+    })
+  })
+  .catch((err) => {
+    console.log(err);
+  })
 
 avatarContainer.addEventListener('mouseover', avatarEditShow)
 avatarContainer.addEventListener('mouseout', avatarEditHide)
@@ -63,7 +67,7 @@ formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // с�
 
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
-  addNewCard()
+  addNewCard(myId)
   element.target.reset();
 }); // создание карточки из попапа
 
@@ -136,5 +140,3 @@ avatarContainer.addEventListener('mousedown', (evt) => {
   openButton(popupEditAvatar);
   toggleButtonState(allAvatarInput, avatarAddButton)
 })
-
-// export {myId};

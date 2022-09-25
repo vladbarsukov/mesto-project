@@ -1,8 +1,3 @@
-import { profileName, profession } from "./modal_window.js";
-import { addCard } from "./card.js";
-import { avatar } from "./avatar.js";
-let myId = null;
-
 const onResponce = (res) => {
   return res.ok ? res.json() : Promise.reject(res);
 };
@@ -88,14 +83,4 @@ function getAllData() {
   return Promise.all([getCard(), getData()]);
 }
 
-getAllData().then(([cards, data]) => {
-  profileName.textContent = data.name;
-  profession.textContent = data.about;
-  avatar.src = data.avatar;
-  myId = data._id;
-  cards.reverse().forEach((element) => {
-    addCard(element, myId);
-  });
-});
-
-export { pushDataProfile, pushDataAvatar, pushCard, myId, deleteCardFromServer, toggleLikeInServer, getAllData };
+export { pushDataProfile, pushDataAvatar, pushCard, deleteCardFromServer, toggleLikeInServer, getAllData, getData };
