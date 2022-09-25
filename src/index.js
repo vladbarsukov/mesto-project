@@ -8,21 +8,28 @@ import {
   popupEditAvatar,
   formAddPhoto,
   formElementEditAvatar,
-  hideValidationErrorAfterClosePopup,
+  // hideValidationErrorAfterClosePopup,
+  // enableValidation,
+  // toggleButtonState,
   openButton,
   addDefaultEditPopupData,
-  toggleButtonState,
   allInputEditProfile,
   addButton,
   allAvatarInput,
   avatarAddButton,
-  enableValidation,
   formElementEditProfile,
   formEditeProfileSubmitHandler,
   formEditeAvatarHandler,
   closeButton,
   saveMessage
 } from '../components/modal_window.js'
+
+import {
+  hideValidationErrorAfterClosePopup,
+  enableValidation,
+  toggleButtonState,
+} from '../components/validation.js'
+
 
 import {
   addCard,
@@ -113,12 +120,13 @@ document.addEventListener('mousedown', function (evt) {
     openButton(popupEditProfile);
     toggleButtonState(allInputEditProfile, addButton)
   }
-  if(evt.target.classList.contains('profile__image')) {
-    addDefaultEditPopupData();
-    openButton(popupEditAvatar);
-    toggleButtonState(allAvatarInput, avatarAddButton)
 
-  }
+  // if(evt.target.classList.contains('profile__image')) {
+  //   addDefaultEditPopupData();
+  //   openButton(popupEditAvatar);
+  //   toggleButtonState(allAvatarInput, avatarAddButton)
+  // }
+
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupEditProfile)
     closeButton(popupButtonAddCard)
@@ -140,5 +148,11 @@ document.addEventListener('keydown', function (evt) {
     formElementEditAvatar.reset()
   }
 })   // один большой слушатель на закрытие по esc
+
+avatarContainer.addEventListener('mousedown', (evt) => {
+  addDefaultEditPopupData();
+  openButton(popupEditAvatar);
+  toggleButtonState(allAvatarInput, avatarAddButton)
+})
 
 // export {myId};
