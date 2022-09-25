@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Место</title>
-<!--  <link rel="stylesheet" href="../pages/index.css"/>-->
+  <link rel="stylesheet" href="../pages/index.css"/>
 </head>
 <body class="root">
 <header class="header">
@@ -12,7 +12,11 @@
 </header>
 <main class="main">
   <section class="profile">
-    <img class="profile__image"  alt="Аватар"/>
+    <div class="profile__image-container">
+      <img class="profile__image"  alt="Аватар"/>
+      <img src="/images/Vector_edit.svg" class="profile__edit-icon"  alt="Аватар"/>
+    </div>
+
     <div class="profile__info">
       <h1 class="profile__name"></h1>
       <button type="button" class="profile__edit-button" aria-label="редактировать профиль"></button>

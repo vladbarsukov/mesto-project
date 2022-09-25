@@ -1,6 +1,8 @@
 import {
   formAddPhoto,
-  popupButtonAddCard
+  popupButtonAddCard,
+  saveMessage,
+  closeButton,
 } from './modal_window.js'
 
 import {
@@ -24,9 +26,9 @@ const img = document.querySelector(".popup__photo");
 function openButton(popup) {
   popup.classList.add("popup_opened");
 }
-function closeButton(popup) {
-  popup.classList.remove("popup_opened");
-}
+// function closeButton(popup) {
+//   popup.classList.remove("popup_opened");
+// }
 
 const handleLikeChangeStatus = (id, isLike, cardElement) => {
   toggleLikeInServer(id, isLike)
@@ -117,11 +119,13 @@ function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
 // }); // создание карточки из попапа
 
 function addNewCard() {
+  saveMessage(cardAddButton)
   pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
-      cardAddButton.textContent = "Создание..."
       addCard(data, myId);
-    })
+    }).then(() => {
+    closeButton(popupButtonAddCard)
+  })
     .finally(() => {
     cardAddButton.textContent = "Создать"
   })

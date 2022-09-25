@@ -1,4 +1,4 @@
-import './../pages/index.css';
+// import '/pages/index.css';
 
 import {
   profileName,
@@ -17,11 +17,11 @@ import {
   allAvatarInput,
   avatarAddButton,
   enableValidation,
-  formElementEditProfile, formEditeProfileSubmitHandler, formEditeAvatarHandler
+  formElementEditProfile, formEditeProfileSubmitHandler, formEditeAvatarHandler, closeButton, saveMessage
 } from '../components/modal_window.js'
 import {
   addCard,
-  closeButton,
+  // closeButton,
   // deleteCard,
   openImg,
   popupImage,
@@ -52,7 +52,7 @@ formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // с�
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
   addNewCard()
-  closeButton(popupButtonAddCard);
+  // closeButton(popupButtonAddCard);
   element.target.reset();
 }); // создание карточки из попапа
 

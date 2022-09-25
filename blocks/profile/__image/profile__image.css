@@ -6,9 +6,5 @@
   align-items: center;
   justify-content: center;
   object-fit: cover;
-}
-
-.profile__image:hover {
-  opacity: 0.2;
-  /*background-image: url(../../../images/vectorProfile.svg);*/
+  transition: ease-out 0.2s;
 }

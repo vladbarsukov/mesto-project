@@ -33,11 +33,15 @@ function addDefaultEditPopupData() {
   isValid(jobInput, formElementEditProfile)
 }
 
+function saveMessage (button) {
+  button.textContent = "Сохранение..."
+}
+
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();
+  saveMessage(addButton)
   pushDataProfile(nameInput.value, jobInput.value)
     .then((data) => {
-      addButton.textContent = "Сохранение..."
       profileName.textContent = data.name
       profession.textContent = data.about
     })
@@ -56,9 +60,9 @@ function formEditeProfileSubmitHandler(evt) {
 
 function formEditeAvatarHandler(evt) {
   evt.preventDefault();
+  saveMessage(avatarAddButton)
   pushDataAvatar(avatarInput.value)
     .then((data) => {
-      avatarAddButton.textContent = "Создание..."
       avatar.src = data.avatar
     })
     .then(() => {
@@ -170,6 +174,6 @@ export {formAddPhoto,
   enableValidation,
   formElementEditProfile,
   formEditeProfileSubmitHandler,
-  formEditeAvatarHandler
-
+  formEditeAvatarHandler,
+  saveMessage
 };
