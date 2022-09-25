@@ -14,7 +14,6 @@ function avatarEditHide () {
   avatarEditIcon.classList.remove('profile__edit-icon_active')
 }
 
-avatarContainer.addEventListener('mouseover', avatarEditShow)
-avatarContainer.addEventListener('mouseout', avatarEditHide)
 
-export {avatarContainer, avatarEditIcon};
+
+export {avatarContainer, avatarEditIcon, avatarEditShow, avatarEditHide};

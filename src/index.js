@@ -17,8 +17,13 @@ import {
   allAvatarInput,
   avatarAddButton,
   enableValidation,
-  formElementEditProfile, formEditeProfileSubmitHandler, formEditeAvatarHandler, closeButton, saveMessage
+  formElementEditProfile,
+  formEditeProfileSubmitHandler,
+  formEditeAvatarHandler,
+  closeButton,
+  saveMessage
 } from '../components/modal_window.js'
+
 import {
   addCard,
   // closeButton,
@@ -27,6 +32,14 @@ import {
   popupImage,
   addNewCard,
 } from '../components/card.js'
+
+import {
+  avatarContainer,
+  avatarEditIcon,
+  avatarEditShow,
+  avatarEditHide,
+} from '../components/avatar.js'
+
 // import {avatar, myId, getAllData} from "./components/api.js";
 // import {avatar, getAllData} from "./components/api.js";
 
@@ -45,6 +58,9 @@ import {
 //   .catch((err) => {
 //     console.log(err);
 //   })
+
+avatarContainer.addEventListener('mouseover', avatarEditShow)
+avatarContainer.addEventListener('mouseout', avatarEditHide)
 
 formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
 formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
