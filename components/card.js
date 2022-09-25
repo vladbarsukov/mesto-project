@@ -1,16 +1,6 @@
-import {
-  formAddPhoto,
-  popupButtonAddCard,
-  saveMessage,
-  closeButton,
-} from './modal_window.js'
+import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton } from "./modal_window.js";
 
-import {
-  pushCard,
-  myId,
-  deleteCardFromServer,
-  toggleLikeInServer,
-} from './api.js'
+import { pushCard, myId, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
 // import {
 //   myId,
@@ -20,42 +10,40 @@ const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
-const cardAddButton = formAddPhoto.querySelector(".popup__submit")
+const cardAddButton = formAddPhoto.querySelector(".popup__submit");
 
 const img = document.querySelector(".popup__photo");
 function openButton(popup) {
   popup.classList.add("popup_opened");
 }
-// function closeButton(popup) {
-//   popup.classList.remove("popup_opened");
-// }
 
 const handleLikeChangeStatus = (id, isLike, cardElement) => {
   toggleLikeInServer(id, isLike)
     .then((data) => {
-      updateLikeStatus(cardElement, data.likes, myId)
+      updateLikeStatus(cardElement, data.likes, myId);
     })
     .catch((err) => {
-    console.log(err)
-  })
-}
+      console.log(err);
+    });
+};
 
-function isLike (likeArr, myId) {
- return Boolean(likeArr.find((element) => {
-  return element._id === myId
-   }
- ))
-}// сравниваю id, проверяю есть ли лайк в массиве лайков
+function isLike(likeArr, myId) {
+  return Boolean(
+    likeArr.find((element) => {
+      return element._id === myId;
+    })
+  );
+} // сравниваю id, проверяю есть ли лайк в массиве лайков
 
-function updateLikeStatus (cardElement, likeArr, myId) {
-  const likeButton = cardElement.querySelector(".photo-grid__like")
-  const likeCounter = cardElement.querySelector(".photo-grid__like-counter")
+function updateLikeStatus(cardElement, likeArr, myId) {
+  const likeButton = cardElement.querySelector(".photo-grid__like");
+  const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
   likeCounter.textContent = likeArr.length;
 
-  if(isLike(likeArr, myId)) {
-    likeButton.classList.add("photo-grid__like_active")
+  if (isLike(likeArr, myId)) {
+    likeButton.classList.add("photo-grid__like_active");
   } else {
-    likeButton.classList.remove("photo-grid__like_active")
+    likeButton.classList.remove("photo-grid__like_active");
   }
 }
 
@@ -81,35 +69,34 @@ function deleteCard(card, cardId) {
       card.remove();
     })
     .catch((err) => {
-      console.log(err)
-    })
-}  // удаление карточки
-
+      console.log(err);
+    });
+} // удаление карточки
 
 function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
   const cardElement = cardTemplate.cloneNode(true);
-  const likeButton = cardElement.querySelector(".photo-grid__like")
-  const card = cardElement.querySelector(".photo-grid__item")
-  const deleteButton = cardElement.querySelector('.photo-grid__del-button')
+  const likeButton = cardElement.querySelector(".photo-grid__like");
+  const card = cardElement.querySelector(".photo-grid__item");
+  const deleteButton = cardElement.querySelector(".photo-grid__del-button");
 
-  cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`
+  cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`;
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
-  updateLikeStatus(cardElement, data.likes, myId)
+  updateLikeStatus(cardElement, data.likes, myId);
   if (data.owner._id !== myId) {
-    cardElement.querySelector(".photo-grid__del-button").remove()
+    cardElement.querySelector(".photo-grid__del-button").remove();
   }
 
   deleteButton.addEventListener("click", () => {
-    deleteCard(card, data._id)
+    deleteCard(card, data._id);
   });
 
   likeButton.addEventListener("click", () => {
-    handleLikeChangeStatus(data._id, likeButton.classList.contains('photo-grid__like_active'), card)
-});
+    handleLikeChangeStatus(data._id, likeButton.classList.contains("photo-grid__like_active"), card);
+  });
   return cardElement;
-}  // создание карточки
+} // создание карточки
 
 // formAddPhoto.addEventListener("submit", (element) => {
 //   element.preventDefault();
@@ -119,26 +106,27 @@ function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
 // }); // создание карточки из попапа
 
 function addNewCard() {
-  saveMessage(cardAddButton)
+  saveMessage(cardAddButton);
   pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
       addCard(data, myId);
-    }).then(() => {
-    closeButton(popupButtonAddCard)
-  })
-    .finally(() => {
-    cardAddButton.textContent = "Создать"
-  })
-    .catch((err) => {
-      console.log(err)
     })
+    .then(() => {
+      closeButton(popupButtonAddCard);
+    })
+    .finally(() => {
+      cardAddButton.textContent = "Создать";
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 // попап с фото
 
 function openImg(evt) {
-  openButton(popupImage)
-  getCardData(evt)
+  openButton(popupImage);
+  getCardData(evt);
 } // открытие попапа с фото
 
 function getCardData(evt) {
@@ -147,27 +135,4 @@ function getCardData(evt) {
   img.alt = imgDescription.textContent;
 } // получение данных из попапа для добавления новой карточки
 
-// document.addEventListener('mousedown', function (evt) {
-//   if(evt.target.classList.contains('popup__close-button')) {
-//     closeButton(popupImage)
-//   }
-//
-//   if(evt.target.classList.contains('photo-grid__del-button')){
-//     deleteCard(evt.target)
-//   }
-//   if(evt.target.classList.contains('photo-grid__picture')){
-//     openImg(evt)
-//   }
-//   if(evt.target.classList.contains('popup_opened')){
-//     closeButton(popupImage)
-//   }
-// })     //  слушатель на все
-//
-// document.addEventListener('keydown', function (evt) {
-//   if(evt.key === 'Escape') {
-//     closeButton(popupImage)
-//   }
-// })   // слушатель на закрытие по esc
-
-
-export {addCard, closeButton, openImg, popupImage, addNewCard};
+export { addCard, closeButton, openImg, popupImage, addNewCard };

@@ -1,16 +1,10 @@
 // import '/pages/index.css';
 
 import {
-  profileName,
-  profession,
   popupEditProfile,
   popupButtonAddCard,
   popupEditAvatar,
   formAddPhoto,
-  formElementEditAvatar,
-  // hideValidationErrorAfterClosePopup,
-  // enableValidation,
-  // toggleButtonState,
   openButton,
   addDefaultEditPopupData,
   allInputEditProfile,
@@ -21,20 +15,17 @@ import {
   formEditeProfileSubmitHandler,
   formEditeAvatarHandler,
   closeButton,
-  saveMessage
 } from '../components/modal_window.js'
 
 import {
   hideValidationErrorAfterClosePopup,
   enableValidation,
   toggleButtonState,
+  formElementEditAvatar,
 } from '../components/validation.js'
 
 
 import {
-  addCard,
-  // closeButton,
-  // deleteCard,
   openImg,
   popupImage,
   addNewCard,
@@ -44,7 +35,6 @@ import {
   avatarContainer,
   avatarEditShow,
   avatarEditHide,
-  avatar,
 } from '../components/avatar.js'
 
 // import {avatar, myId, getAllData} from "./components/api.js";
@@ -120,13 +110,6 @@ document.addEventListener('mousedown', function (evt) {
     openButton(popupEditProfile);
     toggleButtonState(allInputEditProfile, addButton)
   }
-
-  // if(evt.target.classList.contains('profile__image')) {
-  //   addDefaultEditPopupData();
-  //   openButton(popupEditAvatar);
-  //   toggleButtonState(allAvatarInput, avatarAddButton)
-  // }
-
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupEditProfile)
     closeButton(popupButtonAddCard)
