@@ -25,25 +25,23 @@ import {
   popupImage,
   addNewCard,
 } from './components/card.js'
-import {avatar, myId, getAllData} from "./components/api.js";
+// import {avatar, myId, getAllData} from "./components/api.js";
+import {avatar, getAllData} from "./components/api.js";
+let myId = null
+getAllData()
+  .then(([cards, data]) => {
+    profileName.textContent = data.name
+    profession.textContent = data.about
+    avatar.src = data.avatar
+    myId = data._id
 
-// function getAllData() {
-//   return Promise.all([getCard(), getData()])
-// }
-//
-// getAllData()
-//   .then(([cards, data]) => {
-//     profileName.textContent = data.name
-//     profession.textContent = data.about
-//     avatar.src = data.avatar
-//     myId = data._id
-//     cards.reverse().forEach((element) =>{
-//       addCard(element, myId);
-//     })
-//   .catch((err) => {
-//       console.log(err)
-//     })
-//   })
+    cards.reverse().forEach((element) => {
+      addCard(element, myId);
+    })
+  })
+  .catch((err) => {
+    console.log(err);
+  })
 
 formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
 formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем

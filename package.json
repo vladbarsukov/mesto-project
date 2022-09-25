@@ -1,0 +1,19 @@
+{
+  "name": "mesto-project",
+  "version": "1.0.0",
+  "description": "Проект для платформы яндекс практикум. Проект построен с применением Fluxbox и grid вёрстки, адаптивный для мобильых и десктопных устройств. Реализовано окно popup, различные кнопки. https://github.com/vladbarsukov/mesto-project.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladbarsukov/mesto-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vladbarsukov/mesto-project/issues"
+  },
+  "homepage": "https://github.com/vladbarsukov/mesto-project#readme"
+}
