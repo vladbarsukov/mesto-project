@@ -9,7 +9,7 @@
 //
 // const errorMessagePlace = formAddPhoto.querySelector(".popup__input_place-error");
 // const errorMessageLink = formAddPhoto.querySelector(".popup__input_link-error");
-//
+
 // const showInputError = (inputElement, errorMessage, formElement) => {
 //   const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
 //   errorElement.classList.add('popup__input-error_active')
@@ -75,44 +75,12 @@
 //   });
 // };
 //
-// enableValidation();
 //
 // function hideValidationErrorAfterClosePopup() {
 //   errorMessagePlace.classList.remove('popup__input-error_active');
 //   errorMessageLink.classList.remove('popup__input-error_active');
 // }  // скрываю валидацию после закрытия попапа
 //
-// document.addEventListener('mousedown', function (evt) {
-//   if(evt.target.classList.contains('popup__close-button')) {
-//     closeButton(popupEditProfile)
-//     closeButton(popupButtonAddCard)
-//     formAddPhoto.reset()
-//     hideValidationErrorAfterClosePopup()
-//   }
-//   if(evt.target.classList.contains('profile__add-button')) {
-//     openButton(popupButtonAddCard)
-//
-//   }
-//   if(evt.target.classList.contains('profile__edit-button')) {
-//     addDefaultEditPopupData();
-//     openButton(popupEditProfile);
-//     toggleButtonState(allInputEditProfile, addButton)
-//   }
-//   if(evt.target.classList.contains('popup_opened')){
-//     closeButton(popupEditProfile)
-//     closeButton(popupButtonAddCard)
-//     hideValidationErrorAfterClosePopup()
-//     formAddPhoto.reset()
-//   }
-// })     // один большой слушатель на все
-//
-// document.addEventListener('keydown', function (evt) {
-//   if(evt.key === 'Escape') {
-//     closeButton(popupEditProfile)
-//     closeButton(popupButtonAddCard)
-//     hideValidationErrorAfterClosePopup()
-//     formAddPhoto.reset()
-//   }
-// })   // один большой слушатель на закрытие по esc
+
 //
 // export {isValid};

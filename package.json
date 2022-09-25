@@ -2,9 +2,10 @@
   "name": "mesto-project",
   "version": "1.0.0",
   "description": "Проект для платформы яндекс практикум. Проект построен с применением Fluxbox и grid вёрстки, адаптивный для мобильых и десктопных устройств. Реализовано окно popup, различные кнопки. https://github.com/vladbarsukov/mesto-project.git",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,17 @@
   "bugs": {
     "url": "https://github.com/vladbarsukov/mesto-project/issues"
   },
-  "homepage": "https://github.com/vladbarsukov/mesto-project#readme"
+  "homepage": "https://github.com/vladbarsukov/mesto-project#readme",
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "babel-loader": "^8.2.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "core-js": "^3.25.2"
+  }
 }

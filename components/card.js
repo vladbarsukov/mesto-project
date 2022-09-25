@@ -9,12 +9,16 @@ import {
   deleteCardFromServer,
   toggleLikeInServer,
 } from './api.js'
+
+// import {
+//   myId,
+// } from './../index.js'
+
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
 const cardAddButton = formAddPhoto.querySelector(".popup__submit")
-
 
 const img = document.querySelector(".popup__photo");
 function openButton(popup) {
@@ -37,7 +41,7 @@ const handleLikeChangeStatus = (id, isLike, cardElement) => {
 function isLike (likeArr, myId) {
  return Boolean(likeArr.find((element) => {
   return element._id === myId
- }
+   }
  ))
 }// сравниваю id, проверяю есть ли лайк в массиве лайков
 
