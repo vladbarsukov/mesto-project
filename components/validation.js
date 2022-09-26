@@ -7,6 +7,7 @@ const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__inpu
 const showInputError = (inputElement, errorMessage, formElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.add("popup__input-error_active");
+  inputElement.classList.add("popup__input_error");
   if (inputElement.validity.patternMismatch) {
     errorElement.textContent = inputElement.dataset.pattern;
   } else {
@@ -17,6 +18,7 @@ const showInputError = (inputElement, errorMessage, formElement) => {
 const hideInputError = (inputElement, formElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.remove("popup__input-error_active");
+  inputElement.classList.remove("popup__input_error");
   errorElement.textContent = "";
 }; // скрываю текст с ошибкой
 
@@ -53,7 +55,7 @@ const setEventListeners = (formElement) => {
       toggleButtonState(inputList, buttonElement);
     });
   });
-};
+}; // вешаю слушатели всем инпутам
 
 const enableValidation = () => {
   const formList = Array.from(document.querySelectorAll(".popup__form"));
@@ -63,7 +65,7 @@ const enableValidation = () => {
     });
     setEventListeners(formElement);
   });
-};
+}; // включение валидации
 
 function hideValidationErrorAfterClosePopup() {
   errorMessagePlace.classList.remove("popup__input-error_active");

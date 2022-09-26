@@ -1,4 +1,4 @@
-import '/pages/index.css';
+// import '/pages/index.css';
 
 import {
   popupEditProfile,
@@ -40,7 +40,6 @@ import {
   avatar,
 } from '../components/avatar.js'
 
-// import {avatar, myId, getAllData} from "./components/api.js";
 import {getAllData,} from "../components/api.js";
 
 let myId = null
@@ -57,10 +56,10 @@ getAllData()
   })
   .catch((err) => {
     console.log(err);
-  })
+  }) // получаю все данные с сервера
 
-avatarContainer.addEventListener('mouseover', avatarEditShow)
-avatarContainer.addEventListener('mouseout', avatarEditHide)
+avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
+avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
 
 formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
 formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
@@ -78,9 +77,6 @@ document.addEventListener('mousedown', function (evt) {
     closeButton(popupImage)
   }
 
-  // if(evt.target.classList.contains('photo-grid__del-button')){
-  //   deleteCard(evt.target)
-  // }
   if(evt.target.classList.contains('photo-grid__picture')){
     openImg(evt)
   }
@@ -139,4 +135,4 @@ avatarContainer.addEventListener('mousedown', (evt) => {
   addDefaultEditPopupData();
   openButton(popupEditAvatar);
   toggleButtonState(allAvatarInput, avatarAddButton)
-})
+}) // слушатель открытия окна смены аватара

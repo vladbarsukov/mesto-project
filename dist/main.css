@@ -38,4 +38,5 @@
 .popup__submit_disabled,.popup__submit_disabled:hover{background-color:#fff;border:1px solid #000;color:#000;opacity:.2}
 .popup__input-error{color:red;margin:0 0 13px 36px;min-height:37px;padding-top:5px;visibility:hidden;width:358px}.popup__input-error_active{visibility:visible}
 .popup__form{display:flex;flex-direction:column}
+popup__input_error{border-color:red}
 

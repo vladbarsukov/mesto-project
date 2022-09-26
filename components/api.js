@@ -57,7 +57,7 @@ function pushCard(cardLink, cardName) {
       name: cardName,
     }),
   }).then(onResponce);
-}
+} // отправка карточки на сервер
 
 function deleteCardFromServer(id) {
   return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/${id}`, {
@@ -67,11 +67,11 @@ function deleteCardFromServer(id) {
       "Content-Type": "application/json",
     },
   }).then(onResponce);
-}
+} // удаление карточки с сервера
 
-function toggleLikeInServer(id, isLike) {
+function toggleLikeInServer(id, isThereLike) {
   return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/likes/${id}`, {
-    method: isLike ? "DELETE" : "PUT",
+    method: isThereLike ? "DELETE" : "PUT",
     headers: {
       authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
       "Content-Type": "application/json",
@@ -81,6 +81,6 @@ function toggleLikeInServer(id, isLike) {
 
 function getAllData() {
   return Promise.all([getCard(), getData()]);
-}
+} // получение данных с сервера одновременно
 
 export { pushDataProfile, pushDataAvatar, pushCard, deleteCardFromServer, toggleLikeInServer, getAllData, getData };

@@ -29,11 +29,11 @@ function addDefaultEditPopupData() {
   jobInput.value = profession.textContent;
   isValid(nameInput, formElementEditProfile);
   isValid(jobInput, formElementEditProfile);
-}
+} // значение по умолчанию в попапе с данными профиля
 
 function saveMessage(button) {
   button.textContent = "Сохранение...";
-}
+} // изменение текста кнопки в модальном окне во время отправки данных
 
 function formEditeProfileSubmitHandler(evt) {
   evt.preventDefault();

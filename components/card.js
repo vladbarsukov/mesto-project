@@ -7,23 +7,23 @@ const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
 const cardAddButton = formAddPhoto.querySelector(".popup__submit");
-
 const img = document.querySelector(".popup__photo");
+
 function openButton(popup) {
   popup.classList.add("popup_opened");
-}
+} // открытие попапа
 
-const handleLikeChangeStatus = (id, isLike, cardElement, myId) => {
-  toggleLikeInServer(id, isLike)
+const handleLikeShowStatus = (id, isThereLike, cardElement, myId) => {
+  toggleLikeInServer(id, isThereLike)
     .then((data) => {
-      updateLikeStatus(cardElement, data.likes, myId);
+      showLikeStatus(cardElement, data.likes, myId);
     })
     .catch((err) => {
       console.log(err);
     });
-};
+}; // обновляю статус лайка на сервере
 
-function isLike(likeArr, myId) {
+function isThereLike(likeArr, myId) {
   return Boolean(
     likeArr.find((element) => {
       return element._id === myId;
@@ -31,20 +31,20 @@ function isLike(likeArr, myId) {
   );
 } // сравниваю id, проверяю есть ли лайк в массиве лайков
 
-function updateLikeStatus(cardElement, likeArr, myId) {
+function showLikeStatus(cardElement, likeArr, myId) {
   const likeButton = cardElement.querySelector(".photo-grid__like");
   const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
   likeCounter.textContent = likeArr.length;
 
-  if (isLike(likeArr, myId)) {
+  if (isThereLike(likeArr, myId)) {
     likeButton.classList.add("photo-grid__like_active");
   } else {
     likeButton.classList.remove("photo-grid__like_active");
   }
-}
+} // обновляю статус лайка на странице
 
 function addCard(data, myId) {
-  const card = createNewCard(data, myId, handleLikeChangeStatus, deleteCard);
+  const card = createNewCard(data, myId, handleLikeShowStatus, deleteCard);
   cardSection.prepend(card);
 } //// функция добавления карточки из массива на страницу
 
@@ -58,7 +58,7 @@ function deleteCard(card, cardId) {
     });
 } // удаление карточки
 
-function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
+function createNewCard(data, myId, handleLikeShowStatus, deleteCard) {
   const cardElement = cardTemplate.cloneNode(true);
   const likeButton = cardElement.querySelector(".photo-grid__like");
   const card = cardElement.querySelector(".photo-grid__item");
@@ -68,7 +68,7 @@ function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
   cardElement.querySelector(".photo-grid__text").textContent = data.name;
   cardElement.querySelector(".photo-grid__picture").src = data.link;
   cardElement.querySelector(".photo-grid__picture").alt = data.name;
-  updateLikeStatus(cardElement, data.likes, myId);
+  showLikeStatus(cardElement, data.likes, myId);
   if (data.owner._id !== myId) {
     cardElement.querySelector(".photo-grid__del-button").remove();
   }
@@ -78,7 +78,7 @@ function createNewCard(data, myId, handleLikeChangeStatus, deleteCard) {
   });
 
   likeButton.addEventListener("click", () => {
-    handleLikeChangeStatus(data._id, likeButton.classList.contains("photo-grid__like_active"), card, myId);
+    handleLikeShowStatus(data._id, likeButton.classList.contains("photo-grid__like_active"), card, myId);
   });
   return cardElement;
 } // создание карточки
@@ -98,7 +98,7 @@ function addNewCard(myId) {
     .catch((err) => {
       console.log(err);
     });
-}
+}  // отправляю новую карту на сервер
 
 // попап с фото
 
