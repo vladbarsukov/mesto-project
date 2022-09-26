@@ -1,0 +1,14 @@
+.photo-grid__like-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-grid__like-counter {
+    text-align: center;
+    font-family: 'Inter', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    margin: 3px 0 0;
+}
