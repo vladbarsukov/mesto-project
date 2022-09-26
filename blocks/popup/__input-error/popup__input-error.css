@@ -10,3 +10,10 @@
 .popup__input-error_active {
     visibility: visible;
 }
+
+@media screen and (max-width: 907px) {
+    .popup__input-error {
+        width: 235px;
+        min-height: 55px;
+    }
+}

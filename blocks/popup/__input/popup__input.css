@@ -25,9 +25,7 @@
 
 @media screen and (max-width: 907px) {
   .popup__input {
-    margin-bottom: 28px;
     width: 235px;
-    margin-top: 71px;
     margin-left: 20px;
   }
-}
+} /*Добавил высоты чтобы модальное не растягивалось при появлении текста об ошибки *\
