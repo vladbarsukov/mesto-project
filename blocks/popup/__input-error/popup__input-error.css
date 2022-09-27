@@ -7,10 +7,6 @@
     margin: 0px 0px 13px 36px;
 }
 
-.popup__input-error_active {
-    visibility: visible;
-}
-
 @media screen and (max-width: 907px) {
     .popup__input-error {
         width: 235px;

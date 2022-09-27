@@ -5,29 +5,29 @@ import {
   popupButtonAddCard,
   popupEditAvatar,
   formAddPhoto,
-  openButton,
+  handleOpenPopup,
   addDefaultEditPopupData,
-  allInputEditProfile,
+  allInputsEditProfile,
   addButton,
-  allAvatarInput,
+  allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
-  formEditeProfileSubmitHandler,
-  formEditeAvatarHandler,
-  closeButton,
+  HandlerEditeProfileSubmit,
+  HandlerEditeAvatar,
+  handleCloseButton,
   profileName,
-  profession
-} from '../components/modal_window.js'
+  profession,
+  formElementEditAvatar,
+  formsList
+} from '../components/modal.js'
 
 import {
-  hideValidationErrorAfterClosePopup,
   enableValidation,
   toggleButtonState,
-  formElementEditAvatar,
-} from '../components/validation.js'
+  validateBeforeOpenPopup
+} from '../components/validate.js'
 
 import {
-  openImg,
   popupImage,
   addNewCard,
   addCard,
@@ -41,6 +41,9 @@ import {
 } from '../components/avatar.js'
 
 import {getAllData,} from "../components/api.js";
+
+const profileAddButton = document.querySelector(".profile__add-button")
+const profileEditButton = document.querySelector(".profile__edit-button")
 
 let myId = null
 
@@ -61,8 +64,8 @@ getAllData()
 avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
 
-formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
-formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
+formElementEditProfile.addEventListener("submit", HandlerEditeProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
+formElementEditAvatar.addEventListener("submit", HandlerEditeAvatar); // слушатель для добавления значения с сервера в попап с именем
 
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
@@ -70,69 +73,63 @@ formAddPhoto.addEventListener("submit", (element) => {
   element.target.reset();
 }); // создание карточки из попапа
 
-enableValidation(); //подключение валидации
+enableValidation(formsList); //подключение валидации функция принимает на вход только список форм для обработки остальное
+//я вычисляю из списка форм внутри функции
 
-document.addEventListener('mousedown', function (evt) {
+popupImage.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
-    closeButton(popupImage)
+    handleCloseButton(popupImage)
   }
 
-  if(evt.target.classList.contains('photo-grid__picture')){
-    openImg(evt)
-  }
   if(evt.target.classList.contains('popup_opened')){
-    closeButton(popupImage)
+    handleCloseButton(popupImage)
   }
 })     //  слушатель карточек
 
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape') {
-    closeButton(popupImage)
-  }
-})   // слушатель на закрытие по esc
 
-document.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup__close-button')) {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-    hideValidationErrorAfterClosePopup()
-  }
-  if(evt.target.classList.contains('profile__add-button')) {
-    openButton(popupButtonAddCard)
+profileAddButton.addEventListener('mousedown', function () {
+  validateBeforeOpenPopup(formAddPhoto)
+  handleOpenPopup(popupButtonAddCard)
 
-  }
-  if(evt.target.classList.contains('profile__edit-button')) {
-    addDefaultEditPopupData();
-    openButton(popupEditProfile);
-    toggleButtonState(allInputEditProfile, addButton)
-  }
-  if(evt.target.classList.contains('popup_opened')){
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup()
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
+})
 
-  }
-})     // один большой слушатель модальных окон
-
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape') {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup()
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-  }
-})   // один большой слушатель на закрытие по esc
-
-avatarContainer.addEventListener('mousedown', (evt) => {
+profileEditButton.addEventListener('mousedown', function () {
   addDefaultEditPopupData();
-  openButton(popupEditAvatar);
-  toggleButtonState(allAvatarInput, avatarAddButton)
+  handleOpenPopup(popupEditProfile);
+  toggleButtonState(allInputsEditProfile, addButton)
+})
+
+avatarContainer.addEventListener('mousedown', () => {
+  validateBeforeOpenPopup(formElementEditAvatar)
+  handleOpenPopup(popupEditAvatar);
+  toggleButtonState(allAvatarInputs, avatarAddButton)
 }) // слушатель открытия окна смены аватара
+
+popupEditProfile.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup_opened')){
+    handleCloseButton(popupEditProfile)
+  }
+  if(evt.target.classList.contains('popup__close-button')) {
+    handleCloseButton(popupEditProfile)
+  }
+})
+
+popupButtonAddCard.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup_opened')){
+    handleCloseButton(popupButtonAddCard)
+  }
+  if(evt.target.classList.contains('popup__close-button')) {
+    handleCloseButton(popupButtonAddCard)
+  }
+})
+
+popupEditAvatar.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup_opened')){
+    handleCloseButton(popupEditAvatar)
+  }
+  if(evt.target.classList.contains('popup__close-button')) {
+    handleCloseButton(popupEditAvatar)
+  }
+})
+
+

@@ -1,7 +1,9 @@
 import { pushDataProfile, pushDataAvatar } from "./api.js";
 import { avatar } from "./avatar.js";
-import { isValid, formAddPhoto, formElementEditAvatar } from "./validation.js";
+import { isValid } from "./validate.js";
 
+const formAddPhoto = document.forms.formAddPhoto;
+const formElementEditAvatar = document.forms.formAvatar;
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const popupEditAvatar = document.querySelector("#popupProfileImage");
@@ -11,17 +13,32 @@ const jobInput = formElementEditProfile.profession;
 const avatarInput = formElementEditAvatar.linkAvatar;
 const profileName = document.querySelector(".profile__name");
 const profession = document.querySelector(".profile__description");
-const allInputEditProfile = Array.from(formElementEditProfile.querySelectorAll(".popup__input"));
-const allAvatarInput = Array.from(formElementEditAvatar.querySelectorAll(".popup__input"));
+const allInputsEditProfile = Array.from(formElementEditProfile.querySelectorAll(".popup__input"));
+const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popup__input"));
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
+const formsList = Array.from(document.querySelectorAll(".popup__form"));
 
-function openButton(popup) {
+let handleClosePopupKeydownEscape; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
+
+function handleOpenPopup(popup) {
+
+  handleClosePopupKeydownEscape = function (evt)  {
+    const CloseButton = function ()  {
+      handleCloseButton(popup)
+    }
+    if(evt.key === 'Escape') {
+      return  CloseButton()
+    }
+  }
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', handleClosePopupKeydownEscape)
+
 } // функция открытия попапа
 
-function closeButton(popup) {
+function handleCloseButton (popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', handleClosePopupKeydownEscape)
 } //функция закрытия попапа
 
 function addDefaultEditPopupData() {
@@ -35,7 +52,7 @@ function saveMessage(button) {
   button.textContent = "Сохранение...";
 } // изменение текста кнопки в модальном окне во время отправки данных
 
-function formEditeProfileSubmitHandler(evt) {
+function HandlerEditeProfileSubmit(evt) {
   evt.preventDefault();
   saveMessage(addButton);
   pushDataProfile(nameInput.value, jobInput.value)
@@ -44,7 +61,7 @@ function formEditeProfileSubmitHandler(evt) {
       profession.textContent = data.about;
     })
     .then(() => {
-      closeButton(popupEditProfile);
+      handleCloseButton(popupEditProfile);
     })
     .finally(() => {
       addButton.textContent = "Сохранить";
@@ -54,7 +71,7 @@ function formEditeProfileSubmitHandler(evt) {
     });
 } //добавление значения с сервера в попап с именем
 
-function formEditeAvatarHandler(evt) {
+function HandlerEditeAvatar(evt) {
   evt.preventDefault();
   saveMessage(avatarAddButton);
   pushDataAvatar(avatarInput.value)
@@ -62,7 +79,7 @@ function formEditeAvatarHandler(evt) {
       avatar.src = data.avatar;
     })
     .then(() => {
-      closeButton(popupEditAvatar);
+      handleCloseButton(popupEditAvatar);
     })
     .finally(() => {
       avatarAddButton.textContent = "Создать";
@@ -80,15 +97,17 @@ export {
   profession,
   addButton,
   popupEditProfile,
-  allInputEditProfile,
-  openButton,
-  closeButton,
+  allInputsEditProfile,
+  handleOpenPopup,
+  handleCloseButton,
   addDefaultEditPopupData,
   popupEditAvatar,
-  allAvatarInput,
+  allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
-  formEditeProfileSubmitHandler,
-  formEditeAvatarHandler,
+  HandlerEditeProfileSubmit,
+  HandlerEditeAvatar,
   saveMessage,
+  formElementEditAvatar,
+  formsList
 };

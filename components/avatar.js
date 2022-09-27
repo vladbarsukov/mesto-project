@@ -3,12 +3,12 @@ const avatarEditIcon = document.querySelector(".profile__edit-icon");
 const avatar = document.querySelector(".profile__image");
 
 function avatarEditShow() {
-  avatar.style.opacity = "0.2";
+  avatar.classList.add("profile__image_opacity");
   avatarEditIcon.classList.add("profile__edit-icon_active");
 } // затемнение аватара
 
 function avatarEditHide() {
-  avatar.style.opacity = "1";
+  avatar.classList.remove("profile__image_opacity");
   avatarEditIcon.classList.remove("profile__edit-icon_active");
 } // затемнение аватара
 

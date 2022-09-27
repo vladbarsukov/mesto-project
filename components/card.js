@@ -1,4 +1,4 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton } from "./modal_window.js";
+import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handleOpenPopup } from "./modal.js";
 
 import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
@@ -8,10 +8,6 @@ const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
 const cardAddButton = formAddPhoto.querySelector(".popup__submit");
 const img = document.querySelector(".popup__photo");
-
-function openButton(popup) {
-  popup.classList.add("popup_opened");
-} // открытие попапа
 
 const handleLikeShowStatus = (id, isThereLike, cardElement, myId) => {
   toggleLikeInServer(id, isThereLike)
@@ -63,18 +59,24 @@ function createNewCard(data, myId, handleLikeShowStatus, deleteCard) {
   const likeButton = cardElement.querySelector(".photo-grid__like");
   const card = cardElement.querySelector(".photo-grid__item");
   const deleteButton = cardElement.querySelector(".photo-grid__del-button");
+  const image = cardElement.querySelector(".photo-grid__picture");
+  const cardDescription = cardElement.querySelector(".photo-grid__text")
 
-  cardElement.querySelector(".photo-grid__picture").owner = `${data._id}`;
-  cardElement.querySelector(".photo-grid__text").textContent = data.name;
-  cardElement.querySelector(".photo-grid__picture").src = data.link;
-  cardElement.querySelector(".photo-grid__picture").alt = data.name;
+  image.owner = `${data._id}`;
+  cardDescription.textContent = data.name;
+  image.src = data.link;
+  image.alt = data.name;
   showLikeStatus(cardElement, data.likes, myId);
   if (data.owner._id !== myId) {
-    cardElement.querySelector(".photo-grid__del-button").remove();
+    deleteButton.remove();
   }
 
   deleteButton.addEventListener("click", () => {
     deleteCard(card, data._id);
+  });
+
+  image.addEventListener("click", () => {
+    openImg(image)
   });
 
   likeButton.addEventListener("click", () => {
@@ -90,7 +92,7 @@ function addNewCard(myId) {
       addCard(data, myId);
     })
     .then(() => {
-      closeButton(popupButtonAddCard);
+      handleCloseButton(popupButtonAddCard);
     })
     .finally(() => {
       cardAddButton.textContent = "Создать";
@@ -102,15 +104,15 @@ function addNewCard(myId) {
 
 // попап с фото
 
-function openImg(evt) {
-  openButton(popupImage);
-  getCardData(evt);
+function openImg(cardElement) {
+  handleOpenPopup(popupImage);
+  getCardData(cardElement);
 } // открытие попапа с фото
 
-function getCardData(evt) {
-  imgDescription.textContent = evt.target.alt;
-  img.src = evt.target.src;
-  img.alt = imgDescription.textContent;
+function getCardData(image) {
+  imgDescription.textContent = image.alt;
+  img.src = image.src;
+  img.alt = image.textContent;
 } // получение данных из попапа для добавления новой карточки
 
-export { addCard, closeButton, openImg, popupImage, addNewCard };
+export { addCard, handleCloseButton, popupImage, addNewCard,};
