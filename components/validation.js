@@ -3,6 +3,10 @@ const formAddPhoto = document.forms.formAddPhoto;
 const errorMessagePlace = formAddPhoto.querySelector(".popup__input-place-error");
 const errorMessageLink = formAddPhoto.querySelector(".popup__input-link-error");
 const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input-avatar-error")
+const formsList = Array.from(document.querySelectorAll(".popup__form"));
+console.log(formsList)
+
+
 
 const showInputError = (inputElement, errorMessage, formElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -57,12 +61,11 @@ const setEventListeners = (formElement) => {
   });
 }; // вешаю слушатели всем инпутам
 
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll(".popup__form"));
-  formList.forEach((formElement) => {
-    formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-    });
+const enableValidation = (formsList) => {
+  formsList.forEach((formElement) => {
+    // formElement.addEventListener("submit", (evt) => {
+    //   evt.preventDefault();
+    // });
     setEventListeners(formElement);
   });
 }; // включение валидации
@@ -71,6 +74,11 @@ function hideValidationErrorAfterClosePopup() {
   errorMessagePlace.classList.remove("popup__input-error_active");
   errorMessageLink.classList.remove("popup__input-error_active");
   errorMessageLinkAvatar.classList.remove("popup__input-error_active");
+  // errorMessagePlace.classList.remove("popup__input_error");
+  // errorMessageLink.classList.remove("popup__input_error_active");
+  // errorMessageLinkAvatar.classList.remove("popup__input_error_active");
 } // скрываю валидацию после закрытия попапа
 
-export { isValid, enableValidation, hideValidationErrorAfterClosePopup, toggleButtonState, formAddPhoto, formElementEditAvatar};
+
+
+export { isValid, enableValidation, hideValidationErrorAfterClosePopup, toggleButtonState, formAddPhoto, formElementEditAvatar, formsList};

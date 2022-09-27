@@ -24,6 +24,7 @@ import {
   enableValidation,
   toggleButtonState,
   formElementEditAvatar,
+  formsList
 } from '../components/validation.js'
 
 import {
@@ -41,6 +42,7 @@ import {
 } from '../components/avatar.js'
 
 import {getAllData,} from "../components/api.js";
+
 
 let myId = null
 
@@ -70,7 +72,7 @@ formAddPhoto.addEventListener("submit", (element) => {
   element.target.reset();
 }); // создание карточки из попапа
 
-enableValidation(); //подключение валидации
+enableValidation(formsList); //подключение валидации
 
 document.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
@@ -98,7 +100,7 @@ document.addEventListener('mousedown', function (evt) {
     closeButton(popupEditAvatar)
     formAddPhoto.reset()
     formElementEditAvatar.reset()
-    hideValidationErrorAfterClosePopup()
+    hideValidationErrorAfterClosePopup(formAddPhoto)
   }
   if(evt.target.classList.contains('profile__add-button')) {
     handleOpenPopup(popupButtonAddCard)
@@ -113,7 +115,7 @@ document.addEventListener('mousedown', function (evt) {
     closeButton(popupEditProfile)
     closeButton(popupButtonAddCard)
     closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup()
+    hideValidationErrorAfterClosePopup(formAddPhoto)
     formAddPhoto.reset()
     formElementEditAvatar.reset()
 
@@ -125,7 +127,7 @@ document.addEventListener('keydown', function (evt) {
     closeButton(popupEditProfile)
     closeButton(popupButtonAddCard)
     closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup()
+    hideValidationErrorAfterClosePopup(formAddPhoto)
     formAddPhoto.reset()
     formElementEditAvatar.reset()
   }
