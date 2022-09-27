@@ -28,7 +28,6 @@ import {
 } from '../components/validation.js'
 
 import {
-  openImg,
   popupImage,
   addNewCard,
   addCard,
@@ -43,7 +42,7 @@ import {
 
 import {getAllData,} from "../components/api.js";
 
-
+const profileAddButton = document.querySelector(".profile__add-button")
 let myId = null
 
 getAllData()
@@ -74,66 +73,108 @@ formAddPhoto.addEventListener("submit", (element) => {
 
 enableValidation(formsList); //подключение валидации
 
-document.addEventListener('mousedown', function (evt) {
+popupImage.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
     closeButton(popupImage)
   }
 
-  if(evt.target.classList.contains('photo-grid__picture')){
-    openImg(evt)
-  }
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupImage)
   }
 })     //  слушатель карточек
 
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape') {
-    closeButton(popupImage)
+
+
+// document.addEventListener('keydown', function (evt) {
+//   if(evt.key === 'Escape') {
+//     closeButton(popupImage)
+//   }
+// })   // слушатель на закрытие по esc
+
+profileAddButton.addEventListener('mousedown', function () {
+  handleOpenPopup(popupButtonAddCard)
+})
+popupEditProfile.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup_opened')){
+    closeButton(popupEditProfile)
   }
-})   // слушатель на закрытие по esc
+  if(evt.target.classList.contains('popup__close-button')) {
+    closeButton(popupEditProfile)
+  }
+})
+
+popupButtonAddCard.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup_opened')){
+    closeButton(popupButtonAddCard)
+    hideValidationErrorAfterClosePopup(formAddPhoto)
+    formAddPhoto.reset()
+  }
+  if(evt.target.classList.contains('popup__close-button')) {
+    closeButton(popupButtonAddCard)
+    hideValidationErrorAfterClosePopup(formAddPhoto)
+    formAddPhoto.reset()
+  }
+})
+
+popupEditAvatar.addEventListener('mousedown', function (evt) {
+  if(evt.target.classList.contains('popup_opened')){
+    closeButton(popupEditAvatar)
+    hideValidationErrorAfterClosePopup(formElementEditAvatar)
+    formElementEditAvatar.reset()
+  }
+  if(evt.target.classList.contains('popup__close-button')) {
+    closeButton(popupEditAvatar)
+    hideValidationErrorAfterClosePopup(formElementEditAvatar)
+    formElementEditAvatar.reset()
+  }
+})
+
+// document.addEventListener('keydown', function (evt) {
+//   if(evt.key === 'Escape') {
+//     closeButton(popupButtonAddCard)
+//   }
+// })
 
 document.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-    hideValidationErrorAfterClosePopup(formAddPhoto)
+    // closeButton(popupEditProfile)
+    // closeButton(popupButtonAddCard)
+    // closeButton(popupEditAvatar)
+    // formAddPhoto.reset()
+    // formElementEditAvatar.reset()
+    // hideValidationErrorAfterClosePopup(formAddPhoto)
   }
-  if(evt.target.classList.contains('profile__add-button')) {
-    handleOpenPopup(popupButtonAddCard)
-
-  }
+  // if(evt.target.classList.contains('profile__add-button')) {
+  //   handleOpenPopup(popupButtonAddCard)
+  // }
   if(evt.target.classList.contains('profile__edit-button')) {
     addDefaultEditPopupData();
     handleOpenPopup(popupEditProfile);
     toggleButtonState(allInputsEditProfile, addButton)
   }
   if(evt.target.classList.contains('popup_opened')){
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup(formAddPhoto)
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
+    // closeButton(popupEditProfile)
+    // closeButton(popupButtonAddCard)
+    // closeButton(popupEditAvatar)
+    // hideValidationErrorAfterClosePopup(formAddPhoto)
+    // formAddPhoto.reset()
+    // formElementEditAvatar.reset()
 
   }
 })     // один большой слушатель модальных окон
 
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape') {
-    closeButton(popupEditProfile)
-    closeButton(popupButtonAddCard)
-    closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup(formAddPhoto)
-    formAddPhoto.reset()
-    formElementEditAvatar.reset()
-  }
-})   // один большой слушатель на закрытие по esc
+// document.addEventListener('keydown', function (evt) {
+//   if(evt.key === 'Escape') {
+//     closeButton(popupEditProfile)
+//     closeButton(popupButtonAddCard)
+//     closeButton(popupEditAvatar)
+//     hideValidationErrorAfterClosePopup(formAddPhoto)
+//     formAddPhoto.reset()
+//     formElementEditAvatar.reset()
+//   }
+// })   // один большой слушатель на закрытие по esc
 
-avatarContainer.addEventListener('mousedown', (evt) => {
+avatarContainer.addEventListener('mousedown', () => {
   addDefaultEditPopupData();
   handleOpenPopup(popupEditAvatar);
   toggleButtonState(allAvatarInputs, avatarAddButton)
