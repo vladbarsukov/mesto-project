@@ -143,44 +143,44 @@ popupEditAvatar.addEventListener('mousedown', function (evt) {
 //   }
 // })
 
-document.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup__close-button')) {
-    // closeButton(popupEditProfile)
-    // closeButton(popupButtonAddCard)
-    // closeButton(popupEditAvatar)
-    // formAddPhoto.reset()
-    // formElementEditAvatar.reset()
-    // hideValidationErrorAfterClosePopup(formAddPhoto)
-  }
-  // if(evt.target.classList.contains('profile__add-button')) {
-  //   handleOpenPopup(popupButtonAddCard)
-  // }
-  if(evt.target.classList.contains('profile__edit-button')) {
-    // addDefaultEditPopupData();
-    // handleOpenPopup(popupEditProfile);
-    // toggleButtonState(allInputsEditProfile, addButton)
-  }
-  if(evt.target.classList.contains('popup_opened')){
-    // closeButton(popupEditProfile)
-    // closeButton(popupButtonAddCard)
-    // closeButton(popupEditAvatar)
-    // hideValidationErrorAfterClosePopup(formAddPhoto)
-    // formAddPhoto.reset()
-    // formElementEditAvatar.reset()
-
-  }
-})     // один большой слушатель модальных окон
-
-// document.addEventListener('keydown', function (evt) {
-//   if(evt.key === 'Escape') {
-//     closeButton(popupEditProfile)
-//     closeButton(popupButtonAddCard)
-//     closeButton(popupEditAvatar)
-//     hideValidationErrorAfterClosePopup(formAddPhoto)
-//     formAddPhoto.reset()
-//     formElementEditAvatar.reset()
+// document.addEventListener('mousedown', function (evt) {
+//   if(evt.target.classList.contains('popup__close-button')) {
+//     // closeButton(popupEditProfile)
+//     // closeButton(popupButtonAddCard)
+//     // closeButton(popupEditAvatar)
+//     // formAddPhoto.reset()
+//     // formElementEditAvatar.reset()
+//     // hideValidationErrorAfterClosePopup(formAddPhoto)
 //   }
-// })   // один большой слушатель на закрытие по esc
+//   // if(evt.target.classList.contains('profile__add-button')) {
+//   //   handleOpenPopup(popupButtonAddCard)
+//   // }
+//   if(evt.target.classList.contains('profile__edit-button')) {
+//     // addDefaultEditPopupData();
+//     // handleOpenPopup(popupEditProfile);
+//     // toggleButtonState(allInputsEditProfile, addButton)
+//   }
+//   if(evt.target.classList.contains('popup_opened')){
+//     // closeButton(popupEditProfile)
+//     // closeButton(popupButtonAddCard)
+//     // closeButton(popupEditAvatar)
+//     // hideValidationErrorAfterClosePopup(formAddPhoto)
+//     // formAddPhoto.reset()
+//     // formElementEditAvatar.reset()
+//
+//   }
+// })     // один большой слушатель модальных окон
+//
+// // document.addEventListener('keydown', function (evt) {
+// //   if(evt.key === 'Escape') {
+// //     closeButton(popupEditProfile)
+// //     closeButton(popupButtonAddCard)
+// //     closeButton(popupEditAvatar)
+// //     hideValidationErrorAfterClosePopup(formAddPhoto)
+// //     formAddPhoto.reset()
+// //     formElementEditAvatar.reset()
+// //   }
+// // })   // один большой слушатель на закрытие по esc
 
 avatarContainer.addEventListener('mousedown', () => {
   addDefaultEditPopupData();
