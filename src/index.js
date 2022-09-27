@@ -43,6 +43,7 @@ import {
 import {getAllData,} from "../components/api.js";
 
 const profileAddButton = document.querySelector(".profile__add-button")
+const profileEditButton = document.querySelector(".profile__edit-button")
 let myId = null
 
 getAllData()
@@ -94,6 +95,13 @@ popupImage.addEventListener('mousedown', function (evt) {
 profileAddButton.addEventListener('mousedown', function () {
   handleOpenPopup(popupButtonAddCard)
 })
+
+profileEditButton.addEventListener('mousedown', function () {
+  addDefaultEditPopupData();
+  handleOpenPopup(popupEditProfile);
+  toggleButtonState(allInputsEditProfile, addButton)
+})
+
 popupEditProfile.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupEditProfile)
@@ -148,9 +156,9 @@ document.addEventListener('mousedown', function (evt) {
   //   handleOpenPopup(popupButtonAddCard)
   // }
   if(evt.target.classList.contains('profile__edit-button')) {
-    addDefaultEditPopupData();
-    handleOpenPopup(popupEditProfile);
-    toggleButtonState(allInputsEditProfile, addButton)
+    // addDefaultEditPopupData();
+    // handleOpenPopup(popupEditProfile);
+    // toggleButtonState(allInputsEditProfile, addButton)
   }
   if(evt.target.classList.contains('popup_opened')){
     // closeButton(popupEditProfile)
