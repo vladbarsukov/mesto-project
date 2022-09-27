@@ -12,7 +12,7 @@ import {
   allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
-  formEditeProfileSubmitHandler,
+  HandlerEditeProfileSubmit,
   formEditeAvatarHandler,
   closeButton,
   profileName,
@@ -61,7 +61,7 @@ getAllData()
 avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
 
-formElementEditProfile.addEventListener("submit", formEditeProfileSubmitHandler); // слушатель для добавления значения с сервера в попап с именем
+formElementEditProfile.addEventListener("submit", HandlerEditeProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
 formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
 
 formAddPhoto.addEventListener("submit", (element) => {

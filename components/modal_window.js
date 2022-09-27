@@ -35,7 +35,7 @@ function saveMessage(button) {
   button.textContent = "Сохранение...";
 } // изменение текста кнопки в модальном окне во время отправки данных
 
-function formEditeProfileSubmitHandler(evt) {
+function HandlerEditeProfileSubmit(evt) {
   evt.preventDefault();
   saveMessage(addButton);
   pushDataProfile(nameInput.value, jobInput.value)
@@ -88,7 +88,7 @@ export {
   allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
-  formEditeProfileSubmitHandler,
+  HandlerEditeProfileSubmit,
   formEditeAvatarHandler,
   saveMessage,
 };
