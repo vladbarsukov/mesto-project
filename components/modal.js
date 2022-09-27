@@ -19,7 +19,7 @@ const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
 const formsList = Array.from(document.querySelectorAll(".popup__form"));
 
-let handleClosePopupKeydownEscape; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
+let handleClosePopupKeydownEscape = null; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
 
 function handleOpenPopup(popup) {
 
