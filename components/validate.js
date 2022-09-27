@@ -4,7 +4,7 @@ const errorMessagePlace = formAddPhoto.querySelector(".popup__input-place-error"
 const errorMessageLink = formAddPhoto.querySelector(".popup__input-link-error");
 const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input-avatar-error")
 const formsList = Array.from(document.querySelectorAll(".popup__form"));
-console.log(formsList)
+
 
 
 

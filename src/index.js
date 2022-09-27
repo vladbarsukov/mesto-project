@@ -17,7 +17,7 @@ import {
   closeButton,
   profileName,
   profession
-} from '../components/modal_window.js'
+} from '../components/modal.js'
 
 import {
   hideValidationErrorAfterClosePopup,
@@ -25,7 +25,7 @@ import {
   toggleButtonState,
   formElementEditAvatar,
   formsList
-} from '../components/validation.js'
+} from '../components/validate.js'
 
 import {
   popupImage,

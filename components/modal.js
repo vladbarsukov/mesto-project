@@ -1,6 +1,6 @@
 import { pushDataProfile, pushDataAvatar } from "./api.js";
 import { avatar } from "./avatar.js";
-import { isValid, formAddPhoto, formElementEditAvatar } from "./validation.js";
+import { isValid, formAddPhoto, formElementEditAvatar } from "./validate.js";
 // import {popupImage} from "./card";
 
 const popupButtonAddCard = document.querySelector("#popupAddCard");

@@ -1,4 +1,4 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton, handleOpenPopup } from "./modal_window.js";
+import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton, handleOpenPopup } from "./modal.js";
 
 import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
@@ -62,7 +62,6 @@ function createNewCard(data, myId, handleLikeShowStatus, deleteCard) {
   const image = cardElement.querySelector(".photo-grid__picture");
   const cardDescription = cardElement.querySelector(".photo-grid__text")
 
-  console.log(image)
   image.owner = `${data._id}`;
   cardDescription.textContent = data.name;
   image.src = data.link;
