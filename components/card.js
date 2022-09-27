@@ -1,4 +1,4 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton } from "./modal_window.js";
+import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton, openButton } from "./modal_window.js";
 
 import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
@@ -8,10 +8,6 @@ const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
 const cardAddButton = formAddPhoto.querySelector(".popup__submit");
 const img = document.querySelector(".popup__photo");
-
-function openButton(popup) {
-  popup.classList.add("popup_opened");
-} // открытие попапа
 
 const handleLikeShowStatus = (id, isThereLike, cardElement, myId) => {
   toggleLikeInServer(id, isThereLike)
