@@ -1,8 +1,9 @@
 import { pushDataProfile, pushDataAvatar } from "./api.js";
 import { avatar } from "./avatar.js";
-import { isValid, formAddPhoto, formElementEditAvatar } from "./validate.js";
-// import {popupImage} from "./card";
+import { isValid } from "./validate.js";
 
+const formAddPhoto = document.forms.formAddPhoto;
+const formElementEditAvatar = document.forms.formAvatar;
 const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditProfile = document.querySelector("#popupEditProfile");
 const popupEditAvatar = document.querySelector("#popupProfileImage");
@@ -16,6 +17,7 @@ const allInputsEditProfile = Array.from(formElementEditProfile.querySelectorAll(
 const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popup__input"));
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
+const formsList = Array.from(document.querySelectorAll(".popup__form"));
 
 
 function handleOpenPopup(popup) {
@@ -103,4 +105,6 @@ export {
   HandlerEditeProfileSubmit,
   HandlerEditeAvatar,
   saveMessage,
+  formElementEditAvatar,
+  formsList
 };

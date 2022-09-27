@@ -16,14 +16,14 @@ import {
   HandlerEditeAvatar,
   closeButton,
   profileName,
-  profession
+  profession,
+  formElementEditAvatar,
+  formsList
 } from '../components/modal.js'
 
 import {
   enableValidation,
   toggleButtonState,
-  formElementEditAvatar,
-  formsList,
   validateBeforeOpenPopup
 } from '../components/validate.js'
 

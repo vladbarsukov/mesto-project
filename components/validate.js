@@ -1,13 +1,3 @@
-const formElementEditAvatar = document.forms.formAvatar;
-const formAddPhoto = document.forms.formAddPhoto;
-// const errorMessagePlace = formAddPhoto.querySelector(".popup__input-place-error");
-// const errorMessageLink = formAddPhoto.querySelector(".popup__input-link-error");
-// const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input-avatar-error")
-const formsList = Array.from(document.querySelectorAll(".popup__form"));
-
-
-
-
 const showInputError = (inputElement, errorMessage, formElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.add("popup__input-error_active");
@@ -63,9 +53,6 @@ const setEventListeners = (formElement) => {
 
 const enableValidation = (formsList) => {
   formsList.forEach((formElement) => {
-    // formElement.addEventListener("submit", (evt) => {
-    //   evt.preventDefault();
-    // });
     setEventListeners(formElement);
   });
 }; // включение валидации
@@ -77,6 +64,6 @@ function validateBeforeOpenPopup (formElement) {
     inputElement.value = ""
     hideInputError(inputElement, formElement);
   });
-}
+} // валидация при открытии попапа
 
-export { isValid, enableValidation, toggleButtonState, formAddPhoto, formElementEditAvatar, formsList, validateBeforeOpenPopup};
+export { isValid, enableValidation, toggleButtonState, validateBeforeOpenPopup};
