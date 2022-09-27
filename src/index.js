@@ -73,7 +73,8 @@ formAddPhoto.addEventListener("submit", (element) => {
   element.target.reset();
 }); // создание карточки из попапа
 
-enableValidation(formsList); //подключение валидации
+enableValidation(formsList); //подключение валидации функция принимает на вход только список форм для обработки остальное
+//я вычисляю из списка форм внутри функции
 
 popupImage.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup__close-button')) {
@@ -85,13 +86,6 @@ popupImage.addEventListener('mousedown', function (evt) {
   }
 })     //  слушатель карточек
 
-
-
-// document.addEventListener('keydown', function (evt) {
-//   if(evt.key === 'Escape') {
-//     closeButton(popupImage)
-//   }
-// })   // слушатель на закрытие по esc
 
 profileAddButton.addEventListener('mousedown', function () {
   validateBeforeOpenPopup(formAddPhoto)
@@ -123,22 +117,18 @@ popupEditProfile.addEventListener('mousedown', function (evt) {
 popupButtonAddCard.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup_opened')){
     handleCloseButton(popupButtonAddCard)
-    // formAddPhoto.reset()
   }
   if(evt.target.classList.contains('popup__close-button')) {
     handleCloseButton(popupButtonAddCard)
-    // formAddPhoto.reset()
   }
 })
 
 popupEditAvatar.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup_opened')){
     handleCloseButton(popupEditAvatar)
-    // formElementEditAvatar.reset()
   }
   if(evt.target.classList.contains('popup__close-button')) {
     handleCloseButton(popupEditAvatar)
-    // formElementEditAvatar.reset()
   }
 })
 
