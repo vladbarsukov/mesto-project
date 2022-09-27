@@ -131,5 +131,3 @@ popupEditAvatar.addEventListener('mousedown', function (evt) {
     handleCloseButton(popupEditAvatar)
   }
 })
-
-
