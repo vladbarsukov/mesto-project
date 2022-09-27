@@ -68,7 +68,7 @@ function createNewCard(data, myId, handleLikeShowStatus, deleteCard) {
   image.alt = data.name;
   showLikeStatus(cardElement, data.likes, myId);
   if (data.owner._id !== myId) {
-    cardElement.querySelector(".photo-grid__del-button").remove();
+    deleteButton.remove();
   }
 
   deleteButton.addEventListener("click", () => {
