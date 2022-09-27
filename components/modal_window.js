@@ -54,7 +54,7 @@ function HandlerEditeProfileSubmit(evt) {
     });
 } //добавление значения с сервера в попап с именем
 
-function formEditeAvatarHandler(evt) {
+function HandlerEditeAvatar(evt) {
   evt.preventDefault();
   saveMessage(avatarAddButton);
   pushDataAvatar(avatarInput.value)
@@ -89,6 +89,6 @@ export {
   avatarAddButton,
   formElementEditProfile,
   HandlerEditeProfileSubmit,
-  formEditeAvatarHandler,
+  HandlerEditeAvatar,
   saveMessage,
 };

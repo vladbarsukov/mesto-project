@@ -13,7 +13,7 @@ import {
   avatarAddButton,
   formElementEditProfile,
   HandlerEditeProfileSubmit,
-  formEditeAvatarHandler,
+  HandlerEditeAvatar,
   closeButton,
   profileName,
   profession
@@ -62,7 +62,7 @@ avatarContainer.addEventListener('mouseover', avatarEditShow) // слушате�
 avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
 
 formElementEditProfile.addEventListener("submit", HandlerEditeProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
-formElementEditAvatar.addEventListener("submit", formEditeAvatarHandler); // слушатель для добавления значения с сервера в попап с именем
+formElementEditAvatar.addEventListener("submit", HandlerEditeAvatar); // слушатель для добавления значения с сервера в попап с именем
 
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
