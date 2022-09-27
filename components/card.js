@@ -1,4 +1,4 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton, handleOpenPopup } from "./modal.js";
+import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handleOpenPopup } from "./modal.js";
 
 import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
@@ -92,7 +92,7 @@ function addNewCard(myId) {
       addCard(data, myId);
     })
     .then(() => {
-      closeButton(popupButtonAddCard);
+      handleCloseButton(popupButtonAddCard);
     })
     .finally(() => {
       cardAddButton.textContent = "Создать";
@@ -115,4 +115,4 @@ function getCardData(image) {
   img.alt = image.textContent;
 } // получение данных из попапа для добавления новой карточки
 
-export { addCard, closeButton, popupImage, addNewCard,};
+export { addCard, handleCloseButton, popupImage, addNewCard,};

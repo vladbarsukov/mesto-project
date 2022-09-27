@@ -20,22 +20,27 @@ const addButton = formElementEditProfile.querySelector(".popup__submit");
 const formsList = Array.from(document.querySelectorAll(".popup__form"));
 
 
+
+let handleClosePopupKeydownEscape;
+
 function handleOpenPopup(popup) {
-  popup.classList.add("popup_opened");
-  document.addEventListener('keydown', function (evt) {
-    if(evt.key === 'Escape') {
-      closeButton(popup)
+
+  handleClosePopupKeydownEscape = function (evt)  {
+    const CloseButton = function ()  {
+      handleCloseButton(popup)
     }
-  })
+    if(evt.key === 'Escape') {
+      return  CloseButton()
+    }
+  }
+  popup.classList.add("popup_opened");
+  document.addEventListener('keydown', handleClosePopupKeydownEscape)
+
 } // функция открытия попапа
 
-function closeButton(popup) {
+function handleCloseButton (popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener('keydown', function (evt) {
-    if(evt.key === 'Escape') {
-      closeButton(popup)
-    }
-  })
+  document.removeEventListener('keydown', handleClosePopupKeydownEscape)
 } //функция закрытия попапа
 
 function addDefaultEditPopupData() {
@@ -58,7 +63,7 @@ function HandlerEditeProfileSubmit(evt) {
       profession.textContent = data.about;
     })
     .then(() => {
-      closeButton(popupEditProfile);
+      handleCloseButton(popupEditProfile);
     })
     .finally(() => {
       addButton.textContent = "Сохранить";
@@ -76,7 +81,7 @@ function HandlerEditeAvatar(evt) {
       avatar.src = data.avatar;
     })
     .then(() => {
-      closeButton(popupEditAvatar);
+      handleCloseButton(popupEditAvatar);
     })
     .finally(() => {
       avatarAddButton.textContent = "Создать";
@@ -96,7 +101,7 @@ export {
   popupEditProfile,
   allInputsEditProfile,
   handleOpenPopup,
-  closeButton,
+  handleCloseButton,
   addDefaultEditPopupData,
   popupEditAvatar,
   allAvatarInputs,
