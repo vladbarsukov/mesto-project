@@ -1,4 +1,4 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton, openButton } from "./modal_window.js";
+import { formAddPhoto, popupButtonAddCard, saveMessage, closeButton, handleOpenPopup } from "./modal_window.js";
 
 import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
 
@@ -99,7 +99,7 @@ function addNewCard(myId) {
 // попап с фото
 
 function openImg(evt) {
-  openButton(popupImage);
+  handleOpenPopup(popupImage);
   getCardData(evt);
 } // открытие попапа с фото
 

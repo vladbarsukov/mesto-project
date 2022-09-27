@@ -5,11 +5,11 @@ import {
   popupButtonAddCard,
   popupEditAvatar,
   formAddPhoto,
-  openButton,
+  handleOpenPopup,
   addDefaultEditPopupData,
-  allInputEditProfile,
+  allInputsEditProfile,
   addButton,
-  allAvatarInput,
+  allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
   formEditeProfileSubmitHandler,
@@ -101,13 +101,13 @@ document.addEventListener('mousedown', function (evt) {
     hideValidationErrorAfterClosePopup()
   }
   if(evt.target.classList.contains('profile__add-button')) {
-    openButton(popupButtonAddCard)
+    handleOpenPopup(popupButtonAddCard)
 
   }
   if(evt.target.classList.contains('profile__edit-button')) {
     addDefaultEditPopupData();
-    openButton(popupEditProfile);
-    toggleButtonState(allInputEditProfile, addButton)
+    handleOpenPopup(popupEditProfile);
+    toggleButtonState(allInputsEditProfile, addButton)
   }
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupEditProfile)
@@ -133,6 +133,6 @@ document.addEventListener('keydown', function (evt) {
 
 avatarContainer.addEventListener('mousedown', (evt) => {
   addDefaultEditPopupData();
-  openButton(popupEditAvatar);
-  toggleButtonState(allAvatarInput, avatarAddButton)
+  handleOpenPopup(popupEditAvatar);
+  toggleButtonState(allAvatarInputs, avatarAddButton)
 }) // слушатель открытия окна смены аватара

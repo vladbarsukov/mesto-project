@@ -11,12 +11,12 @@ const jobInput = formElementEditProfile.profession;
 const avatarInput = formElementEditAvatar.linkAvatar;
 const profileName = document.querySelector(".profile__name");
 const profession = document.querySelector(".profile__description");
-const allInputEditProfile = Array.from(formElementEditProfile.querySelectorAll(".popup__input"));
-const allAvatarInput = Array.from(formElementEditAvatar.querySelectorAll(".popup__input"));
+const allInputsEditProfile = Array.from(formElementEditProfile.querySelectorAll(".popup__input"));
+const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popup__input"));
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
 
-function openButton(popup) {
+function handleOpenPopup(popup) {
   popup.classList.add("popup_opened");
 } // функция открытия попапа
 
@@ -80,12 +80,12 @@ export {
   profession,
   addButton,
   popupEditProfile,
-  allInputEditProfile,
-  openButton,
+  allInputsEditProfile,
+  handleOpenPopup,
   closeButton,
   addDefaultEditPopupData,
   popupEditAvatar,
-  allAvatarInput,
+  allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
   formEditeProfileSubmitHandler,
