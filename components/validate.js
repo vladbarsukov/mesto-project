@@ -1,8 +1,8 @@
 const formElementEditAvatar = document.forms.formAvatar;
 const formAddPhoto = document.forms.formAddPhoto;
-const errorMessagePlace = formAddPhoto.querySelector(".popup__input-place-error");
-const errorMessageLink = formAddPhoto.querySelector(".popup__input-link-error");
-const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input-avatar-error")
+// const errorMessagePlace = formAddPhoto.querySelector(".popup__input-place-error");
+// const errorMessageLink = formAddPhoto.querySelector(".popup__input-link-error");
+// const errorMessageLinkAvatar = formElementEditAvatar.querySelector(".popup__input-avatar-error")
 const formsList = Array.from(document.querySelectorAll(".popup__form"));
 
 
@@ -70,15 +70,13 @@ const enableValidation = (formsList) => {
   });
 }; // включение валидации
 
-function hideValidationErrorAfterClosePopup() {
-  errorMessagePlace.classList.remove("popup__input-error_active");
-  errorMessageLink.classList.remove("popup__input-error_active");
-  errorMessageLinkAvatar.classList.remove("popup__input-error_active");
-  // errorMessagePlace.classList.remove("popup__input_error");
-  // errorMessageLink.classList.remove("popup__input_error_active");
-  // errorMessageLinkAvatar.classList.remove("popup__input_error_active");
-} // скрываю валидацию после закрытия попапа
 
+function validateBeforeOpenPopup (formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  inputList.forEach((inputElement) => {
+    inputElement.value = ""
+    hideInputError(inputElement, formElement);
+  });
+}
 
-
-export { isValid, enableValidation, hideValidationErrorAfterClosePopup, toggleButtonState, formAddPhoto, formElementEditAvatar, formsList};
+export { isValid, enableValidation, toggleButtonState, formAddPhoto, formElementEditAvatar, formsList, validateBeforeOpenPopup};

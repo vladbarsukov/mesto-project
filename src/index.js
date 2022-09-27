@@ -20,11 +20,11 @@ import {
 } from '../components/modal.js'
 
 import {
-  hideValidationErrorAfterClosePopup,
   enableValidation,
   toggleButtonState,
   formElementEditAvatar,
-  formsList
+  formsList,
+  validateBeforeOpenPopup
 } from '../components/validate.js'
 
 import {
@@ -44,6 +44,7 @@ import {getAllData,} from "../components/api.js";
 
 const profileAddButton = document.querySelector(".profile__add-button")
 const profileEditButton = document.querySelector(".profile__edit-button")
+
 let myId = null
 
 getAllData()
@@ -93,7 +94,9 @@ popupImage.addEventListener('mousedown', function (evt) {
 // })   // слушатель на закрытие по esc
 
 profileAddButton.addEventListener('mousedown', function () {
+  validateBeforeOpenPopup(formAddPhoto)
   handleOpenPopup(popupButtonAddCard)
+
 })
 
 profileEditButton.addEventListener('mousedown', function () {
@@ -101,6 +104,12 @@ profileEditButton.addEventListener('mousedown', function () {
   handleOpenPopup(popupEditProfile);
   toggleButtonState(allInputsEditProfile, addButton)
 })
+
+avatarContainer.addEventListener('mousedown', () => {
+  validateBeforeOpenPopup(formElementEditAvatar)
+  handleOpenPopup(popupEditAvatar);
+  toggleButtonState(allAvatarInputs, avatarAddButton)
+}) // слушатель открытия окна смены аватара
 
 popupEditProfile.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup_opened')){
@@ -114,26 +123,22 @@ popupEditProfile.addEventListener('mousedown', function (evt) {
 popupButtonAddCard.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupButtonAddCard)
-    hideValidationErrorAfterClosePopup(formAddPhoto)
-    formAddPhoto.reset()
+    // formAddPhoto.reset()
   }
   if(evt.target.classList.contains('popup__close-button')) {
     closeButton(popupButtonAddCard)
-    hideValidationErrorAfterClosePopup(formAddPhoto)
-    formAddPhoto.reset()
+    // formAddPhoto.reset()
   }
 })
 
 popupEditAvatar.addEventListener('mousedown', function (evt) {
   if(evt.target.classList.contains('popup_opened')){
     closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup(formElementEditAvatar)
-    formElementEditAvatar.reset()
+    // formElementEditAvatar.reset()
   }
   if(evt.target.classList.contains('popup__close-button')) {
     closeButton(popupEditAvatar)
-    hideValidationErrorAfterClosePopup(formElementEditAvatar)
-    formElementEditAvatar.reset()
+    // formElementEditAvatar.reset()
   }
 })
 
@@ -182,8 +187,3 @@ popupEditAvatar.addEventListener('mousedown', function (evt) {
 // //   }
 // // })   // один большой слушатель на закрытие по esc
 
-avatarContainer.addEventListener('mousedown', () => {
-  addDefaultEditPopupData();
-  handleOpenPopup(popupEditAvatar);
-  toggleButtonState(allAvatarInputs, avatarAddButton)
-}) // слушатель открытия окна смены аватара
