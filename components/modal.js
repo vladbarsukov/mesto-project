@@ -19,15 +19,12 @@ const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popu
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
 
-// let handleClosePopupKeydownEscape = null; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
-
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened')
     handleCloseButton(openedPopup)
   }
 }
-
 
 function handleOpenPopup(popup) {
   popup.classList.add("popup_opened");
