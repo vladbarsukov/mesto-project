@@ -85,17 +85,6 @@ formAddPhoto.addEventListener("submit", (element) => {
 enableValidation(validationSettings); //подключение валидации функция принимает на вход только список форм для обработки остальное
 //я вычисляю из списка форм внутри функции
 
-popupImage.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup__close-button')) {
-    handleCloseButton(popupImage)
-  }
-
-  if(evt.target.classList.contains('popup_opened')){
-    handleCloseButton(popupImage)
-  }
-})     //  слушатель карточек
-
-
 profileAddButton.addEventListener('mousedown', function () {
   validateBeforeOpenPopup(formAddPhoto, validationSettings, validationSettings)
   handleOpenPopup(popupButtonAddCard)
