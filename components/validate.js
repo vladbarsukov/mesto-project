@@ -1,4 +1,3 @@
-
 const showInputError = (inputElement, errorMessage, formElement, validationSettings) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.add(validationSettings.errorClass);
