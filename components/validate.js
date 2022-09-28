@@ -67,6 +67,4 @@ function validateBeforeOpenPopup (formElement, validationSettings) {
   });
 } // валидация и очистка поля при открытии модального окна
 
-export { isValid, enableValidation, toggleButtonState,
-  validateBeforeOpenPopup
-};
+export { isValid, enableValidation, toggleButtonState, validateBeforeOpenPopup };
