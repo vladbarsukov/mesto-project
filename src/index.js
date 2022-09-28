@@ -60,7 +60,6 @@ getAllData()
     profession.textContent = data.about
     avatar.src = data.avatar
     myId = data._id
-    console.log(data._id)
     cards.reverse().forEach((element) => {
       addCard(element, myId);
     })

@@ -19,25 +19,24 @@ const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popu
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
 
-let handleClosePopupKeydownEscape = null; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
+// let handleClosePopupKeydownEscape = null; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
+
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    handleCloseButton(openedPopup)
+  }
+}
+
 
 function handleOpenPopup(popup) {
-  handleClosePopupKeydownEscape = function (evt)  {
-    const closeButton = function ()  {
-      handleCloseButton(popup)
-    }
-    if(evt.key === 'Escape') {
-      return  closeButton()
-    }
-  }
   popup.classList.add("popup_opened");
-  document.addEventListener('keydown', handleClosePopupKeydownEscape)
-
+  document.addEventListener('keydown', closeByEscape)
 } // функция открытия попапа
 
 function handleCloseButton (popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener('keydown', handleClosePopupKeydownEscape)
+  document.removeEventListener('keydown', closeByEscape)
 } //функция закрытия попапа
 
 function addDefaultEditPopupData() {
@@ -75,6 +74,7 @@ function HandlerEditeAvatar(evt) {
   saveMessage(avatarAddButton);
   pushDataAvatar(avatarInput.value)
     .then((data) => {
+      formElementEditAvatar.reset();
       avatar.src = data.avatar;
     })
     .then(() => {
@@ -86,7 +86,6 @@ function HandlerEditeAvatar(evt) {
     .catch((err) => {
       console.log(err);
     });
-  formElementEditAvatar.reset();
 } //добавление значения с сервера в попап с аватаром
 
 export {
