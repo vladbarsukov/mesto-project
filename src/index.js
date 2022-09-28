@@ -40,9 +40,11 @@ import {
 } from '../components/avatar.js'
 
 import {getAllData,} from "../components/api.js";
+import {logPlugin} from "@babel/preset-env/lib/debug";
 
 const profileAddButton = document.querySelector(".profile__add-button")
 const profileEditButton = document.querySelector(".profile__edit-button")
+const popups = document.querySelectorAll('.popup')
 const validationSettings = {
   formSelector: ".popup__form",
   errorClass: "popup__input-error_active",
@@ -112,30 +114,15 @@ avatarContainer.addEventListener('mousedown', () => {
   toggleButtonState(allAvatarInputs, avatarAddButton, validationSettings)
 }) // слушатель открытия окна смены аватара
 
-popupEditProfile.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup_opened')){
-    handleCloseButton(popupEditProfile)
-  }
-  if(evt.target.classList.contains('popup__close-button')) {
-    handleCloseButton(popupEditProfile)
-  }
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      handleCloseButton(popup)
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      handleCloseButton(popup)
+    }
+  })
 })
 
-popupButtonAddCard.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup_opened')){
-    handleCloseButton(popupButtonAddCard)
-  }
-  if(evt.target.classList.contains('popup__close-button')) {
-    handleCloseButton(popupButtonAddCard)
-  }
-})
-
-popupEditAvatar.addEventListener('mousedown', function (evt) {
-  if(evt.target.classList.contains('popup_opened')){
-    handleCloseButton(popupEditAvatar)
-  }
-  if(evt.target.classList.contains('popup__close-button')) {
-    handleCloseButton(popupEditAvatar)
-  }
-})
 export {validationSettings}
