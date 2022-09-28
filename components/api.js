@@ -1,30 +1,31 @@
+const config = {
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-15",
+  headers: {
+    authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
+    'Content-Type': 'application/json',
+  },
+};
+
 const onResponce = (res) => {
   return res.ok ? res.json() : Promise.reject(res);
 };
 
 function getData() {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me ", {
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-    },
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
   }).then(onResponce);
 } //получаю данные профиля с сервера
 
 function getCard() {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-15/cards ", {
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-    },
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
   }).then(onResponce);
 } //получаю карточки с сервера
 
 function pushDataProfile(name, prof) {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me", {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       name: name,
       about: prof,
@@ -33,12 +34,9 @@ function pushDataProfile(name, prof) {
 } //отправляю данные профиля на сервер
 
 function pushDataAvatar(link) {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me/avatar", {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       avatar: link,
     }),
@@ -46,12 +44,9 @@ function pushDataAvatar(link) {
 } //отправляю данные профиля на сервер
 
 function pushCard(cardLink, cardName) {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-15/cards", {
+  return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       link: cardLink,
       name: cardName,
@@ -60,22 +55,16 @@ function pushCard(cardLink, cardName) {
 } // отправка карточки на сервер
 
 function deleteCardFromServer(id) {
-  return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/${id}`, {
+  return fetch(`${config.baseUrl}/cards/${id}`, {
     method: "DELETE",
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
   }).then(onResponce);
 } // удаление карточки с сервера
 
 function toggleLikeInServer(id, isThereLike) {
-  return fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/likes/${id}`, {
+  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
     method: isThereLike ? "DELETE" : "PUT",
-    headers: {
-      authorization: "e807f0be-4a7f-40ad-a75f-bff7cd3e53ea",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
   }).then(onResponce);
 } //запрос на сервер удаление или нажатие лайка
 

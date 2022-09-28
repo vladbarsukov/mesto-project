@@ -1,7 +1,8 @@
-const showInputError = (inputElement, errorMessage, formElement) => {
+
+const showInputError = (inputElement, errorMessage, formElement, validationSettings) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  errorElement.classList.add("popup__input-error_active");
-  inputElement.classList.add("popup__input_error");
+  errorElement.classList.add(validationSettings.errorClass);
+  inputElement.classList.add(validationSettings.inputErrorClass);
   if (inputElement.validity.patternMismatch) {
     errorElement.textContent = inputElement.dataset.pattern;
   } else {
@@ -9,10 +10,10 @@ const showInputError = (inputElement, errorMessage, formElement) => {
   }
 }; // показываю текст с ошибкой
 
-const hideInputError = (inputElement, formElement) => {
+const hideInputError = (inputElement, formElement, validationSettings) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  errorElement.classList.remove("popup__input-error_active");
-  inputElement.classList.remove("popup__input_error");
+  errorElement.classList.remove(validationSettings.errorClass);
+  inputElement.classList.remove(validationSettings.inputErrorClass);
   errorElement.textContent = "";
 }; // скрываю текст с ошибкой
 
@@ -22,48 +23,52 @@ const hasInvalidInput = (inputList) => {
   });
 }; // проверяю поле ввода на наличие ошибок
 
-const toggleButtonState = (inputList, button) => {
+const toggleButtonState = (inputList, button, validationSettings) => {
   if (hasInvalidInput(inputList)) {
-    button.classList.add("popup__submit_disabled");
+    button.classList.add(validationSettings.inactiveButtonClass);
     button.disabled = true;
   } else {
-    button.removeAttribute("disabled");
-    button.classList.remove("popup__submit_disabled");
+    button.disabled = false;
+    button.classList.remove(validationSettings.inactiveButtonClass);
   }
 }; // отключаю кнопку при наличии ошибки
 
-const isValid = (inputElement, formElement) => {
+const isValid = (inputElement, formElement, validationSettings) => {
   if (!inputElement.validity.valid) {
-    showInputError(inputElement, inputElement.validationMessage, formElement);
+    showInputError(inputElement, inputElement.validationMessage, formElement, validationSettings);
   } else {
-    hideInputError(inputElement, formElement);
+    hideInputError(inputElement, formElement, validationSettings);
   }
 }; // показываю и скрываю текст с ошибкой
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
-  const buttonElement = formElement.querySelector(".popup__submit");
+const setEventListeners = (formElement, validationSettings) => {
+  const inputList = Array.from(formElement.querySelectorAll(validationSettings.inputList));
+  const buttonElement = formElement.querySelector(validationSettings.submitButtonSelector);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
-      isValid(inputElement, formElement);
-      toggleButtonState(inputList, buttonElement);
+      isValid(inputElement, formElement, validationSettings);
+      toggleButtonState(inputList, buttonElement, validationSettings);
     });
   });
 }; // вешаю слушатели всем инпутам
 
-const enableValidation = (formsList) => {
+const enableValidation = (validationSettings) => {
+  const formsList = Array.from(document.querySelectorAll(validationSettings.formSelector));
   formsList.forEach((formElement) => {
-    setEventListeners(formElement);
+    setEventListeners(formElement, validationSettings);
   });
 }; // включение валидации
 
 
-function validateBeforeOpenPopup (formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+
+function validateBeforeOpenPopup (formElement, validationSettings) {
+  const inputList = Array.from(formElement.querySelectorAll(validationSettings.inputList));
   inputList.forEach((inputElement) => {
     inputElement.value = ""
-    hideInputError(inputElement, formElement);
+    hideInputError(inputElement, formElement, validationSettings);
   });
 } // валидация и очистка поля при открытии модального окна
 
-export { isValid, enableValidation, toggleButtonState, validateBeforeOpenPopup};
+export { isValid, enableValidation, toggleButtonState,
+  validateBeforeOpenPopup
+};

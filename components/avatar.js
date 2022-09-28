@@ -12,5 +12,4 @@ function avatarEditHide() {
   avatarEditIcon.classList.remove("profile__edit-icon_active");
 } // затемнение аватара
 
-export {
-  avatarContainer, avatarEditShow, avatarEditHide, avatar };
+export { avatarContainer, avatarEditShow, avatarEditHide, avatar };

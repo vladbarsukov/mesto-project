@@ -18,7 +18,6 @@ import {
   profileName,
   profession,
   formElementEditAvatar,
-  formsList
 } from '../components/modal.js'
 
 import {
@@ -44,6 +43,14 @@ import {getAllData,} from "../components/api.js";
 
 const profileAddButton = document.querySelector(".profile__add-button")
 const profileEditButton = document.querySelector(".profile__edit-button")
+const validationSettings = {
+  formSelector: ".popup__form",
+  errorClass: "popup__input-error_active",
+  inputErrorClass: "popup__input_error",
+  submitButtonSelector: ".popup__submit",
+  inactiveButtonClass: "popup__submit_disabled",
+  inputList: ".popup__input",
+}
 
 let myId = null
 
@@ -53,6 +60,7 @@ getAllData()
     profession.textContent = data.about
     avatar.src = data.avatar
     myId = data._id
+    console.log(data._id)
     cards.reverse().forEach((element) => {
       addCard(element, myId);
     })
@@ -73,7 +81,7 @@ formAddPhoto.addEventListener("submit", (element) => {
   element.target.reset();
 }); // создание карточки из попапа
 
-enableValidation(formsList); //подключение валидации функция принимает на вход только список форм для обработки остальное
+enableValidation(validationSettings); //подключение валидации функция принимает на вход только список форм для обработки остальное
 //я вычисляю из списка форм внутри функции
 
 popupImage.addEventListener('mousedown', function (evt) {
@@ -88,7 +96,7 @@ popupImage.addEventListener('mousedown', function (evt) {
 
 
 profileAddButton.addEventListener('mousedown', function () {
-  validateBeforeOpenPopup(formAddPhoto)
+  validateBeforeOpenPopup(formAddPhoto, validationSettings, validationSettings)
   handleOpenPopup(popupButtonAddCard)
 
 })
@@ -96,13 +104,13 @@ profileAddButton.addEventListener('mousedown', function () {
 profileEditButton.addEventListener('mousedown', function () {
   addDefaultEditPopupData();
   handleOpenPopup(popupEditProfile);
-  toggleButtonState(allInputsEditProfile, addButton)
+  toggleButtonState(allInputsEditProfile, addButton, validationSettings)
 })
 
 avatarContainer.addEventListener('mousedown', () => {
-  validateBeforeOpenPopup(formElementEditAvatar)
+  validateBeforeOpenPopup(formElementEditAvatar, validationSettings)
   handleOpenPopup(popupEditAvatar);
-  toggleButtonState(allAvatarInputs, avatarAddButton)
+  toggleButtonState(allAvatarInputs, avatarAddButton, validationSettings)
 }) // слушатель открытия окна смены аватара
 
 popupEditProfile.addEventListener('mousedown', function (evt) {
@@ -131,3 +139,4 @@ popupEditAvatar.addEventListener('mousedown', function (evt) {
     handleCloseButton(popupEditAvatar)
   }
 })
+export {validationSettings}

@@ -1,6 +1,7 @@
 import { pushDataProfile, pushDataAvatar } from "./api.js";
 import { avatar } from "./avatar.js";
 import { isValid } from "./validate.js";
+import { validationSettings } from "./../src/index.js";
 
 const formAddPhoto = document.forms.formAddPhoto;
 const formElementEditAvatar = document.forms.formAvatar;
@@ -17,18 +18,16 @@ const allInputsEditProfile = Array.from(formElementEditProfile.querySelectorAll(
 const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popup__input"));
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
-const formsList = Array.from(document.querySelectorAll(".popup__form"));
 
 let handleClosePopupKeydownEscape = null; // функция для добавления и удаления слушателя на закрытие модального окна по кнопке esc
 
 function handleOpenPopup(popup) {
-
   handleClosePopupKeydownEscape = function (evt)  {
-    const CloseButton = function ()  {
+    const closeButton = function ()  {
       handleCloseButton(popup)
     }
     if(evt.key === 'Escape') {
-      return  CloseButton()
+      return  closeButton()
     }
   }
   popup.classList.add("popup_opened");
@@ -44,8 +43,8 @@ function handleCloseButton (popup) {
 function addDefaultEditPopupData() {
   nameInput.value = profileName.textContent;
   jobInput.value = profession.textContent;
-  isValid(nameInput, formElementEditProfile);
-  isValid(jobInput, formElementEditProfile);
+  isValid(nameInput, formElementEditProfile, validationSettings);
+  isValid(jobInput, formElementEditProfile, validationSettings);
 } // значение по умолчанию в попапе с данными профиля
 
 function saveMessage(button) {
@@ -109,5 +108,4 @@ export {
   HandlerEditeAvatar,
   saveMessage,
   formElementEditAvatar,
-  formsList
 };
