@@ -59,8 +59,6 @@ const enableValidation = (validationSettings) => {
   });
 }; // включение валидации
 
-
-
 function validateBeforeOpenPopup (formElement, validationSettings) {
   const inputList = Array.from(formElement.querySelectorAll(validationSettings.inputList));
   inputList.forEach((inputElement) => {
