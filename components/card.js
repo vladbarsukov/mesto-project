@@ -1,6 +1,6 @@
 import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handleOpenPopup } from "./modal.js";
 
-import { pushCard, deleteCardFromServer, toggleLikeInServer, Api, config } from "./api.js";
+// import { pushCard, deleteCardFromServer, toggleLikeInServer, Api, config } from "./api.js";
 import { api } from "./../src/index.js";
 
 const cardSection = document.querySelector(".photo-grid");
@@ -54,6 +54,24 @@ function deleteCard(card, cardId) {
       console.log(err);
     });
 } // удаление карточки
+
+//////////////// card OOP
+export class CardList {
+  constructor(containerSelector, renderer) {
+    this._container = document.querySelector(containerSelector);
+    this._renderer = renderer;
+  }
+  renderItem(cardData) {
+    this._renderer(cardData)
+  }
+  renderItems(cards) {
+    cards.forEach( cardData => this.renderItem(cardData))
+  }
+  addCard(cardNode) {
+
+  }
+}
+///////////////////
 
 function createNewCard(data, myId, handleLikeShowStatus, deleteCard) {
   const cardElement = cardTemplate.cloneNode(true);

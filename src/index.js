@@ -39,7 +39,9 @@ import {
   avatar,
 } from '../components/avatar.js'
 
-import {getAllData, Api, config} from "../components/api.js";
+import {
+  // getAllData,
+  Api, config} from "../components/api.js";
 import {logPlugin} from "@babel/preset-env/lib/debug";
 
 const profileAddButton = document.querySelector(".profile__add-button")
