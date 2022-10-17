@@ -1,6 +1,7 @@
 import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handleOpenPopup } from "./modal.js";
 
-import { pushCard, deleteCardFromServer, toggleLikeInServer } from "./api.js";
+import { pushCard, deleteCardFromServer, toggleLikeInServer, Api, config } from "./api.js";
+import { api } from "./../src/index.js";
 
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
@@ -10,7 +11,7 @@ const cardAddButton = formAddPhoto.querySelector(".popup__submit");
 const img = document.querySelector(".popup__photo");
 
 const handleLikeShowStatus = (id, isThereLike, cardElement, myId) => {
-  toggleLikeInServer(id, isThereLike)
+  api.toggleLikeInServer(id, isThereLike)
     .then((data) => {
       showLikeStatus(cardElement, data.likes, myId);
     })
@@ -45,7 +46,7 @@ function addCard(data, myId) {
 } //// функция добавления карточки из массива на страницу
 
 function deleteCard(card, cardId) {
-  deleteCardFromServer(cardId)
+  api.deleteCardFromServer(cardId)
     .then(() => {
       card.remove();
     })
@@ -87,7 +88,7 @@ function createNewCard(data, myId, handleLikeShowStatus, deleteCard) {
 
 function addNewCard(myId) {
   saveMessage(cardAddButton);
-  pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
+  api.pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
       addCard(data, myId);
     })

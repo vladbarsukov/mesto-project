@@ -1,7 +1,7 @@
 import { pushDataProfile, pushDataAvatar } from "./api.js";
 import { avatar } from "./avatar.js";
 import { isValid } from "./validate.js";
-import { validationSettings } from "./../src/index.js";
+import { validationSettings, api } from "./../src/index.js";
 
 const formAddPhoto = document.forms.formAddPhoto;
 const formElementEditAvatar = document.forms.formAvatar;
@@ -50,7 +50,7 @@ function saveMessage(button) {
 function HandlerEditeProfileSubmit(evt) {
   evt.preventDefault();
   saveMessage(addButton);
-  pushDataProfile(nameInput.value, jobInput.value)
+  api.pushDataProfile(nameInput.value, jobInput.value)
     .then((data) => {
       profileName.textContent = data.name;
       profession.textContent = data.about;
@@ -69,7 +69,7 @@ function HandlerEditeProfileSubmit(evt) {
 function HandlerEditeAvatar(evt) {
   evt.preventDefault();
   saveMessage(avatarAddButton);
-  pushDataAvatar(avatarInput.value)
+  api.pushDataAvatar(avatarInput.value)
     .then((data) => {
       formElementEditAvatar.reset();
       avatar.src = data.avatar;

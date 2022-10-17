@@ -39,7 +39,7 @@ import {
   avatar,
 } from '../components/avatar.js'
 
-import {getAllData,} from "../components/api.js";
+import {getAllData, Api, config} from "../components/api.js";
 import {logPlugin} from "@babel/preset-env/lib/debug";
 
 const profileAddButton = document.querySelector(".profile__add-button")
@@ -56,7 +56,10 @@ const validationSettings = {
 
 let myId = null
 
-getAllData()
+export const api = new Api(config)
+console.log(api.getData())
+//////////////
+api.getAllData()
   .then(([cards, data]) => {
     profileName.textContent = data.name
     profession.textContent = data.about
@@ -69,6 +72,19 @@ getAllData()
   .catch((err) => {
     console.log(err);
   }) // получаю все данные с сервера
+// getAllData()
+//   .then(([cards, data]) => {
+//     profileName.textContent = data.name
+//     profession.textContent = data.about
+//     avatar.src = data.avatar
+//     myId = data._id
+//     cards.reverse().forEach((element) => {
+//       addCard(element, myId);
+//     })
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   }) // получаю все данные с сервера
 
 avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
