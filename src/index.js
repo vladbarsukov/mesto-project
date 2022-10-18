@@ -29,8 +29,8 @@ import {
 import {
   popupImage,
   addNewCard,
-  addCard,
-  CardList
+  Card,
+  openImg,
 } from '../components/card.js'
 
 import {
@@ -40,10 +40,10 @@ import {
   avatar,
 } from '../components/avatar.js'
 
+import Section from '../components/Section'
+
 import {
-  // getAllData,
   Api, config} from "../components/api.js";
-import {logPlugin} from "@babel/preset-env/lib/debug";
 
 const profileAddButton = document.querySelector(".profile__add-button")
 const profileEditButton = document.querySelector(".profile__edit-button")
@@ -57,20 +57,33 @@ const validationSettings = {
   inputList: ".popup__input",
 }
 
+
+
 let myId = null
 
 export const api = new Api(config)
 console.log(api.getData())
 //////////////
+
+
 api.getAllData()
   .then(([cards, data]) => {
-    profileName.textContent = data.name
-    profession.textContent = data.about
-    avatar.src = data.avatar
-    myId = data._id
-    cards.reverse().forEach((element) => {
-      addCard(element, myId);
-    })
+
+    profileName.textContent = data.name;
+    profession.textContent = data.about;
+    avatar.src = data.avatar;
+    myId = data._id;
+    console.log(data)
+
+    const cardList = new Section({
+      data: cards,
+      renderer: (data) => {
+        const card = new Card({data, myId, openImg});
+        // console.log(data)
+        cardList.setItem(card.createNewCard())}
+
+    }, ".photo-grid");
+    cardList.renderItems()
   })
   .catch((err) => {
     console.log(err);
@@ -90,9 +103,6 @@ api.getAllData()
 //     console.log(err);
 //   }) // получаю все данные с сервера
 
-export const cardList = new CardList("#card-template", (data) => {
-
-})
 
 avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
