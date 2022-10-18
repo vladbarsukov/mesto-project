@@ -108,7 +108,7 @@ function addNewCard(myId) {
   saveMessage(cardAddButton);
   api.pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
-      addCard(data, myId);
+      // addCard(data, myId);
     })
     .then(() => {
       handleCloseButton(popupButtonAddCard);

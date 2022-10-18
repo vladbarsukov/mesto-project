@@ -68,20 +68,22 @@ console.log(api.getData())
 
 api.getAllData()
   .then(([cards, data]) => {
-
     profileName.textContent = data.name;
     profession.textContent = data.about;
     avatar.src = data.avatar;
     myId = data._id;
-    console.log(data)
-
+    // const cardList = new Section({
+    //   data: cards,
+    //   renderer: (item) => {
+    //     const card = new Card({data: item, myId: myId, openImg: openImg});
+    //     cardList.setItem(card.createNewCard())}
+    // }, ".photo-grid");
+    // cardList.renderItems()
     const cardList = new Section({
       data: cards,
-      renderer: (data) => {
-        const card = new Card({data, myId, openImg});
-        // console.log(data)
+      renderer: (item) => {
+        const card = new Card({data: item, myId: myId, openImg: openImg});
         cardList.setItem(card.createNewCard())}
-
     }, ".photo-grid");
     cardList.renderItems()
   })
@@ -89,19 +91,6 @@ api.getAllData()
     console.log(err);
   }) // получаю все данные с сервера
 
-// getAllData()
-//   .then(([cards, data]) => {
-//     profileName.textContent = data.name
-//     profession.textContent = data.about
-//     avatar.src = data.avatar
-//     myId = data._id
-//     cards.reverse().forEach((element) => {
-//       addCard(element, myId);
-//     })
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   }) // получаю все данные с сервера
 
 
 avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
