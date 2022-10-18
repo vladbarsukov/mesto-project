@@ -1,4 +1,3 @@
-// import { pushDataProfile, pushDataAvatar } from "./api.js";
 import { avatar } from "./avatar.js";
 import { isValid } from "./validate.js";
 import { validationSettings, api } from "./../src/index.js";

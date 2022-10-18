@@ -1,26 +1,17 @@
 import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handleOpenPopup } from "./modal.js";
-
-// import { pushCard, deleteCardFromServer, toggleLikeInServer, Api, config } from "./api.js";
 import { api } from "./../src/index.js";
 import Section from "./Section";
 
-const cardSection = document.querySelector(".photo-grid");
-const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector("#popupPhoto");
 const imgDescription = document.querySelector(".popup__photo-title");
 const cardAddButton = formAddPhoto.querySelector(".popup__submit");
 const img = document.querySelector(".popup__photo");
-
-//////////////// card OOP
-///////////////////////
 
 export class Card {
   static _template = document.querySelector("#card-template").content
   constructor({data, myId, openImg}) {
     this.data = data;
     this.myId = myId;
-    // this.handleLikeShowStatus = handleLikeShowStatus;
-    // this.deleteCard = deleteCard;
     this.openImg = openImg;
     this.cardElement = Card._template.cloneNode(true);
     this.likeButton = this.cardElement.querySelector(".photo-grid__like");
@@ -40,15 +31,14 @@ _isThereLike(likeArr, myId) {
   } // сравниваю id, проверяю есть ли лайк в массиве лайков
 
 _showLikeStatus(cardElement, likeArr, myId) {
-    const likeButton = cardElement.querySelector(".photo-grid__like");
-    const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
-    likeCounter.textContent = likeArr.length;
-
-    if (this._isThereLike(likeArr, myId)) {
-      likeButton.classList.add("photo-grid__like_active");
-    } else {
-      likeButton.classList.remove("photo-grid__like_active");
-    }
+  const likeButton = cardElement.querySelector(".photo-grid__like");
+  const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
+  likeCounter.textContent = likeArr.length;
+  if (this._isThereLike(likeArr, myId)) {
+    likeButton.classList.add("photo-grid__like_active");
+  } else {
+    likeButton.classList.remove("photo-grid__like_active");
+  }
   } // обновляю статус лайка на странице
 
 _handleLikeShowStatus(id, isThereLike, cardElement, myId) {
@@ -59,7 +49,6 @@ _handleLikeShowStatus(id, isThereLike, cardElement, myId) {
       .catch((err) => {
         console.log(err);
       });
-
   }; // обновляю статус лайка на сервере
 
 _deleteCard(card, cardId) {
@@ -104,20 +93,10 @@ _delButtonNotOwnerRemover() {
   } // создание карточки
 }
 
-// function addCard(data, myId) {
-//   const createNewCard = new Card({
-//     data,
-//     myId,
-//     openImg,
-//   })
-//   cardSection.prepend(createNewCard.createNewCard());
-// }
-
 function addNewCard(myId) {
   saveMessage(cardAddButton);
   api.pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
-      // addCard(data, myId);
       const cardList = new Section({
         renderer: (item) => {
           const card = new Card({data: item, myId: myId, openImg: openImg});
@@ -137,7 +116,6 @@ function addNewCard(myId) {
 }  // отправляю новую карту на сервер
 
 // попап с фото
-
 function openImg(cardElement) {
   handleOpenPopup(popupImage);
   getCardData(cardElement);

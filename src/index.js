@@ -45,9 +45,9 @@ import Section from '../components/Section'
 import {
   Api, config} from "../components/api.js";
 
-const profileAddButton = document.querySelector(".profile__add-button")
-const profileEditButton = document.querySelector(".profile__edit-button")
-const popups = document.querySelectorAll('.popup')
+const profileAddButton = document.querySelector(".profile__add-button");
+const profileEditButton = document.querySelector(".profile__edit-button");
+const popups = document.querySelectorAll('.popup');
 const validationSettings = {
   formSelector: ".popup__form",
   errorClass: "popup__input-error_active",
@@ -55,15 +55,12 @@ const validationSettings = {
   submitButtonSelector: ".popup__submit",
   inactiveButtonClass: "popup__submit_disabled",
   inputList: ".popup__input",
-}
+};
 
+let myId = null;
 
+export const api = new Api(config);
 
-let myId = null
-
-export const api = new Api(config)
-console.log(api.getData())
-//////////////
 
 
 api.getAllData()
@@ -85,8 +82,8 @@ api.getAllData()
 
 
 
-avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
-avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
+avatarContainer.addEventListener('mouseover', avatarEditShow); // слушатель на затемнение аватара при наведении курсора
+avatarContainer.addEventListener('mouseout', avatarEditHide); // слушатель на затемнение аватара при наведении курсора
 
 formElementEditProfile.addEventListener("submit", HandlerEditeProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
 formElementEditAvatar.addEventListener("submit", HandlerEditeAvatar); // слушатель для добавления значения с сервера в попап с именем
