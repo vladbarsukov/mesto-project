@@ -72,20 +72,12 @@ api.getAllData()
     profession.textContent = data.about;
     avatar.src = data.avatar;
     myId = data._id;
-    // const cardList = new Section({
-    //   data: cards,
-    //   renderer: (item) => {
-    //     const card = new Card({data: item, myId: myId, openImg: openImg});
-    //     cardList.setItem(card.createNewCard())}
-    // }, ".photo-grid");
-    // cardList.renderItems()
     const cardList = new Section({
-      data: cards,
       renderer: (item) => {
         const card = new Card({data: item, myId: myId, openImg: openImg});
         cardList.setItem(card.createNewCard())}
     }, ".photo-grid");
-    cardList.renderItems()
+    cardList.renderItems(cards)
   })
   .catch((err) => {
     console.log(err);

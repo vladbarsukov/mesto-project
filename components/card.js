@@ -2,6 +2,7 @@ import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handl
 
 // import { pushCard, deleteCardFromServer, toggleLikeInServer, Api, config } from "./api.js";
 import { api } from "./../src/index.js";
+import Section from "./Section";
 
 const cardSection = document.querySelector(".photo-grid");
 const cardTemplate = document.querySelector("#card-template").content;
@@ -103,12 +104,26 @@ _delButtonNotOwnerRemover() {
   } // создание карточки
 }
 
+// function addCard(data, myId) {
+//   const createNewCard = new Card({
+//     data,
+//     myId,
+//     openImg,
+//   })
+//   cardSection.prepend(createNewCard.createNewCard());
+// }
 
 function addNewCard(myId) {
   saveMessage(cardAddButton);
   api.pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
     .then((data) => {
       // addCard(data, myId);
+      const cardList = new Section({
+        renderer: (item) => {
+          const card = new Card({data: item, myId: myId, openImg: openImg});
+          cardList.setItem(card.createNewCard())}
+      }, ".photo-grid");
+      cardList.renderItem(data)
     })
     .then(() => {
       handleCloseButton(popupButtonAddCard);
