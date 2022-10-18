@@ -10,15 +10,15 @@ const imgDescription = document.querySelector(".popup__photo-title");
 const cardAddButton = formAddPhoto.querySelector(".popup__submit");
 const img = document.querySelector(".popup__photo");
 
-const handleLikeShowStatus = (id, isThereLike, cardElement, myId) => {
-  api.toggleLikeInServer(id, isThereLike)
-    .then((data) => {
-      showLikeStatus(cardElement, data.likes, myId);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}; // обновляю статус лайка на сервере
+// const handleLikeShowStatus = (id, isThereLike, cardElement, myId) => {
+//   api.toggleLikeInServer(id, isThereLike)
+//     .then((data) => {
+//       showLikeStatus(cardElement, data.likes, myId);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }; // обновляю статус лайка на сервере
 
 function isThereLike(likeArr, myId) {
   return Boolean(
@@ -28,17 +28,17 @@ function isThereLike(likeArr, myId) {
   );
 } // сравниваю id, проверяю есть ли лайк в массиве лайков
 
-function showLikeStatus(cardElement, likeArr, myId) {
-  const likeButton = cardElement.querySelector(".photo-grid__like");
-  const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
-  likeCounter.textContent = likeArr.length;
-
-  if (isThereLike(likeArr, myId)) {
-    likeButton.classList.add("photo-grid__like_active");
-  } else {
-    likeButton.classList.remove("photo-grid__like_active");
-  }
-} // обновляю статус лайка на странице
+// function showLikeStatus(cardElement, likeArr, myId) {
+//   const likeButton = cardElement.querySelector(".photo-grid__like");
+//   const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
+//   likeCounter.textContent = likeArr.length;
+//
+//   if (isThereLike(likeArr, myId)) {
+//     likeButton.classList.add("photo-grid__like_active");
+//   } else {
+//     likeButton.classList.remove("photo-grid__like_active");
+//   }
+// } // обновляю статус лайка на странице
 
 function addCard(data, myId) {
   // const card = createNewCard(data, myId, handleLikeShowStatus, deleteCard);
@@ -46,23 +46,23 @@ function addCard(data, myId) {
   const card = new Card({
     data,
     myId,
-    handleLikeShowStatus,
-    deleteCard,
+    // handleLikeShowStatus,
+    // deleteCard,
     openImg,
   })
   cardSection.prepend(card.createNewCard());
 
 } //// функция добавления карточки из массива на страницу
 
-function deleteCard(card, cardId) {
-  api.deleteCardFromServer(cardId)
-    .then(() => {
-      card.remove();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-} // удаление карточки
+// function deleteCard(card, cardId) {
+//   api.deleteCardFromServer(cardId)
+//     .then(() => {
+//       card.remove();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// } // удаление карточки
 
 //////////////// card OOP
 ///////////////////////
@@ -88,42 +88,103 @@ export class CardList {
 
 export class Card {
   static _template = document.querySelector("#card-template").content
-  constructor({data, myId, handleLikeShowStatus, deleteCard, openImg}) {
+  constructor({data, myId, openImg}) {
     this.data = data;
     this.myId = myId;
-    this.handleLikeShowStatus = handleLikeShowStatus;
-    this.deleteCard = deleteCard;
+    // this.handleLikeShowStatus = handleLikeShowStatus;
+    // this.deleteCard = deleteCard;
     this.openImg = openImg;
+
+    this.cardElement = Card._template.cloneNode(true);
+    this.likeButton = this.cardElement.querySelector(".photo-grid__like");
+    this.card = this.cardElement.querySelector(".photo-grid__item");
+    this.deleteButton = this.cardElement.querySelector(".photo-grid__del-button");
+    this.image = this.cardElement.querySelector(".photo-grid__picture");
+    this.cardDescription = this.cardElement.querySelector(".photo-grid__text")
+
   }
- createNewCard() {
-    const cardElement = Card._template.cloneNode(true);
+
+_showLikeStatus(cardElement, likeArr, myId) {
     const likeButton = cardElement.querySelector(".photo-grid__like");
-    const card = cardElement.querySelector(".photo-grid__item");
-    const deleteButton = cardElement.querySelector(".photo-grid__del-button");
-    const image = cardElement.querySelector(".photo-grid__picture");
-    const cardDescription = cardElement.querySelector(".photo-grid__text")
+    const likeCounter = cardElement.querySelector(".photo-grid__like-counter");
+    likeCounter.textContent = likeArr.length;
 
-    image.owner = `${this.data._id}`;
-    cardDescription.textContent = this.data.name;
-    image.src = this.data.link;
-    image.alt = this.data.name;
-    showLikeStatus(cardElement, this.data.likes, this.myId);
-    if (this.data.owner._id !== this.myId) {
-      deleteButton.remove();
+    if (isThereLike(likeArr, myId)) {
+      likeButton.classList.add("photo-grid__like_active");
+    } else {
+      likeButton.classList.remove("photo-grid__like_active");
     }
+  } // обновляю статус лайка на странице
 
-    deleteButton.addEventListener("click", () => {
-      this.deleteCard(card, this.data._id);
-    });
+_handleLikeShowStatus(id, isThereLike, cardElement, myId) {
+    api.toggleLikeInServer(id, isThereLike)
+      .then((data) => {
+        this._showLikeStatus(cardElement, data.likes, myId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }; // обновляю статус лайка на сервере
 
-    image.addEventListener("click", () => {
-      this.openImg(image)
-    });
+_deleteCard(card, cardId) {
+    api.deleteCardFromServer(cardId)
+      .then(() => {
+        card.remove();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } // удаление карточки
 
-    likeButton.addEventListener("click", () => {
-      this.handleLikeShowStatus(this.data._id, likeButton.classList.contains("photo-grid__like_active"), card, this.myId);
-    });
-    return cardElement;
+_setEventListeners() {
+  this.deleteButton.addEventListener("click", () => {
+    this._deleteCard(this.card, this.data._id);
+  });
+
+  this.image.addEventListener("click", () => {
+    this.openImg(this.image)
+  });
+
+  this.likeButton.addEventListener("click", () => {
+    this._handleLikeShowStatus(this.data._id, this.likeButton.classList.contains("photo-grid__like_active"), this.card, this.myId);
+  });
+  }
+
+_delButtonNotOwnerRemover() {
+    if (this.data.owner._id !== this.myId) {
+      this.deleteButton.remove();
+    }
+  }
+
+ createNewCard() {
+    // const cardElement = Card._template.cloneNode(true);
+    // const likeButton = cardElement.querySelector(".photo-grid__like");
+    // const card = cardElement.querySelector(".photo-grid__item");
+    // const deleteButton = cardElement.querySelector(".photo-grid__del-button");
+    // const image = cardElement.querySelector(".photo-grid__picture");
+    // const cardDescription = cardElement.querySelector(".photo-grid__text")
+   this.image.owner = `${this.data._id}`;
+   this.cardDescription.textContent = this.data.name;
+   this.image.src = this.data.link;
+   this.image.alt = this.data.name;
+   this._showLikeStatus(this.cardElement, this.data.likes, this.myId);
+   this._delButtonNotOwnerRemover()
+    // if (this.data.owner._id !== this.myId) {
+    //   this.deleteButton.remove();
+    // }
+   this._setEventListeners()
+   // this.deleteButton.addEventListener("click", () => {
+   //    this.deleteCard(this.card, this.data._id);
+   //  });
+   //
+   // this.image.addEventListener("click", () => {
+   //    this.openImg(this.image)
+   //  });
+   //
+   // this.likeButton.addEventListener("click", () => {
+   //    this.handleLikeShowStatus(this.data._id, this.likeButton.classList.contains("photo-grid__like_active"), this.card, this.myId);
+   //  });
+    return this.cardElement;
   } // создание карточки
 }
 
