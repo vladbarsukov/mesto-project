@@ -30,6 +30,7 @@ import {
   popupImage,
   addNewCard,
   addCard,
+  CardList
 } from '../components/card.js'
 
 import {
@@ -74,6 +75,7 @@ api.getAllData()
   .catch((err) => {
     console.log(err);
   }) // получаю все данные с сервера
+
 // getAllData()
 //   .then(([cards, data]) => {
 //     profileName.textContent = data.name
@@ -87,6 +89,10 @@ api.getAllData()
 //   .catch((err) => {
 //     console.log(err);
 //   }) // получаю все данные с сервера
+
+export const cardList = new CardList("#card-template", (data) => {
+
+})
 
 avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
