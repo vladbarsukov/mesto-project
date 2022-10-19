@@ -1,6 +1,6 @@
 import { avatar } from "./avatar.js";
 import { isValid } from "./validate.js";
-import { validationSettings, api } from "./../src/index.js";
+import { validationSettings, api } from "../src/index";
 
 const formAddPhoto = document.forms.formAddPhoto;
 const formElementEditAvatar = document.forms.formAvatar;
@@ -46,7 +46,7 @@ function saveMessage(button) {
   button.textContent = "Сохранение...";
 } // изменение текста кнопки в модальном окне во время отправки данных
 
-function HandlerEditeProfileSubmit(evt) {
+function HandlerEditProfileSubmit(evt) {
   evt.preventDefault();
   saveMessage(addButton);
   api.pushDataProfile(nameInput.value, jobInput.value)
@@ -65,7 +65,7 @@ function HandlerEditeProfileSubmit(evt) {
     });
 } //добавление значения с сервера в попап с именем
 
-function HandlerEditeAvatar(evt) {
+function HandlerEditAvatar(evt) {
   evt.preventDefault();
   saveMessage(avatarAddButton);
   api.pushDataAvatar(avatarInput.value)
@@ -99,8 +99,8 @@ export {
   allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
-  HandlerEditeProfileSubmit,
-  HandlerEditeAvatar,
+  HandlerEditProfileSubmit,
+  HandlerEditAvatar,
   saveMessage,
   formElementEditAvatar,
 };

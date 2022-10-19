@@ -12,38 +12,38 @@ import {
   allAvatarInputs,
   avatarAddButton,
   formElementEditProfile,
-  HandlerEditeProfileSubmit,
-  HandlerEditeAvatar,
+  HandlerEditProfileSubmit,
+  HandlerEditAvatar,
   handleCloseButton,
   profileName,
   profession,
   formElementEditAvatar,
-} from '../components/modal.js'
+} from '../components/modal'
 
 import {
   enableValidation,
   toggleButtonState,
   validateBeforeOpenPopup
-} from '../components/validate.js'
+} from '../components/validate'
 
 import {
   popupImage,
   addNewCard,
   Card,
   openImg,
-} from '../components/card.js'
+} from '../components/card'
 
 import {
   avatarContainer,
   avatarEditShow,
   avatarEditHide,
   avatar,
-} from '../components/avatar.js'
+} from '../components/avatar'
 
 import Section from '../components/Section'
 
 import {
-  Api, config} from "../components/api.js";
+  Api, config} from "../components/api";
 
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -61,32 +61,30 @@ let myId = null;
 
 export const api = new Api(config);
 
-
-
 api.getAllData()
-  .then(([cards, data]) => {
-    profileName.textContent = data.name;
-    profession.textContent = data.about;
-    avatar.src = data.avatar;
-    myId = data._id;
+  .then(([cards, userData]) => {
+    profileName.textContent = userData.name;
+    profession.textContent = userData.about;
+    avatar.src = userData.avatar;
+    myId = userData._id;
+
     const cardList = new Section({
       renderer: (item) => {
         const card = new Card({data: item, myId: myId, openImg: openImg});
         cardList.setItem(card.createNewCard())}
     }, ".photo-grid");
-    cardList.renderItems(cards)
+
+    cardList.renderItems(cards);
   })
   .catch((err) => {
     console.log(err);
   }) // получаю все данные с сервера
 
-
-
 avatarContainer.addEventListener('mouseover', avatarEditShow); // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener('mouseout', avatarEditHide); // слушатель на затемнение аватара при наведении курсора
 
-formElementEditProfile.addEventListener("submit", HandlerEditeProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
-formElementEditAvatar.addEventListener("submit", HandlerEditeAvatar); // слушатель для добавления значения с сервера в попап с именем
+formElementEditProfile.addEventListener("submit", HandlerEditProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
+formElementEditAvatar.addEventListener("submit", HandlerEditAvatar); // слушатель для добавления значения с сервера в попап с именем
 
 formAddPhoto.addEventListener("submit", (element) => {
   element.preventDefault();
@@ -100,7 +98,6 @@ enableValidation(validationSettings); //подключение валидаци�
 profileAddButton.addEventListener('mousedown', function () {
   validateBeforeOpenPopup(formAddPhoto, validationSettings, validationSettings)
   handleOpenPopup(popupButtonAddCard)
-
 })
 
 profileEditButton.addEventListener('mousedown', function () {

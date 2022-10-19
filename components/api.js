@@ -12,23 +12,23 @@ class Api {
     this._headers = config.headers;
   }
 
-   onResponce(res) {
+  _onResponse(res) {
     return res.ok ? res.json() : Promise.reject(res);
   };
 
-   getData() {
+  getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } //получаю данные профиля с сервера
 
-   getCard() {
+  getCard() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } //получаю карточки с сервера
 
-   pushDataProfile(name, prof) {
+  pushDataProfile(name, prof) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -36,20 +36,20 @@ class Api {
         name: name,
         about: prof,
       }),
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } //отправляю данные профиля на сервер
 
-    pushDataAvatar(link) {
+  pushDataAvatar(link) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         avatar: link,
       }),
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } //отправляю данные профиля на сервер
 
-    pushCard(cardLink, cardName) {
+  pushCard(cardLink, cardName) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -57,27 +57,26 @@ class Api {
         link: cardLink,
         name: cardName,
       }),
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } // отправка карточки на сервер
 
-    deleteCardFromServer(id) {
+  deleteCardFromServer(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } // удаление карточки с сервера
 
-    toggleLikeInServer(id, isThereLike) {
+  toggleLikeInServer(id, isThereLike) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: isThereLike ? "DELETE" : "PUT",
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this._onResponse);
   } //запрос на сервер удаление или нажатие лайка
 
-    getAllData() {
-    return Promise.all([this.getCard(), this.getData()]);
+  getAllData() {
+    return Promise.all([this.getCard(), this.getUserData()]);
   } // получение данных с сервера одновременно
-
 }
 
 export { Api, config };
