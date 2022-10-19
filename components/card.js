@@ -1,4 +1,4 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage, handleCloseButton, handleOpenPopup } from "./modal";
+import { formAddPhoto, popupButtonAddCard, saveMessage } from "./Popup";
 import { api } from "../src/index";
 import Section from "./Section";
 
@@ -136,4 +136,4 @@ function getCardData(image) {
   img.alt = image.textContent;
 } // получение данных из попапа для добавления новой карточки
 
-export { handleCloseButton, popupImage, addNewCard, openImg};
+export { popupImage, addNewCard, openImg};

@@ -1,11 +1,10 @@
 import { avatar } from "./avatar.js";
-import { isValid } from "./validate.js";
-import { validationSettings, api } from "../src/index";
+import { api } from "../src/index";
 
 const formAddPhoto = document.forms.formAddPhoto;
 const formElementEditAvatar = document.forms.formAvatar;
 const popupButtonAddCard = document.querySelector("#popupAddCard");
-const popupEditProfile = document.querySelector("#popupEditProfile");
+// const popupEditProfile = document.querySelector("#popupEditProfile");
 const popupEditAvatar = document.querySelector("#popupProfileImage");
 const formElementEditProfile = document.forms.formProfile;
 const nameInput = formElementEditProfile.name;
@@ -18,28 +17,48 @@ const allAvatarInputs = Array.from(formElementEditAvatar.querySelectorAll(".popu
 const avatarAddButton = formElementEditAvatar.querySelector(".popup__submit");
 const addButton = formElementEditProfile.querySelector(".popup__submit");
 
-function closeByEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened')
-    handleCloseButton(openedPopup)
+export default class Popup {
+  constructor(selector) {
+    this._element = document.querySelector(selector);
+    this._closeButton = this._element.querySelector(".popup__close-button");
+    this._isOpened = false;
+  }
+
+  _handleEscClose(evt) {
+    if (evt.key === 'Escape') {
+      if (this._isOpened) {
+        this.close();
+      }
+    }
+  }
+
+  open() {
+    this._element.classList.add("popup_opened");
+    this._isOpened = true;
+    document.addEventListener('keydown', this._handleEscClose.bind(this));
+
+  } // функция открытия попапа
+
+  close() {
+    this._element.classList.remove("popup_opened");
+    document.removeEventListener('keydown', this._handleEscClose);
+    this._isOpened = false;
+  } //функция закрытия попапа
+
+  setEventListeners() {
+    this._closeButton.addEventListener('click', this.close.bind(this));
+
+    document.addEventListener('mousedown', (evt) => {
+      if(evt.target.classList.contains('popup_opened')) {
+        this.close();
+      }
+    });
   }
 }
-
-function handleOpenPopup(popup) {
-  popup.classList.add("popup_opened");
-  document.addEventListener('keydown', closeByEscape)
-} // функция открытия попапа
-
-function handleCloseButton (popup) {
-  popup.classList.remove("popup_opened");
-  document.removeEventListener('keydown', closeByEscape)
-} //функция закрытия попапа
 
 function addDefaultEditPopupData() {
   nameInput.value = profileName.textContent;
   jobInput.value = profession.textContent;
-  isValid(nameInput, formElementEditProfile, validationSettings);
-  isValid(jobInput, formElementEditProfile, validationSettings);
 } // значение по умолчанию в попапе с данными профиля
 
 function saveMessage(button) {
@@ -90,10 +109,8 @@ export {
   profileName,
   profession,
   addButton,
-  popupEditProfile,
+  // popupEditProfile,
   allInputsEditProfile,
-  handleOpenPopup,
-  handleCloseButton,
   addDefaultEditPopupData,
   popupEditAvatar,
   allAvatarInputs,
