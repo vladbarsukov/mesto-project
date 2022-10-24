@@ -1,13 +1,10 @@
-import { formAddPhoto, popupButtonAddCard, saveMessage } from "./Popup";
+import { formAddCard, popupButtonAddCard, saveMessage } from "./Popup";
 import { api } from "../src/index";
 import Section from "./Section";
 
-const popupImage = document.querySelector("#popupPhoto");
-const imgDescription = document.querySelector(".popup__photo-title");
-const cardAddButton = formAddPhoto.querySelector(".popup__submit");
-const img = document.querySelector(".popup__photo");
+const cardAddButton = formAddCard.querySelector(".popup__submit");
 
-export class Card {
+export default class Card {
   constructor({data, myId, openImg}) {
     this.data = data;
     this.myId = myId;
@@ -31,7 +28,7 @@ export class Card {
         return element._id === myId;
       })
     );
-  } // сравниваю id, проверяю есть ли лайк в массиве лайков
+  } // сравниваю Id, проверяю есть ли лайк в массиве лайков
 
   _showLikeStatus(cardElement, likeArr, myId) {
     const likeButton = cardElement.querySelector(".photo-grid__like");
@@ -56,12 +53,16 @@ export class Card {
   }; // обновляю статус лайка на сервере
 
   _deleteCard(cardEl, cardId) {
+    this.deleteButton.disabled = true;
     api.deleteCardFromServer(cardId)
       .then(() => {
         cardEl.remove();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        this.deleteButton.disabled = false;
       });
   } // удаление карточки
 
@@ -101,14 +102,14 @@ export class Card {
   } // создание карточки
 }
 
-function addNewCard(myId) {
+function addNewCard() {
   saveMessage(cardAddButton);
 
-  api.pushCard(formAddPhoto.linkPicture.value, formAddPhoto.namePlace.value)
+  api.pushCard(formAddCard.linkPicture.value, formAddCard.namePlace.value)
     .then((data) => {
       const cardList = new Section({
         renderer: (item) => {
-          const card = new Card({data: item, myId: myId, openImg: openImg});
+          const card = new Card({data: item, id: id, openImg: openImg});
           cardList.setItem(card.createNewCard())}
       }, ".photo-grid");
       cardList.renderItem(data);
@@ -124,16 +125,4 @@ function addNewCard(myId) {
     });
 }  // отправляю новую карту на сервер
 
-// попап с фото
-function openImg(cardElement) {
-  handleOpenPopup(popupImage);
-  getCardData(cardElement);
-} // открытие попапа с фото
-
-function getCardData(image) {
-  imgDescription.textContent = image.alt;
-  img.src = image.src;
-  img.alt = image.textContent;
-} // получение данных из попапа для добавления новой карточки
-
-export { popupImage, addNewCard, openImg};
+export { addNewCard };

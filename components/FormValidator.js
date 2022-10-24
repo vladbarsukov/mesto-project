@@ -1,6 +1,6 @@
 import {validationSettings} from "../src";
 
-export default class Validate {
+export default class FormValidator {
   constructor(validationSettings, formEl) {
     this._settings = validationSettings;
     this._formElement = formEl;

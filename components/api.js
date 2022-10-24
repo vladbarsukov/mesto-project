@@ -12,20 +12,20 @@ class Api {
     this._headers = config.headers;
   }
 
-  _onResponse(res) {
+  onResponce(res) {
     return res.ok ? res.json() : Promise.reject(res);
   };
 
-  getUserData() {
+  getData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } //получаю данные профиля с сервера
 
   getCard() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } //получаю карточки с сервера
 
   pushDataProfile(name, prof) {
@@ -36,7 +36,7 @@ class Api {
         name: name,
         about: prof,
       }),
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } //отправляю данные профиля на сервер
 
   pushDataAvatar(link) {
@@ -46,7 +46,7 @@ class Api {
       body: JSON.stringify({
         avatar: link,
       }),
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } //отправляю данные профиля на сервер
 
   pushCard(cardLink, cardName) {
@@ -57,26 +57,29 @@ class Api {
         link: cardLink,
         name: cardName,
       }),
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } // отправка карточки на сервер
 
   deleteCardFromServer(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } // удаление карточки с сервера
 
   toggleLikeInServer(id, isThereLike) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: isThereLike ? "DELETE" : "PUT",
       headers: this._headers,
-    }).then(this._onResponse);
+    }).then(this.onResponce);
   } //запрос на сервер удаление или нажатие лайка
 
   getAllData() {
-    return Promise.all([this.getCard(), this.getUserData()]);
+    return Promise.all([this.getCard(), this.getData()]);
   } // получение данных с сервера одновременно
+
 }
 
-export { Api, config };
+export {
+  // pushDataProfile, pushDataAvatar, pushCard, deleteCardFromServer, toggleLikeInServer, getAllData, getData,
+  Api, config };
