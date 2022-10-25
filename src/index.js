@@ -65,8 +65,10 @@ export const api = new Api(config);
 export const userInfo = new UserInfo(userDataSelectors)
 
 const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
-  api.pushCard(formAddCard.linkPicture.value, formAddCard.namePlace.value)
+  // в линк попадает нейм
+  api.pushCard(name, link)
     .then((data) => {
+      console.log(name)
       cardList.renderItem(data);
     })
     .then(() => {
