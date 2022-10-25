@@ -82,47 +82,45 @@ const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
 popupAddCard.setEventListeners();
 
 const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, about ]) => {
-  // userInfo.setUserInfo(api.pushDataProfile(api))
-  api.pushDataProfile(name, about)
-    .then((data) => {
-      profileName.textContent = data.name;
-      profession.textContent = data.about;
-    })
-    .then(() => {
-      popupEditProfile.close();
-    })
-    .finally(() => {
-      popupEditProfile.submitButton.textContent = "Сохранить";
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  userInfo.setUserInfo(name, about, api.pushDataProfile.bind(api), popupEditProfile)
+  // api.pushDataProfile(name, about)
+  //   .then((data) => {
+  //     profileName.textContent = data.name;
+  //     profession.textContent = data.about;
+  //   })
+  //   .then(() => {
+  //     popupEditProfile.close();
+  //   })
+  //   .finally(() => {
+  //     popupEditProfile.submitButton.textContent = "Сохранить";
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 });
 popupEditProfile.setEventListeners();
 
 const popupProfileImage = new PopupWithForm("#popupProfileImage", (imgSrc) => {
-  api.pushDataAvatar(imgSrc)
-    .then((data) => {
-      avatar.src = data.avatar;
-    })
-    .then(() => {
-      popupProfileImage.close();
-    })
-    .finally(() => {
-      popupProfileImage.submitButton.textContent = "Сохранить";
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  userInfo.setAvatar(imgSrc[0], api.pushDataAvatar.bind(api), popupProfileImage)
+  // api.pushDataAvatar(imgSrc[0])
+  //   .then((data) => {
+  //
+  //     avatar.src = data.avatar;
+  //   })
+  //   .then(() => {
+  //     popupProfileImage.close();
+  //   })
+  //   .finally(() => {
+  //     popupProfileImage.submitButton.textContent = "Сохранить";
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 });
 popupProfileImage.setEventListeners();
 
 const popupPhoto = new PopupWithImage("#popupPhoto");
 popupPhoto.setEventListeners();
-
-
-
-
 
 api.getAllData()
   .then(([cards, userData]) => {
@@ -177,6 +175,7 @@ profileEditButton.addEventListener("mousedown", function () {
 
 avatarContainer.addEventListener("mousedown", () => {
   // validateBeforeOpenPopup(formElementEditAvatar, validationSettings)
+  formEditAvatarValidator.clearValidation()
   popupProfileImage.open();
   // toggleButtonState(allAvatarInputs, avatarAddButton, validationSettings);
 }) // слушатель открытия окна смены аватара

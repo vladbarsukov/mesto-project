@@ -1,41 +1,50 @@
 
-import {addButton, avatarAddButton,} from "./Popup";
-
 export default class UserInfo {
-  constructor (userDataSelectors) {
+  constructor(userDataSelectors) {
     this.name = document.querySelector(`${userDataSelectors.nameSelector}`);
     this.profession = document.querySelector(`${userDataSelectors.professionSelector}`);
     this.avatar = document.querySelector(`${userDataSelectors.avatar}`);
   }
 
   getUserInfo(api) {
-    return api()
+    return api();
   }
 
-  setUserInfo(name, about, api) {
+  setUserInfo(name, about, api, popup) {
     api(name, about)
       .then((userData) => {
         this.name.textContent = userData.name;
         this.profession.textContent = userData.about;
       })
+      // .finally(() => {
+      //   addButton.textContent = "Сохранить";
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+      .then(() => {
+        popup.close();
+      })
       .finally(() => {
-        addButton.textContent = "Сохранить";
+        popup.submitButton.textContent = "Сохранить";
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  setAvatar(avatarInput, api) {
-    api(avatarInput)
+  setAvatar(imgSrc, api, popup) {
+    api(imgSrc)
       .then((data) => {
         this.avatar.src = data.avatar;
       })
+      .then(() => {
+        popup.close();
+      })
       .finally(() => {
-        avatarAddButton.textContent = "Создать";
+        popup.submitButton.textContent = "Сохранить";
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
 }
