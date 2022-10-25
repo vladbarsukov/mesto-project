@@ -10,41 +10,24 @@ export default class UserInfo {
     return api();
   }
 
-  setUserInfo(name, about, api, popup) {
-    api(name, about)
+  setUserInfo(name, about, api) {
+   return  api(name, about)
       .then((userData) => {
-        this.name.textContent = userData.name;
-        this.profession.textContent = userData.about;
+        this.fillUserInfo(userData)
       })
-      // .finally(() => {
-      //   addButton.textContent = "Сохранить";
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
-      .then(() => {
-        popup.close();
-      })
-      .finally(() => {
-        popup.submitButton.textContent = "Сохранить";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
-  setAvatar(imgSrc, api, popup) {
-    api(imgSrc)
+  setAvatar(imgSrc, api) {
+   return  api(imgSrc)
       .then((data) => {
         this.avatar.src = data.avatar;
       })
-      .then(() => {
-        popup.close();
-      })
-      .finally(() => {
-        popup.submitButton.textContent = "Сохранить";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  }
+
+  fillUserInfo(userData) {
+    this.name.textContent = userData.name;
+    this.profession.textContent = userData.about;
+  }
+  updateAvatar(userData) {
+    this.avatar.src = userData.avatar
   }
 }

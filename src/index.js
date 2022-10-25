@@ -6,10 +6,7 @@ import PopupWithForm from "../components/PopupWithForm";
 import {
   formAddCard,
   formEditAvatar,
-  // addDefaultEditPopupData,
   formEditProfile,
-  profileName,
-  profession,
   nameInput,
   jobInput,
 } from "../components/Popup"
@@ -49,7 +46,6 @@ const userDataSelectors = {
 }
 
 let cardList;
-let myId = null;
 
 const formEditProfileValidator = new FormValidator(validationSettings, formEditProfile);
 formEditProfileValidator.enableValidation();
@@ -65,7 +61,6 @@ export const api = new Api(config);
 export const userInfo = new UserInfo(userDataSelectors)
 
 const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
-  // в линк попадает нейм
   api.pushCard(name, link)
     .then((data) => {
       console.log(name)
@@ -84,40 +79,31 @@ const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
 popupAddCard.setEventListeners();
 
 const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, about ]) => {
-  userInfo.setUserInfo(name, about, api.pushDataProfile.bind(api), popupEditProfile)
-  // api.pushDataProfile(name, about)
-  //   .then((data) => {
-  //     profileName.textContent = data.name;
-  //     profession.textContent = data.about;
-  //   })
-  //   .then(() => {
-  //     popupEditProfile.close();
-  //   })
-  //   .finally(() => {
-  //     popupEditProfile.submitButton.textContent = "Сохранить";
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  userInfo.setUserInfo(name, about, api.pushDataProfile.bind(api))
+      .then(() => {
+        popupEditProfile.close();
+      })
+      .finally(() => {
+        popupEditProfile.submitButton.textContent = "Сохранить";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
 });
 popupEditProfile.setEventListeners();
 
 const popupProfileImage = new PopupWithForm("#popupProfileImage", (imgSrc) => {
-  userInfo.setAvatar(imgSrc[0], api.pushDataAvatar.bind(api), popupProfileImage)
-  // api.pushDataAvatar(imgSrc[0])
-  //   .then((data) => {
-  //
-  //     avatar.src = data.avatar;
-  //   })
-  //   .then(() => {
-  //     popupProfileImage.close();
-  //   })
-  //   .finally(() => {
-  //     popupProfileImage.submitButton.textContent = "Сохранить";
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  userInfo.setAvatar(imgSrc[0], api.pushDataAvatar.bind(api))
+    .then(() => {
+      popupProfileImage.close();
+    })
+    .finally(() => {
+      popupProfileImage.submitButton.textContent = "Сохранить";
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 popupProfileImage.setEventListeners();
 
@@ -126,16 +112,13 @@ popupPhoto.setEventListeners();
 
 api.getAllData()
   .then(([cards, userData]) => {
-    profileName.textContent = userData.name;
-    profession.textContent = userData.about;
-    avatar.src = userData.avatar;
-    myId = userData._id;
-
+    userInfo.fillUserInfo(userData)
+    userInfo.updateAvatar(userData)
     cardList = new Section({
       renderer: (item) => {
         const card = new Card({
           data: item, 
-          myId: myId, 
+          myId: userData._id,
           openImg: () => {
             popupPhoto.open({
               img: item.link,
@@ -145,7 +128,6 @@ api.getAllData()
         });
         cardList.setItem(card.createNewCard())}
     }, ".photo-grid");
-
     cardList.renderItems(cards);
   })
   .catch((err) => {
@@ -165,21 +147,18 @@ profileAddButton.addEventListener("mousedown", function (evt) {
 })
 
 profileEditButton.addEventListener("mousedown", function () {
+  formEditProfileValidator.clearValidation()
   userInfo.getUserInfo(api.getData.bind(api))
     .then((userData) => {
       nameInput.value = userData.name;
       jobInput.value = userData.about;
     })
-  // addDefaultEditPopupData();
   popupEditProfile.open();
-  // toggleButtonState(allInputsEditProfile, addButton, validationSettings);
 })
 
 avatarContainer.addEventListener("mousedown", () => {
-  // validateBeforeOpenPopup(formElementEditAvatar, validationSettings)
   formEditAvatarValidator.clearValidation()
   popupProfileImage.open();
-  // toggleButtonState(allAvatarInputs, avatarAddButton, validationSettings);
 }) // слушатель открытия окна смены аватара
 
 export {validationSettings}
