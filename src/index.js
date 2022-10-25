@@ -6,10 +6,12 @@ import PopupWithForm from "../components/PopupWithForm";
 import {
   formAddCard,
   formEditAvatar,
-  addDefaultEditPopupData,
+  // addDefaultEditPopupData,
   formEditProfile,
   profileName,
   profession,
+  nameInput,
+  jobInput,
 } from "../components/Popup"
 
 import FormValidator from "../components/FormValidator";
@@ -26,6 +28,7 @@ import Section from "../components/Section"
 
 import {
   Api, config} from "../components/Api";
+import UserInfo from "../components/UserInfo";
 
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -38,6 +41,13 @@ const validationSettings = {
   inputList: ".popup__input",
 };
 
+const userDataSelectors = {
+  nameSelector: ".profile__name",
+  professionSelector: ".profile__description",
+  avatar: ".profile__image",
+  addButton: ".popup__submit",
+}
+
 let cardList;
 let myId = null;
 
@@ -49,6 +59,10 @@ formAddCardValidator.enableValidation();
 
 const formEditAvatarValidator = new FormValidator(validationSettings, formEditAvatar);
 formEditAvatarValidator.enableValidation();
+
+export const api = new Api(config);
+
+export const userInfo = new UserInfo(userDataSelectors)
 
 const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
   api.pushCard(formAddCard.linkPicture.value, formAddCard.namePlace.value)
@@ -68,6 +82,7 @@ const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
 popupAddCard.setEventListeners();
 
 const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, about ]) => {
+  // userInfo.setUserInfo(api.pushDataProfile(api))
   api.pushDataProfile(name, about)
     .then((data) => {
       profileName.textContent = data.name;
@@ -107,7 +122,7 @@ popupPhoto.setEventListeners();
 
 
 
-export const api = new Api(config);
+
 
 api.getAllData()
   .then(([cards, userData]) => {
@@ -150,7 +165,12 @@ profileAddButton.addEventListener("mousedown", function (evt) {
 })
 
 profileEditButton.addEventListener("mousedown", function () {
-  addDefaultEditPopupData();
+  userInfo.getUserInfo(api.getData.bind(api))
+    .then((userData) => {
+      nameInput.value = userData.name;
+      jobInput.value = userData.about;
+    })
+  // addDefaultEditPopupData();
   popupEditProfile.open();
   // toggleButtonState(allInputsEditProfile, addButton, validationSettings);
 })

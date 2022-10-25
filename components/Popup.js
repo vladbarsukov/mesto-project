@@ -4,6 +4,7 @@ const popupButtonAddCard = document.querySelector("#popupAddCard");
 const popupEditAvatar = document.querySelector("#popupProfileImage");
 const formEditProfile = document.forms.formProfile;
 const nameInput = formEditProfile.name;
+const jobInput = formEditProfile.profession;
 const profileName = document.querySelector(".profile__name");
 const profession = document.querySelector(".profile__description");
 const allInputsEditProfile = Array.from(formEditProfile.querySelectorAll(".popup__input"));
@@ -55,10 +56,10 @@ export default class Popup {
   }
 }
 
-function addDefaultEditPopupData() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profession.textContent;
-} // значение по умолчанию в попапе с данными профиля
+// function addDefaultEditPopupData() {
+//   nameInput.value = profileName.textContent;
+//   jobInput.value = profession.textContent;
+// } // значение по умолчанию в попапе с данными профиля
 
 function saveMessage(button) {
   button.textContent = "Сохранение...";
@@ -72,11 +73,13 @@ export {
   profession,
   addButton,
   allInputsEditProfile,
-  addDefaultEditPopupData,
+  // addDefaultEditPopupData,
   popupEditAvatar,
   allAvatarInputs,
   avatarAddButton,
   formEditProfile,
   saveMessage,
   formEditAvatar,
+  nameInput,
+  jobInput
 };
