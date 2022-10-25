@@ -1,8 +1,4 @@
-import { formAddCard, popupButtonAddCard, saveMessage } from "./Popup";
 import { api } from "../src/index";
-import Section from "./Section";
-
-const cardAddButton = formAddCard.querySelector(".popup__submit");
 
 export default class Card {
   constructor({data, myId, openImg}) {
@@ -102,27 +98,3 @@ export default class Card {
   } // создание карточки
 }
 
-function addNewCard() {
-  saveMessage(cardAddButton);
-
-  api.pushCard(formAddCard.linkPicture.value, formAddCard.namePlace.value)
-    .then((data) => {
-      const cardList = new Section({
-        renderer: (item) => {
-          const card = new Card({data: item, id: id, openImg: openImg});
-          cardList.setItem(card.createNewCard())}
-      }, ".photo-grid");
-      cardList.renderItem(data);
-    })
-    .then(() => {
-      handleCloseButton(popupButtonAddCard);
-    })
-    .finally(() => {
-      cardAddButton.textContent = "Создать";
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}  // отправляю новую карту на сервер
-
-export { addNewCard };

@@ -1,4 +1,3 @@
-
 export default class UserInfo {
   constructor(userDataSelectors) {
     this.name = document.querySelector(`${userDataSelectors.nameSelector}`);

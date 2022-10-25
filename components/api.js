@@ -80,6 +80,4 @@ class Api {
 
 }
 
-export {
-  // pushDataProfile, pushDataAvatar, pushCard, deleteCardFromServer, toggleLikeInServer, getAllData, getData,
-  Api, config };
+export {Api, config };

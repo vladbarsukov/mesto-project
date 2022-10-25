@@ -1,6 +1,7 @@
-const avatarContainer = document.querySelector(".profile__image-container");
-const avatarEditIcon = document.querySelector(".profile__edit-icon");
-const avatar = document.querySelector(".profile__image");
+import {
+  avatar,
+  avatarEditIcon,
+} from "../utils/constants"
 
 function avatarEditShow() {
   avatar.classList.add("profile__image_opacity");
@@ -12,4 +13,4 @@ function avatarEditHide() {
   avatarEditIcon.classList.remove("profile__edit-icon_active");
 } // затемнение аватара
 
-export { avatarContainer, avatarEditShow, avatarEditHide, avatar };
+export {avatarEditShow, avatarEditHide};

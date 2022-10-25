@@ -9,16 +9,15 @@ import {
   formEditProfile,
   nameInput,
   jobInput,
-} from "../components/Popup"
+  avatarContainer,
+} from "../utils/constants"
 
 import FormValidator from "../components/FormValidator";
 import Card from "../components/card"
 
 import {
-  avatarContainer,
   avatarEditShow,
   avatarEditHide,
-  avatar,
 } from "../components/avatar"
 
 import Section from "../components/Section"
