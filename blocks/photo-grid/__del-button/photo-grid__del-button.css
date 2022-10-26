@@ -1,20 +1,25 @@
 .photo-grid__del-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 0;
-    border: none;
-    font: inherit;
-    color: inherit;
-    background-color: transparent;
-    cursor: pointer;
-    background-image: url(../../../images/Group.svg);
-    width: 18px;
-    height: 19px;
-    transition: ease-out 0.4s;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  background-image: url(../../../images/Group.svg);
+  width: 18px;
+  height: 19px;
+  transition: opacity ease-out 0.3s;
 }
 
-.photo-grid__del-button:hover {
-    cursor: pointer;
-    opacity: 0.6;
+.photo-grid__del-button:hover,
+.photo-grid__del-button:focus {
+  opacity: 0.6;
+}
+
+.photo-grid__del-button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

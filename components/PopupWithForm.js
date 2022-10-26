@@ -9,13 +9,13 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const inputList = Array.from(this._element.querySelectorAll(".popup__input"));
-    return inputList.map((input) => input.value);
+    return this._form.elements;
   }
 
   setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      this.submitButton.disabled = true;
       this.submitButton.textContent = "Сохраняю...";
       this._submitCallback(this._getInputValues());
     });

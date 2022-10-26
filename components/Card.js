@@ -56,10 +56,8 @@ export default class Card {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
         this.deleteButton.disabled = false;
-      });
+      })
   } // удаление карточки
 
   _setEventListeners() {
