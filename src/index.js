@@ -36,7 +36,6 @@ const popupAddCard = new PopupWithForm("#popupAddCard", ([ namePlace, linkPictur
     })
     .catch((err) => {
       console.log(err);
-      popupAddCard.submitButton.disabled = false;
     })
     .finally(() => {
       popupAddCard.submitButton.textContent = "Создать";
@@ -50,7 +49,6 @@ const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, profess
     })
     .catch((err) => {
       console.log(err);
-      popupEditProfile.submitButton.disabled = false;
     })
     .finally(() => {
       popupEditProfile.submitButton.textContent = "Сохранить";
@@ -64,7 +62,6 @@ const popupProfileImage = new PopupWithForm("#popupProfileImage", ([ linkAvatar 
     })
     .catch((err) => {
       console.log(err);
-      popupProfileImage.submitButton.disabled = false;
     })
     .finally(() => {
       popupProfileImage.submitButton.textContent = "Сохранить";
