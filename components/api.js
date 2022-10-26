@@ -1,31 +1,23 @@
-const config = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-15",
-  headers: {
-    authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
-    'Content-Type': 'application/json',
-  },
-};
-
-class Api {
+export default class Api {
   constructor(config) {
     this._baseUrl = config.baseUrl;
     this._headers = config.headers;
   }
 
-  onResponce(res) {
+  onResponse(res) {
     return res.ok ? res.json() : Promise.reject(res);
   };
 
   getData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } //получаю данные профиля с сервера
 
   getCard() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } //получаю карточки с сервера
 
   pushDataProfile(name, prof) {
@@ -36,7 +28,7 @@ class Api {
         name: name,
         about: prof,
       }),
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } //отправляю данные профиля на сервер
 
   pushDataAvatar(link) {
@@ -46,7 +38,7 @@ class Api {
       body: JSON.stringify({
         avatar: link,
       }),
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } //отправляю данные профиля на сервер
 
   pushCard(cardLink, cardName) {
@@ -57,27 +49,24 @@ class Api {
         link: cardLink,
         name: cardName,
       }),
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } // отправка карточки на сервер
 
   deleteCardFromServer(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } // удаление карточки с сервера
 
   toggleLikeInServer(id, isThereLike) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: isThereLike ? "DELETE" : "PUT",
       headers: this._headers,
-    }).then(this.onResponce);
+    }).then(this.onResponse);
   } //запрос на сервер удаление или нажатие лайка
 
   getAllData() {
     return Promise.all([this.getCard(), this.getData()]);
   } // получение данных с сервера одновременно
-
 }
-
-export {Api, config };

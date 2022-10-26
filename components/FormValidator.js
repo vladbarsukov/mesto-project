@@ -1,4 +1,4 @@
-import {validationSettings} from "../src";
+import {validationSettings} from "../utils/constants";
 
 export default class FormValidator {
   constructor(validationSettings, formEl) {
@@ -51,6 +51,7 @@ export default class FormValidator {
   _setEventListeners() {
     const inputList = Array.from(this._formElement.querySelectorAll(this._settings.inputList));
     const buttonElement = this._formElement.querySelector(this._settings.submitButtonSelector);
+
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._isValid(inputElement, this._formElement, this._settings);
@@ -66,6 +67,7 @@ export default class FormValidator {
   clearValidation() {
     const inputList = Array.from(this._formElement.querySelectorAll(validationSettings.inputList));
     const buttonElement = this._formElement.querySelector(this._settings.submitButtonSelector);
+
     inputList.forEach((inputElement) => {
       inputElement.value = "";
       this._hideInputError(inputElement, this._formElement);

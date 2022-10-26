@@ -1,48 +1,32 @@
 import "/pages/index.css";
 
-import PopupWithImage from "../components/PopupWithImage";
-import PopupWithForm from "../components/PopupWithForm";
-
 import {
+  config,
+  validationSettings,
+  userDataSelectors,
   formAddCard,
   formEditAvatar,
   formEditProfile,
+  profileAddButton,
+  profileEditButton,
   nameInput,
   jobInput,
   avatarContainer,
-} from "../utils/constants"
+} from "../utils/constants";
 
+import Api from "../components/Api";
+import Card from "../components/card";
+import Section from "../components/Section";
+import PopupWithImage from "../components/PopupWithImage";
+import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
-import Card from "../components/card"
+import UserInfo from "../components/UserInfo";
 
 import {
   avatarEditShow,
   avatarEditHide,
 } from "../components/avatar"
 
-import Section from "../components/Section"
-
-import {
-  Api, config} from "../components/Api";
-import UserInfo from "../components/UserInfo";
-
-const profileAddButton = document.querySelector(".profile__add-button");
-const profileEditButton = document.querySelector(".profile__edit-button");
-
-const validationSettings = {
-  errorClass: "popup__input-error_active",
-  inputErrorClass: "popup__input_error",
-  submitButtonSelector: ".popup__submit",
-  inactiveButtonClass: "popup__submit_disabled",
-  inputList: ".popup__input",
-};
-
-const userDataSelectors = {
-  nameSelector: ".profile__name",
-  professionSelector: ".profile__description",
-  avatar: ".profile__image",
-  addButton: ".popup__submit",
-}
 
 let cardList;
 
@@ -75,7 +59,6 @@ const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
       console.log(err);
     });
 });
-popupAddCard.setEventListeners();
 
 const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, about ]) => {
   userInfo.setUserInfo(name, about, api.pushDataProfile.bind(api))
@@ -88,9 +71,7 @@ const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, about ]
       .catch((err) => {
         console.log(err);
       });
-
 });
-popupEditProfile.setEventListeners();
 
 const popupProfileImage = new PopupWithForm("#popupProfileImage", (imgSrc) => {
   userInfo.setAvatar(imgSrc[0], api.pushDataAvatar.bind(api))
@@ -104,15 +85,19 @@ const popupProfileImage = new PopupWithForm("#popupProfileImage", (imgSrc) => {
       console.log(err);
     });
 });
-popupProfileImage.setEventListeners();
 
 const popupPhoto = new PopupWithImage("#popupPhoto");
+
+popupEditProfile.setEventListeners();
+popupAddCard.setEventListeners();
+popupProfileImage.setEventListeners();
 popupPhoto.setEventListeners();
 
 api.getAllData()
   .then(([cards, userData]) => {
     userInfo.fillUserInfo(userData)
     userInfo.updateAvatar(userData)
+
     cardList = new Section({
       renderer: (item) => {
         const card = new Card({
@@ -127,6 +112,7 @@ api.getAllData()
         });
         cardList.setItem(card.createNewCard())}
     }, ".photo-grid");
+
     cardList.renderItems(cards);
   })
   .catch((err) => {
@@ -136,9 +122,6 @@ api.getAllData()
 avatarContainer.addEventListener("mouseover", avatarEditShow); // слушатель на затемнение аватара при наведении курсора
 avatarContainer.addEventListener("mouseout", avatarEditHide); // слушатель на затемнение аватара при наведении курсора
 
-//подключение валидации функция принимает на вход только список форм для обработки остальное
-//я вычисляю из списка форм внутри функции
-
 profileAddButton.addEventListener("mousedown", function (evt) {
   evt.preventDefault();
   formAddCardValidator.clearValidation();
@@ -147,11 +130,13 @@ profileAddButton.addEventListener("mousedown", function (evt) {
 
 profileEditButton.addEventListener("mousedown", function () {
   formEditProfileValidator.clearValidation()
+
   userInfo.getUserInfo(api.getData.bind(api))
     .then((userData) => {
       nameInput.value = userData.name;
       jobInput.value = userData.about;
     })
+
   popupEditProfile.open();
 })
 
@@ -159,5 +144,3 @@ avatarContainer.addEventListener("mousedown", () => {
   formEditAvatarValidator.clearValidation()
   popupProfileImage.open();
 }) // слушатель открытия окна смены аватара
-
-export {validationSettings}

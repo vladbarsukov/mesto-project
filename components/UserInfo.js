@@ -10,23 +10,25 @@ export default class UserInfo {
   }
 
   setUserInfo(name, about, api) {
-   return  api(name, about)
-      .then((userData) => {
-        this.fillUserInfo(userData)
-      })
+   return api(name, about)
+    .then((userData) => {
+      this.fillUserInfo(userData);
+    })
   }
+
   setAvatar(imgSrc, api) {
-   return  api(imgSrc)
-      .then((data) => {
-        this.avatar.src = data.avatar;
-      })
+   return api(imgSrc)
+    .then((data) => {
+      this.avatar.src = data.avatar;
+    })
   }
 
   fillUserInfo(userData) {
     this.name.textContent = userData.name;
     this.profession.textContent = userData.about;
   }
+
   updateAvatar(userData) {
-    this.avatar.src = userData.avatar
+    this.avatar.src = userData.avatar;
   }
 }
