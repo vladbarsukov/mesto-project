@@ -1,4 +1,4 @@
-export const config = {
+export const apiConfig = {
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-15",
   headers: {
     authorization: 'e807f0be-4a7f-40ad-a75f-bff7cd3e53ea',
@@ -28,7 +28,4 @@ export const nameInput = formEditProfile.name;
 export const jobInput = formEditProfile.profession;
 export const profileAddButton = document.querySelector(".profile__add-button");
 export const profileEditButton = document.querySelector(".profile__edit-button");
-
 export const avatarContainer = document.querySelector(".profile__image-container");
-export const avatarEditIcon = document.querySelector(".profile__edit-icon");
-export const avatar = document.querySelector(".profile__image");

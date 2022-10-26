@@ -1,7 +1,7 @@
 import "/pages/index.css";
 
 import {
-  config,
+  apiConfig,
   validationSettings,
   userDataSelectors,
   formAddCard,
@@ -15,18 +15,12 @@ import {
 } from "../utils/constants";
 
 import Api from "../components/Api";
-import Card from "../components/card";
+import Card from "../components/Card";
 import Section from "../components/Section";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
-
-import {
-  avatarEditShow,
-  avatarEditHide,
-} from "../components/avatar"
-
 
 let cardList;
 
@@ -39,9 +33,8 @@ formAddCardValidator.enableValidation();
 const formEditAvatarValidator = new FormValidator(validationSettings, formEditAvatar);
 formEditAvatarValidator.enableValidation();
 
-export const api = new Api(config);
-
-export const userInfo = new UserInfo(userDataSelectors)
+const api = new Api(apiConfig);
+const userInfo = new UserInfo(userDataSelectors);
 
 const popupAddCard = new PopupWithForm("#popupAddCard", ([ link, name ]) => {
   api.pushCard(name, link)
@@ -101,7 +94,7 @@ api.getAllData()
     cardList = new Section({
       renderer: (item) => {
         const card = new Card({
-          data: item, 
+          data: item,
           myId: userData._id,
           openImg: () => {
             popupPhoto.open({
@@ -118,9 +111,6 @@ api.getAllData()
   .catch((err) => {
     console.log(err);
   }) // получаю все данные с сервера
-
-avatarContainer.addEventListener("mouseover", avatarEditShow); // слушатель на затемнение аватара при наведении курсора
-avatarContainer.addEventListener("mouseout", avatarEditHide); // слушатель на затемнение аватара при наведении курсора
 
 profileAddButton.addEventListener("mousedown", function (evt) {
   evt.preventDefault();
@@ -144,3 +134,5 @@ avatarContainer.addEventListener("mousedown", () => {
   formEditAvatarValidator.clearValidation()
   popupProfileImage.open();
 }) // слушатель открытия окна смены аватара
+
+export {api};
