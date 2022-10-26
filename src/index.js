@@ -1,117 +1,137 @@
-import '/pages/index.css';
+import "/pages/index.css";
 
 import {
-  popupEditProfile,
-  popupButtonAddCard,
-  popupEditAvatar,
-  formAddPhoto,
-  handleOpenPopup,
-  addDefaultEditPopupData,
-  allInputsEditProfile,
-  addButton,
-  allAvatarInputs,
-  avatarAddButton,
-  formElementEditProfile,
-  HandlerEditeProfileSubmit,
-  HandlerEditeAvatar,
-  handleCloseButton,
-  profileName,
-  profession,
-  formElementEditAvatar,
-} from '../components/modal.js'
-
-import {
-  enableValidation,
-  toggleButtonState,
-  validateBeforeOpenPopup
-} from '../components/validate.js'
-
-import {
-  popupImage,
-  addNewCard,
-  addCard,
-} from '../components/card.js'
-
-import {
+  apiConfig,
+  validationSettings,
+  userDataSelectors,
+  formAddCard,
+  formEditAvatar,
+  formEditProfile,
+  profileAddButton,
+  profileEditButton,
+  nameInput,
+  jobInput,
   avatarContainer,
-  avatarEditShow,
-  avatarEditHide,
-  avatar,
-} from '../components/avatar.js'
+} from "../utils/constants";
 
-import {getAllData,} from "../components/api.js";
-import {logPlugin} from "@babel/preset-env/lib/debug";
+import Api from "../components/Api";
+import Card from "../components/Card";
+import Section from "../components/Section";
+import PopupWithImage from "../components/PopupWithImage";
+import PopupWithForm from "../components/PopupWithForm";
+import FormValidator from "../components/FormValidator";
+import UserInfo from "../components/UserInfo";
 
-const profileAddButton = document.querySelector(".profile__add-button")
-const profileEditButton = document.querySelector(".profile__edit-button")
-const popups = document.querySelectorAll('.popup')
-const validationSettings = {
-  formSelector: ".popup__form",
-  errorClass: "popup__input-error_active",
-  inputErrorClass: "popup__input_error",
-  submitButtonSelector: ".popup__submit",
-  inactiveButtonClass: "popup__submit_disabled",
-  inputList: ".popup__input",
-}
+const api = new Api(apiConfig);
+const userInfo = new UserInfo(userDataSelectors);
+const formEditProfileValidator = new FormValidator(validationSettings, formEditProfile);
+const formAddCardValidator = new FormValidator(validationSettings, formAddCard);
+const formEditAvatarValidator = new FormValidator(validationSettings, formEditAvatar);
 
-let myId = null
-
-getAllData()
-  .then(([cards, data]) => {
-    profileName.textContent = data.name
-    profession.textContent = data.about
-    avatar.src = data.avatar
-    myId = data._id
-    cards.reverse().forEach((element) => {
-      addCard(element, myId);
+const popupAddCard = new PopupWithForm("#popupAddCard", ([ namePlace, linkPicture ]) => {
+  api.pushCard(linkPicture.value, namePlace.value)
+    .then((data) => {
+      cardList.renderItem(data);
+      popupAddCard.close();
     })
+    .catch((err) => {
+      console.log(err);
+      popupAddCard.submitButton.disabled = false;
+    })
+    .finally(() => {
+      popupAddCard.submitButton.textContent = "Создать";
+    });
+});
+
+const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, profession ]) => {
+  userInfo.setUserInfo(name.value, profession.value, api.pushDataProfile.bind(api))
+    .then(() => {
+      popupEditProfile.close();
+    })
+    .catch((err) => {
+      console.log(err);
+      popupEditProfile.submitButton.disabled = false;
+    })
+    .finally(() => {
+      popupEditProfile.submitButton.textContent = "Сохранить";
+    });
+});
+
+const popupProfileImage = new PopupWithForm("#popupProfileImage", ([ linkAvatar ]) => {
+  userInfo.setAvatar(linkAvatar.value, api.pushDataAvatar.bind(api))
+    .then(() => {
+      popupProfileImage.close();
+    })
+    .catch((err) => {
+      console.log(err);
+      popupProfileImage.submitButton.disabled = false;
+    })
+    .finally(() => {
+      popupProfileImage.submitButton.textContent = "Сохранить";
+    });
+});
+
+const popupPhoto = new PopupWithImage("#popupPhoto");
+
+let cardList;
+
+popupEditProfile.setEventListeners();
+popupAddCard.setEventListeners();
+popupProfileImage.setEventListeners();
+popupPhoto.setEventListeners();
+
+profileAddButton.addEventListener("mousedown", (evt) => {
+  evt.preventDefault();
+  formAddCardValidator.clearValidation();
+  popupAddCard.open();
+})
+
+profileEditButton.addEventListener("mousedown", (evt) => {
+  evt.preventDefault();
+  formEditProfileValidator.clearValidation();
+
+  userInfo.getUserInfo(api.getData.bind(api))
+    .then((userData) => {
+      nameInput.value = userData.name;
+      jobInput.value = userData.about;
+    })
+
+  popupEditProfile.open();
+})
+
+avatarContainer.addEventListener("mousedown", () => {
+  formEditAvatarValidator.clearValidation();
+  popupProfileImage.open();
+}) // слушатель открытия окна смены аватара
+
+formEditProfileValidator.enableValidation();
+formAddCardValidator.enableValidation();
+formEditAvatarValidator.enableValidation();
+
+api.getAllData()
+  .then(([cards, userData]) => {
+    userInfo.fillUserInfo(userData)
+    userInfo.updateAvatar(userData)
+
+    cardList = new Section({
+      renderer: (item) => {
+        const card = new Card({
+          data: item,
+          myId: userData._id,
+          openImg: () => {
+            popupPhoto.open({
+              img: item.link,
+              title: item.name,
+            });
+          }
+        });
+        cardList.setItem(card.createNewCard())}
+    }, ".photo-grid");
+
+    cardList.renderItems(cards);
   })
   .catch((err) => {
     console.log(err);
   }) // получаю все данные с сервера
 
-avatarContainer.addEventListener('mouseover', avatarEditShow) // слушатель на затемнение аватара при наведении курсора
-avatarContainer.addEventListener('mouseout', avatarEditHide) // слушатель на затемнение аватара при наведении курсора
-
-formElementEditProfile.addEventListener("submit", HandlerEditeProfileSubmit); // слушатель для добавления значения с сервера в попап с именем
-formElementEditAvatar.addEventListener("submit", HandlerEditeAvatar); // слушатель для добавления значения с сервера в попап с именем
-
-formAddPhoto.addEventListener("submit", (element) => {
-  element.preventDefault();
-  addNewCard(myId)
-  element.target.reset();
-}); // создание карточки из попапа
-
-enableValidation(validationSettings); //подключение валидации функция принимает на вход только список форм для обработки остальное
-//я вычисляю из списка форм внутри функции
-
-profileAddButton.addEventListener('mousedown', function () {
-  validateBeforeOpenPopup(formAddPhoto, validationSettings, validationSettings)
-  handleOpenPopup(popupButtonAddCard)
-
-})
-
-profileEditButton.addEventListener('mousedown', function () {
-  addDefaultEditPopupData();
-  handleOpenPopup(popupEditProfile);
-  toggleButtonState(allInputsEditProfile, addButton, validationSettings)
-})
-
-avatarContainer.addEventListener('mousedown', () => {
-  validateBeforeOpenPopup(formElementEditAvatar, validationSettings)
-  handleOpenPopup(popupEditAvatar);
-  toggleButtonState(allAvatarInputs, avatarAddButton, validationSettings)
-}) // слушатель открытия окна смены аватара
-
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      handleCloseButton(popup)
-    }
-    if (evt.target.classList.contains('popup__close-button')) {
-      handleCloseButton(popup)
-    }
-  })
-})
-
-export {validationSettings}
+export {api};

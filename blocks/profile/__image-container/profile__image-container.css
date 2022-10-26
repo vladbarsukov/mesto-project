@@ -1,7 +1,13 @@
 .profile__image-container {
-    display: flex;
-    position: relative;
-    width: 120px;
-    height: 120px;
-    cursor: pointer;
+  display: flex;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.profile__image-container:hover .profile__edit-icon,
+.profile__image-container:focus .profile__edit-icon {
+  opacity: 1;
+  visibility: visible;
 }

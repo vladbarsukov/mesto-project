@@ -11,9 +11,9 @@
 </header>
 <main class="main">
   <section class="profile">
-    <div class="profile__image-container">
-      <img class="profile__image"  alt="Аватар"/>
-      <div class="profile__edit-icon" ></div>
+    <div class="profile__image-container" tabindex="0">
+      <img class="profile__image" alt="Аватар"/>
+      <span class="profile__edit-icon"></span>
     </div>
 
     <div class="profile__info">
@@ -27,7 +27,7 @@
     <template id="card-template">
       <div class="photo-grid__item">
         <button aria-label="кнопка удалить" type="button" class="photo-grid__del-button"></button>
-        <img class="photo-grid__picture" alt=""/>
+        <img class="photo-grid__picture" alt="#"/>
         <div class="photo-grid__description">
           <h2 class="photo-grid__text"></h2>
           <div class="photo-grid__like-container">
@@ -58,7 +58,7 @@
              id="popup__input-job" required type="text" name="profession" placeholder="Профессия" class="popup__input"
              minlength="2" maxlength="200"/>
       <span id="profileProf" class="popup__input-error popup__input-job-error"></span>
-      <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
+      <button disabled aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
         Сохранить
       </button>
     </form>
@@ -73,7 +73,7 @@
       <input id="popup__input-avatar" required type="url" name="linkAvatar" placeholder="Ссылка на картинку"
              class="popup__input"/>
       <span class="popup__input-error popup__input-avatar-error"></span>
-      <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
+      <button disabled aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
         Создать
       </button>
     </form>
@@ -93,12 +93,13 @@
       <input id="popup__input-link" required type="url" name="linkPicture" placeholder="Ссылка на картинку"
              class="popup__input"/>
       <span class="popup__input-error popup__input-link-error"></span>
-      <button disabled="true" aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
+      <button disabled aria-label="кнопка Сохранить" class="popup__submit popup__submit_disabled" type="submit">
         Создать
       </button>
     </form>
   </div>
 </div>
+
 <div id="popupPhoto" class="popup">
   <div class="popup__photo-content">
     <button id="closeButtonPhotoCard" aria-label="кнопка закрыть" type="button" class="popup__close-button"></button>
@@ -106,5 +107,6 @@
     <h2 class="popup__photo-title"></h2>
   </div>
 </div>
+
 </body>
 </html>
