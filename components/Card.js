@@ -1,10 +1,10 @@
-import { api } from "../src/index";
-
 export default class Card {
   constructor({data, myId, openImg}) {
     this.data = data;
     this.myId = myId;
     this.openImg = openImg;
+
+
   }
 
   _getElement() {
@@ -38,8 +38,8 @@ export default class Card {
     }
   } // обновляю статус лайка на странице
 
-  _handleLikeShowStatus(id, isThereLike, cardElement, myId) {
-    api.toggleLikeInServer(id, isThereLike)
+  _handleLikeShowStatus(id, isThereLike, cardElement, myId, apiToggleLike) {
+   return apiToggleLike(id, isThereLike)
       .then((data) => {
         this._showLikeStatus(cardElement, data.likes, myId);
       })
@@ -48,9 +48,9 @@ export default class Card {
       });
   }; // обновляю статус лайка на сервере
 
-  _deleteCard(cardEl, cardId) {
+  _deleteCard(cardEl, cardId, apiDeleteCard) {
     this.deleteButton.disabled = true;
-    api.deleteCardFromServer(cardId)
+    return apiDeleteCard(cardId)
       .then(() => {
         cardEl.remove();
       })
@@ -60,9 +60,9 @@ export default class Card {
       })
   } // удаление карточки
 
-  _setEventListeners() {
+  _setEventListeners(apiToggleLike, apiDeleteCard) {
     this.deleteButton.addEventListener("click", () => {
-      this._deleteCard(this._cardElement, this.data._id);
+      this._deleteCard(this._cardElement, this.data._id, apiDeleteCard);
     });
 
     this.image.addEventListener("click", () => {
@@ -70,7 +70,7 @@ export default class Card {
     });
 
     this.likeButton.addEventListener("click", () => {
-      this._handleLikeShowStatus(this.data._id, this.likeButton.classList.contains("photo-grid__like_active"), this._cardElement, this.myId);
+      this._handleLikeShowStatus(this.data._id, this.likeButton.classList.contains("photo-grid__like_active"), this._cardElement, this.myId, apiToggleLike);
     });
   }
 
@@ -80,7 +80,7 @@ export default class Card {
     }
   }
 
-  createNewCard() {
+  createNewCard(apiToggleLike, apiDeleteCard) {
     this._cardElement = this._getElement();
     this._findInnerElements();
 
@@ -91,8 +91,7 @@ export default class Card {
 
     this._showLikeStatus(this._cardElement, this.data.likes, this.myId);
     this._delButtonNotOwnerRemover()
-    this._setEventListeners();
+    this._setEventListeners(apiToggleLike, apiDeleteCard);
     return this._cardElement;
   } // создание карточки
 }
-

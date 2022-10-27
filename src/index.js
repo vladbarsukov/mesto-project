@@ -86,13 +86,9 @@ profileAddButton.addEventListener("mousedown", (evt) => {
 profileEditButton.addEventListener("mousedown", (evt) => {
   evt.preventDefault();
   formEditProfileValidator.clearValidation();
-
-  userInfo.getUserInfo(api.getData.bind(api))
-    .then((userData) => {
-      nameInput.value = userData.name;
-      jobInput.value = userData.about;
-    })
-
+  let user = userInfo.getUserInfo();
+      nameInput.value = user.name;
+      jobInput.value = user.about;
   popupEditProfile.open();
 })
 
@@ -122,7 +118,7 @@ api.getAllData()
             });
           }
         });
-        cardList.setItem(card.createNewCard())}
+        cardList.setItem(card.createNewCard(api.toggleLikeInServer.bind(api), api.deleteCardFromServer.bind(api)))}
     }, ".photo-grid");
 
     cardList.renderItems(cards);
