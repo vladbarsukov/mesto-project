@@ -3,18 +3,13 @@ import Popup from "./Popup";
 export default class PopupWithImage extends Popup {
   constructor(selector) {
     super(selector);
+    this._photo = this._element.querySelector(".popup__photo");
+    this._photoTitle = this._element.querySelector(".popup__photo-title");
   }
 
   open({ img, title }) {
-    const photo = this._element.querySelector(".popup__photo");
-    const photoTitle = this._element.querySelector(".popup__photo-title");
-    
-    if (!photo || !photoTitle) {
-      return;
-    }
-
-    photo.src = img;
-    photoTitle.textContent = title;
+    this._photo.src = img;
+    this._photoTitle.textContent = title;
     super.open();
   }
 }

@@ -1,14 +1,12 @@
 export default class Card {
-  constructor({data, myId, openImg}) {
+  constructor({data, myId, handleCardClick}) {
     this.data = data;
     this.myId = myId;
-    this.openImg = openImg;
-
-
+    this.handleCardClick = handleCardClick;
   }
 
   _getElement() {
-    return  document.querySelector("#card-template").content.querySelector('.photo-grid__item').cloneNode(true);
+    return document.querySelector("#card-template").content.querySelector('.photo-grid__item').cloneNode(true);
   }
 
   _findInnerElements() {
@@ -19,11 +17,7 @@ export default class Card {
   }
 
   _isThereLike(likeArr, myId) {
-    return Boolean(
-      likeArr.find((element) => {
-        return element._id === myId;
-      })
-    );
+    return !!likeArr.find((element) => element._id === myId);
   } // сравниваю Id, проверяю есть ли лайк в массиве лайков
 
   _showLikeStatus(cardElement, likeArr, myId) {
@@ -66,7 +60,7 @@ export default class Card {
     });
 
     this.image.addEventListener("click", () => {
-      this.openImg(this.image)
+      this.handleCardClick(this.image)
     });
 
     this.likeButton.addEventListener("click", () => {

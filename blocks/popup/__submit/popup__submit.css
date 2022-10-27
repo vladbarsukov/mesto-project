@@ -17,9 +17,17 @@
 }
 
 /*у меня в макете прозрачность 0.8*/
-.popup__submit:hover {
+.popup__submit:hover,
+.popup__submit:focus {
   opacity: 0.8;
   cursor: pointer;
+}
+
+.popup__submit:disabled {
+  color: #000;
+  background-color: transparent;
+  opacity: 0.2;
+  cursor: auto;
 }
 
 @media screen and (max-width: 907px) {

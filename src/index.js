@@ -28,43 +28,55 @@ const formEditProfileValidator = new FormValidator(validationSettings, formEditP
 const formAddCardValidator = new FormValidator(validationSettings, formAddCard);
 const formEditAvatarValidator = new FormValidator(validationSettings, formEditAvatar);
 
-const popupAddCard = new PopupWithForm("#popupAddCard", ([ namePlace, linkPicture ]) => {
-  api.pushCard(linkPicture.value, namePlace.value)
+const popupAddCard = new PopupWithForm("#popupAddCard", ({ namePlace, linkPicture }) => {
+  formAddCardValidator.disableSubmitButton();
+  formAddCardValidator.setSubmitButtonText("Сохраняю...");
+
+  api.pushCard(linkPicture, namePlace)
     .then((data) => {
       cardList.renderItem(data);
       popupAddCard.close();
     })
     .catch((err) => {
       console.log(err);
+      formAddCardValidator.enableSubmitButton();
     })
     .finally(() => {
-      popupAddCard.submitButton.textContent = "Создать";
+      formAddCardValidator.setSubmitButtonText("Создать");
     });
 });
 
-const popupEditProfile = new PopupWithForm("#popupEditProfile", ([ name, profession ]) => {
-  userInfo.setUserInfo(name.value, profession.value, api.pushDataProfile.bind(api))
+const popupEditProfile = new PopupWithForm("#popupEditProfile", ({ name, profession }) => {
+  formEditProfileValidator.disableSubmitButton();
+  formEditProfileValidator.setSubmitButtonText("Сохраняю...");
+
+  userInfo.setUserInfo(name, profession, api.pushDataProfile.bind(api))
     .then(() => {
       popupEditProfile.close();
     })
     .catch((err) => {
       console.log(err);
+      formEditProfileValidator.enableSubmitButton();
     })
     .finally(() => {
-      popupEditProfile.submitButton.textContent = "Сохранить";
+      formEditProfileValidator.setSubmitButtonText("Сохранить");
     });
 });
 
-const popupProfileImage = new PopupWithForm("#popupProfileImage", ([ linkAvatar ]) => {
-  userInfo.setAvatar(linkAvatar.value, api.pushDataAvatar.bind(api))
+const popupProfileImage = new PopupWithForm("#popupProfileImage", ({ linkAvatar }) => {
+  formEditAvatarValidator.disableSubmitButton();
+  formEditAvatarValidator.setSubmitButtonText("Сохраняю...")
+
+  userInfo.setAvatar(linkAvatar, api.pushDataAvatar.bind(api))
     .then(() => {
       popupProfileImage.close();
     })
     .catch((err) => {
       console.log(err);
+      formEditAvatarValidator.enableSubmitButton();
     })
     .finally(() => {
-      popupProfileImage.submitButton.textContent = "Сохранить";
+      formEditAvatarValidator.setSubmitButtonText("Сохранить");
     });
 });
 
@@ -87,8 +99,8 @@ profileEditButton.addEventListener("mousedown", (evt) => {
   evt.preventDefault();
   formEditProfileValidator.clearValidation();
   let user = userInfo.getUserInfo();
-      nameInput.value = user.name;
-      jobInput.value = user.about;
+  nameInput.value = user.name;
+  jobInput.value = user.about;
   popupEditProfile.open();
 })
 
@@ -103,22 +115,23 @@ formEditAvatarValidator.enableValidation();
 
 api.getAllData()
   .then(([cards, userData]) => {
-    userInfo.fillUserInfo(userData)
-    userInfo.updateAvatar(userData)
+    userInfo.fillUserInfo(userData);
+    userInfo.updateAvatar(userData);
 
     cardList = new Section({
       renderer: (item) => {
         const card = new Card({
           data: item,
           myId: userData._id,
-          openImg: () => {
+          handleCardClick: () => {
             popupPhoto.open({
               img: item.link,
               title: item.name,
             });
           }
         });
-        cardList.setItem(card.createNewCard(api.toggleLikeInServer.bind(api), api.deleteCardFromServer.bind(api)))}
+        cardList.setItem(card.createNewCard(api.toggleLikeInServer.bind(api), api.deleteCardFromServer.bind(api)));
+      }
     }, ".photo-grid");
 
     cardList.renderItems(cards);
@@ -126,5 +139,3 @@ api.getAllData()
   .catch((err) => {
     console.log(err);
   }) // получаю все данные с сервера
-
-export {api};
