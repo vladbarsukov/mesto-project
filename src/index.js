@@ -34,7 +34,23 @@ const popupAddCard = new PopupWithForm("#popupAddCard", ({ namePlace, linkPictur
 
   api.pushCard(linkPicture, namePlace)
     .then((data) => {
-      cardList.renderItem(data);
+     let newCard = new Section({
+        renderer: (item) => {
+          const card = new Card({
+            data: item,
+            myId: myId,
+            handleCardClick: () => {
+              popupPhoto.open({
+                img: item.link,
+                title: item.name,
+              });
+            }
+          });
+          newCard.setNewItem(card.createNewCard(api.toggleLikeInServer.bind(api), api.deleteCardFromServer.bind(api)));
+        }
+      }, ".photo-grid");
+
+      newCard.renderItem(data);
       popupAddCard.close();
     })
     .catch((err) => {
@@ -113,11 +129,14 @@ formEditProfileValidator.enableValidation();
 formAddCardValidator.enableValidation();
 formEditAvatarValidator.enableValidation();
 
+let myId = null
+
 api.getAllData()
   .then(([cards, userData]) => {
+    myId = userData._id;
     userInfo.fillUserInfo(userData);
     userInfo.updateAvatar(userData);
-
+    
     cardList = new Section({
       renderer: (item) => {
         const card = new Card({

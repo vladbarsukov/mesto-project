@@ -77,12 +77,10 @@ export default class Card {
   createNewCard(apiToggleLike, apiDeleteCard) {
     this._cardElement = this._getElement();
     this._findInnerElements();
-
     this.image.owner = `${this.data._id}`;
     this.cardDescription.textContent = this.data.name;
     this.image.src = this.data.link;
     this.image.alt = this.data.name;
-
     this._showLikeStatus(this._cardElement, this.data.likes, this.myId);
     this._delButtonNotOwnerRemover()
     this._setEventListeners(apiToggleLike, apiDeleteCard);
