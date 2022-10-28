@@ -28,77 +28,106 @@ const formEditProfileValidator = new FormValidator(validationSettings, formEditP
 const formAddCardValidator = new FormValidator(validationSettings, formAddCard);
 const formEditAvatarValidator = new FormValidator(validationSettings, formEditAvatar);
 
-const popupAddCard = new PopupWithForm("#popupAddCard", ({ namePlace, linkPicture }) => {
-  formAddCardValidator.disableSubmitButton();
-  formAddCardValidator.setSubmitButtonText("Сохраняю...");
+const cardList = new Section({
+  renderer: (cardData, userId) => {
+    const card = new Card({
+      data: cardData,
+      myId: userId,
 
-  api.pushCard(linkPicture, namePlace)
-    .then((data) => {
-     let newCard = new Section({
-        renderer: (item) => {
-          const card = new Card({
-            data: item,
-            myId: myId,
-            handleCardClick: () => {
-              popupPhoto.open({
-                img: item.link,
-                title: item.name,
-              });
-            }
+      handleCardClick: () => {
+        popupPhoto.open({
+          img: cardData.link,
+          title: cardData.name,
+        });
+      },
+
+      handleLikeClick: (cardId, isThereLike) => {
+        api.toggleLikeInServer(cardId, isThereLike)
+          .then((data) => {
+            card.data.likes = data.likes;
+            card._showLikeStatus();
+          })
+          .catch((err) => {
+            console.log(err);
           });
-          newCard.setNewItem(card.createNewCard(api.toggleLikeInServer.bind(api), api.deleteCardFromServer.bind(api)));
-        }
-      }, ".photo-grid");
+      },
 
-      newCard.renderItem(data);
-      popupAddCard.close();
-    })
-    .catch((err) => {
-      console.log(err);
-      formAddCardValidator.enableSubmitButton();
-    })
-    .finally(() => {
-      formAddCardValidator.setSubmitButtonText("Создать");
+      deleteCard: (cardId) => {
+        card._deleteButton.disabled = true;
+        return api.deleteCardFromServer(cardId)
+          .then(() => {
+            card._element.remove();
+          })
+          .catch((err) => {
+            console.log(err);
+            card._deleteButton.disabled = false;
+          })
+      }
     });
+
+    return card.createNewCard();
+  }
+}, ".photo-grid");
+
+const popupAddCard = new PopupWithForm("#popupAddCard", {
+  submitCallback: ({ namePlace, linkPicture }) => {
+    formAddCardValidator.disableSubmitButton();
+    formAddCardValidator.setSubmitButtonText("Сохраняю...");
+
+    api.pushCard(linkPicture, namePlace)
+      .then((data) => {
+        cardList.renderItem(data, data.owner._id);
+        popupAddCard.close();
+      })
+      .catch((err) => {
+        console.log(err);
+        formAddCardValidator.enableSubmitButton();
+      })
+      .finally(() => {
+        formAddCardValidator.setSubmitButtonText("Создать");
+      });
+  }
 });
 
-const popupEditProfile = new PopupWithForm("#popupEditProfile", ({ name, profession }) => {
-  formEditProfileValidator.disableSubmitButton();
-  formEditProfileValidator.setSubmitButtonText("Сохраняю...");
+const popupEditProfile = new PopupWithForm("#popupEditProfile", {
+  submitCallback: ({ name, profession }) => {
+    formEditProfileValidator.disableSubmitButton();
+    formEditProfileValidator.setSubmitButtonText("Сохраняю...");
 
-  userInfo.setUserInfo(name, profession, api.pushDataProfile.bind(api))
-    .then(() => {
-      popupEditProfile.close();
-    })
-    .catch((err) => {
-      console.log(err);
-      formEditProfileValidator.enableSubmitButton();
-    })
-    .finally(() => {
-      formEditProfileValidator.setSubmitButtonText("Сохранить");
-    });
+    userInfo.setUserInfo(name, profession, api.pushDataProfile.bind(api))
+      .then(() => {
+        popupEditProfile.close();
+      })
+      .catch((err) => {
+        console.log(err);
+        formEditProfileValidator.enableSubmitButton();
+      })
+      .finally(() => {
+        formEditProfileValidator.setSubmitButtonText("Сохранить");
+      });
+  }
 });
 
-const popupProfileImage = new PopupWithForm("#popupProfileImage", ({ linkAvatar }) => {
-  formEditAvatarValidator.disableSubmitButton();
-  formEditAvatarValidator.setSubmitButtonText("Сохраняю...")
+const popupProfileImage = new PopupWithForm("#popupProfileImage", {
+  submitCallback: ({ linkAvatar }) => {
+    formEditAvatarValidator.disableSubmitButton();
+    formEditAvatarValidator.setSubmitButtonText("Сохраняю...")
 
-  userInfo.setAvatar(linkAvatar, api.pushDataAvatar.bind(api))
-    .then(() => {
-      popupProfileImage.close();
-    })
-    .catch((err) => {
-      console.log(err);
-      formEditAvatarValidator.enableSubmitButton();
-    })
-    .finally(() => {
-      formEditAvatarValidator.setSubmitButtonText("Сохранить");
-    });
+    userInfo.setAvatar(linkAvatar, api.pushDataAvatar.bind(api))
+      .then(() => {
+        popupProfileImage.close();
+      })
+      .catch((err) => {
+        console.log(err);
+        formEditAvatarValidator.enableSubmitButton();
+      })
+      .finally(() => {
+        formEditAvatarValidator.setSubmitButtonText("Сохранить");
+      });
+  }
 });
 
 const popupPhoto = new PopupWithImage("#popupPhoto");
-
-let cardList;
 
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
@@ -129,31 +158,11 @@ formEditProfileValidator.enableValidation();
 formAddCardValidator.enableValidation();
 formEditAvatarValidator.enableValidation();
 
-let myId = null
-
 api.getAllData()
   .then(([cards, userData]) => {
-    myId = userData._id;
     userInfo.fillUserInfo(userData);
     userInfo.updateAvatar(userData);
-    
-    cardList = new Section({
-      renderer: (item) => {
-        const card = new Card({
-          data: item,
-          myId: userData._id,
-          handleCardClick: () => {
-            popupPhoto.open({
-              img: item.link,
-              title: item.name,
-            });
-          }
-        });
-        cardList.setItem(card.createNewCard(api.toggleLikeInServer.bind(api), api.deleteCardFromServer.bind(api)));
-      }
-    }, ".photo-grid");
-
-    cardList.renderItems(cards);
+    cardList.renderItems(cards, userData._id);
   })
   .catch((err) => {
     console.log(err);
