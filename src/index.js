@@ -55,14 +55,14 @@ const cardList = new Section({
       },
 
       deleteCard: (cardId) => {
-        card.toggleDeleteButton()
+        card.toggleDeleteButton();
         return api.deleteCardFromServer(cardId)
           .then(() => {
             card.deleteCard();
           })
           .catch((err) => {
             console.log(err);
-            card.toggleDeleteButton()
+            card.toggleDeleteButton();
           })
       }
     });

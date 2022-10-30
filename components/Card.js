@@ -44,7 +44,7 @@ export default class Card {
     });
 
     this._image.addEventListener("click", () => {
-      this.handleCardClick(this._image)
+      this.handleCardClick(this._image);
     });
 
     this._likeButton.addEventListener("click", () => {
@@ -59,11 +59,11 @@ export default class Card {
   }
 
   deleteCard() {
-    this._element.remove()
+    this._element.remove();
   }
 
   toggleDeleteButton() {
-    this._deleteButton.disabled = this._deleteButton.disabled !== true;
+    this._deleteButton.disabled = !this._deleteButton.disabled;
   }
 
   createNewCard() {
@@ -73,7 +73,7 @@ export default class Card {
     this._image.src = this.data.link;
     this._image.alt = this.data.name;
     this.showLikeStatus(this._element, this.data.likes, this.myId);
-    this._delButtonNotOwnerRemover()
+    this._delButtonNotOwnerRemover();
     this._setEventListeners();
     return this._element;
   } // создание карточки
