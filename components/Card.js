@@ -28,7 +28,7 @@ export default class Card {
     return !!this.data.likes.find((element) => element._id === this.myId);
   } // сравниваю Id, проверяю есть ли лайк в массиве лайков
 
-  _showLikeStatus() {
+  showLikeStatus() {
     this._likeCounter.textContent = this.data.likes.length;
 
     if (this._isThereLike()) {
@@ -58,13 +58,21 @@ export default class Card {
     }
   }
 
+  deleteCard() {
+    this._element.remove()
+  }
+
+  toggleDeleteButton() {
+    this._deleteButton.disabled = this._deleteButton.disabled !== true;
+  }
+
   createNewCard() {
     this._getElement();
     this._findInnerElements();
     this._cardDescription.textContent = this.data.name;
     this._image.src = this.data.link;
     this._image.alt = this.data.name;
-    this._showLikeStatus(this._element, this.data.likes, this.myId);
+    this.showLikeStatus(this._element, this.data.likes, this.myId);
     this._delButtonNotOwnerRemover()
     this._setEventListeners();
     return this._element;

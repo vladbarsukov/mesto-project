@@ -47,7 +47,7 @@ const cardList = new Section({
         api.toggleLikeInServer(cardId, isThereLike)
           .then((data) => {
             card.data.likes = data.likes;
-            card._showLikeStatus();
+            card.showLikeStatus();
           })
           .catch((err) => {
             console.log(err);
@@ -55,14 +55,14 @@ const cardList = new Section({
       },
 
       deleteCard: (cardId) => {
-        card._deleteButton.disabled = true;
+        card.toggleDeleteButton()
         return api.deleteCardFromServer(cardId)
           .then(() => {
-            card._element.remove();
+            card.deleteCard();
           })
           .catch((err) => {
             console.log(err);
-            card._deleteButton.disabled = false;
+            card.toggleDeleteButton()
           })
       }
     });
