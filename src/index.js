@@ -22,6 +22,8 @@ import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
 
+let userId = null;
+
 const api = new Api(apiConfig);
 const userInfo = new UserInfo(userDataSelectors);
 const formEditProfileValidator = new FormValidator(validationSettings, formEditProfile);
@@ -29,7 +31,7 @@ const formAddCardValidator = new FormValidator(validationSettings, formAddCard);
 const formEditAvatarValidator = new FormValidator(validationSettings, formEditAvatar);
 
 const cardList = new Section({
-  renderer: (cardData, userId) => {
+  renderer: (cardData) => {
     const card = new Card({
       data: cardData,
       myId: userId,
@@ -143,7 +145,7 @@ profileAddButton.addEventListener("mousedown", (evt) => {
 profileEditButton.addEventListener("mousedown", (evt) => {
   evt.preventDefault();
   formEditProfileValidator.clearValidation();
-  let user = userInfo.getUserInfo();
+  const user = userInfo.getUserInfo();
   nameInput.value = user.name;
   jobInput.value = user.about;
   popupEditProfile.open();
@@ -160,6 +162,7 @@ formEditAvatarValidator.enableValidation();
 
 api.getAllData()
   .then(([cards, userData]) => {
+    userId = userData._id;
     userInfo.fillUserInfo(userData);
     userInfo.updateAvatar(userData);
     cardList.renderItems(cards, userData._id);
