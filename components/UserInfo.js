@@ -3,10 +3,11 @@ export default class UserInfo {
     this.name = document.querySelector(`${userDataSelectors.nameSelector}`);
     this.profession = document.querySelector(`${userDataSelectors.professionSelector}`);
     this.avatar = document.querySelector(`${userDataSelectors.avatar}`);
+    this.userData = {name: this.name.textContent, about: this.profession.textContent}
   }
 
-  getUserInfo(api) {
-    return api();
+  getUserInfo() {
+    return this.userData;
   }
 
   setUserInfo(name, about, api) {
@@ -26,6 +27,8 @@ export default class UserInfo {
   fillUserInfo(userData) {
     this.name.textContent = userData.name;
     this.profession.textContent = userData.about;
+    this.userData.name = userData.name;
+    this.userData.about = userData.about;
   }
 
   updateAvatar(userData) {
